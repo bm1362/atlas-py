@@ -4,7 +4,7 @@ from entity import entity
 class square(entity):
     def __init__(self, **kwargs):
         super(square, self).__init__(**kwargs)
-        self.size = kwargs['size'] if 'size' in kwargs else 5
+        self.size = kwargs.get('size', 5)
 
     def draw(self):
         vertices = (self.position['x']-self.size, self.position['y']+self.size, 
