@@ -38,16 +38,14 @@ class simulation(object):
 
         # create physics engine
         self.engine = engine.engine()
-        
-        s = square.square(position=dict(x=50, y=50), size=50, color=(100, 0, 0, 255))
-        self.world.add_entity(s)
-        s = square.square(position=dict(x=50, y=world_height - 50), size=50)
-        self.world.add_entity(s)
 
-        # add objects to world
-        # pyglet.graphics.draw(2, pyglet.gl.GL_POINTS,
-        #     ('v2i', (0, 0, world_width, world_height))
-        # )
+        for _ in xrange(0, 100):
+            theta = random() * 2 * math.pi
+            pos = dict(x=random() * world_width, y=random() * world_height)
+            s = square.square(position=pos, size=50)
+            s.rotate(theta)
+            self.world.add_entity(s)
+
     def tick(self, dt):
         # update physics 
         self.engine.update()

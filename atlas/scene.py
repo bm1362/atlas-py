@@ -21,12 +21,7 @@ class scene(object):
 		# ask the world for the objects we should render
 		self.entities = self.world.get_entities_in(self.top_left, self.top_right, self.bottom_left, self.bottom_right)
 
-		print "Scene"
-		print self.top_left
-		print self.top_right
-		print self.bottom_left
-		print self.bottom_right
-		print "/Scene"
+		# print ("scene", self.top_left, self.top_right, self.bottom_left, self.bottom_right)
 
 	def render(self):
 		# get all the entities and draw them
@@ -57,6 +52,7 @@ class scene(object):
 	def is_in_world(x, y):
 		# detect if a point is in this world- used to prevent the scene from moving out of the world
 		pass
+
 	def add_entity(self, entity):
 		self.entities.append(entity)
 
