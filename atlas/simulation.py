@@ -11,8 +11,6 @@ from entity import entity, square
 class simulation(object):
     def __init__(self, width, height):
         # create pyglet window
-        # super(Simulation, self).__init__()
-        self.tick_count = 0
         self.window = pyglet.window.Window()
         self.window.on_draw = self.on_draw
         self.window.on_key_press = self.on_key_press
@@ -29,25 +27,27 @@ class simulation(object):
         pyglet.clock.set_fps_limit(30)
 
         # create world
-        self.world = world.world()
+        world_width = 5000
+        world_height = 5000
+        self.world = world.world(world_width, world_height)
 
-        # create scene
-        self.scene = scene.scene(self.world, width=width, height=height)
+        # create scene- match dimensions of the app window
+        self.scene = scene.scene(self.world, offset_x=0, offset_y=0,width=width, height=height)
         
         # add event listeners
 
         # create physics engine
         self.engine = engine.engine()
         
-        # generate objects
-        for _ in xrange(0, 1):
-            pos = dict(x = random()*500, y = random()*500)
-            size = random()*50
-            s = square.square(position=pos, size=size)
-            # self.scene.add_entity(s)
-            self.world.add_entity(s)
-        # add objects to world
+        s = square.square(position=dict(x=50, y=50), size=50, color=(100, 0, 0, 255))
+        self.world.add_entity(s)
+        s = square.square(position=dict(x=50, y=world_height - 50), size=50)
+        self.world.add_entity(s)
 
+        # add objects to world
+        # pyglet.graphics.draw(2, pyglet.gl.GL_POINTS,
+        #     ('v2i', (0, 0, world_width, world_height))
+        # )
     def tick(self, dt):
         # update physics 
         self.engine.update()
@@ -57,13 +57,13 @@ class simulation(object):
 
         # move scene
         if key.LEFT in self.key_pressed:
-            self.scene.offset_x -= 5
+            self.scene.translateX(-10)
         if key.RIGHT in self.key_pressed:
-            self.scene.offset_x += 5
+            self.scene.translateX(10)
         if key.UP in self.key_pressed:
-            self.scene.offset_y -= 5
+            self.scene.translateY(-10)
         if key.DOWN in self.key_pressed:
-            self.scene.offset_y += 5
+            self.scene.translateY(10)
 
     def on_draw(self):
         # clear window
