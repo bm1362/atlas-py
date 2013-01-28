@@ -21,7 +21,7 @@ class entity(object):
             vertices += (x - _['x'],)
             vertices += (y + _['y'],)
 
-        pyglet.graphics.draw(4, pyglet.gl.GL_POLYGON,
+        pyglet.graphics.draw(len(self.vertices), pyglet.gl.GL_POLYGON,
             ('v2f', vertices),
             ('c4B', self.color * 4)
         )

@@ -4,7 +4,8 @@ class scene(object):
 	def __init__(self, world, **kwargs):
 		self.entities = []
 		self.world = world
-		
+		self.counter = 0
+
 		assert(self.world is not None)
 
 		self.offset_x = kwargs.get('offset_x', 0)
@@ -27,9 +28,8 @@ class scene(object):
 		# get all the entities and draw them
 		for e in self.entities:
 			e.draw(self.top_left['x'], self.top_left['y'], self.height)
-
-	def rotate(self, theta):
-		pass
+			e.rotate((self.counter))
+			self.counter += 1
 
 	def translateX(self, x):
 		if self.top_left['x'] + x < 0 or self.top_right['x'] + x > self.world.width:
