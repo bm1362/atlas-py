@@ -16,21 +16,23 @@ class simulation(object):
         self.window = pyglet.window.Window()
         self.window.on_draw = self.on_draw
         self.window.on_key_press = self.on_key_press
+        self.window.on_key_release = self.on_key_release
         self.window.width = width
         self.window.height = height
+        self.key_pressed = []
 
         # create fps display 
         self.fps_display = pyglet.clock.ClockDisplay()
 
         # sync clock
-        pyglet.clock.schedule_interval(self.tick, 1.0/75.0)   
-        pyglet.clock.set_fps_limit(75)
+        pyglet.clock.schedule_interval(self.tick, 1.0/30.0)   
+        pyglet.clock.set_fps_limit(30)
 
         # create world
         self.world = world.world()
 
         # create scene
-        self.scene = scene.scene(self.world)
+        self.scene = scene.scene(self.world, width=width, height=height)
         
         # add event listeners
 
@@ -38,7 +40,7 @@ class simulation(object):
         self.engine = engine.engine()
         
         # generate objects
-        for _ in xrange(0, 10):
+        for _ in xrange(0, 1):
             pos = dict(x = random()*500, y = random()*500)
             size = random()*50
             s = square.square(position=pos, size=size)
@@ -52,6 +54,16 @@ class simulation(object):
 
         # update scene
         self.scene.update()
+
+        # move scene
+        if key.LEFT in self.key_pressed:
+            self.scene.offset_x -= 5
+        if key.RIGHT in self.key_pressed:
+            self.scene.offset_x += 5
+        if key.UP in self.key_pressed:
+            self.scene.offset_y -= 5
+        if key.DOWN in self.key_pressed:
+            self.scene.offset_y += 5
 
     def on_draw(self):
         # clear window
@@ -69,9 +81,16 @@ class simulation(object):
 
     def on_key_press(self, symbol, modifiers):
         if symbol == key.LEFT:
-            self.scene.offset_x -= 10
+            self.key_pressed.append(key.LEFT)
         elif symbol == key.RIGHT:
-            self.scene.offset_x += 10
+            self.key_pressed.append(key.RIGHT)
+        elif symbol == key.UP:
+            self.key_pressed.append(key.UP)
+        elif symbol == key.DOWN:
+            self.key_pressed.append(key.DOWN)
 
-sim = simulation(300, 500)
+    def on_key_release(self, symbol, modifiers):
+        self.key_pressed.remove(symbol)
+
+sim = simulation(1000, 500)
 pyglet.app.run()

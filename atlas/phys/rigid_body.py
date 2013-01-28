@@ -1,6 +1,7 @@
 import entity
-class rigid_body(entity):
-	def __init__(self):
+class rigid_body(object):
+	def __init__(self, entity):
+		assert(entity is not None)
 		pass
 
 	def update(self):
