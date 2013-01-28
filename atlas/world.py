@@ -6,11 +6,16 @@ class world(object):
 		# list of objects that are in the world
 		self.entities = []
 
-	def get_objects_in(top_left, top_right, bottom_left, bottom_right):
+	def get_entities_in(self, top_left, top_right, bottom_left, bottom_right):
 		"""
 			Returns a list of objects that are within the bounding box.
 		"""
-		return "unimplemented"
+		# is it to the right of the left side of ths screen and below the top of the screen
+		result = filter(lambda o: o.position['x'] > top_left['x'] and o.position['y'] > bottom_left['y'], self.entities)
+		# is it inside the window
+		result = filter(lambda o: o.position['y'] < bottom_left['y'] and o.position['x'] < top_right['x'], self.entities)
+		return result
+		return filter(lambda o: o.position['x'] > top_left['x'] and o.position['y'] > bottom_left['y'] and o.position['x'] < top_right['x'] and o.position['y'] < bottom_right['y'], self.entities)
 
 	def add_entity(self, entity):
 		self.entities.append(entity)

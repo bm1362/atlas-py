@@ -1,4 +1,5 @@
 from random import random
+import math
 
 import pyglet
 from pyglet.window import key, mouse
@@ -11,8 +12,10 @@ class simulation(object):
     def __init__(self, width, height):
         # create pyglet window
         # super(Simulation, self).__init__()
+        self.tick_count = 0
         self.window = pyglet.window.Window()
         self.window.on_draw = self.on_draw
+        self.window.on_key_press = self.on_key_press
         self.window.width = width
         self.window.height = height
 
@@ -47,6 +50,9 @@ class simulation(object):
         # update physics 
         self.engine.update()
 
+        # update scene
+        self.scene.update()
+
     def on_draw(self):
         # clear window
         self.window.clear()
@@ -60,6 +66,12 @@ class simulation(object):
         self.scene.render()
 
         # draw foreground/ui
+
+    def on_key_press(self, symbol, modifiers):
+        if symbol == key.LEFT:
+            self.scene.offset_x -= 10
+        elif symbol == key.RIGHT:
+            self.scene.offset_x += 10
 
 sim = simulation(300, 500)
 pyglet.app.run()
