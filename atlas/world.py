@@ -1,4 +1,4 @@
-from util.geometry import is_in_rectangle
+from util.geometry import is_in_polygon
 
 class world(object):
 	def __init__(self, width, height):
@@ -17,13 +17,11 @@ class world(object):
 		"""
 		# returns any object with a vertice within the dimensions given
 		result = []
+		# return self.entities
 		for _ in self.entities:
 			for v in _.get_abs_vertices():
-				if is_in_rectangle(			(top_left['x'], top_left['y']),
-											(top_right['x'], top_right['y']),
-											(bottom_left['x'], bottom_left['y']),
-											(bottom_right['x'], bottom_right['y']),
-											(v['x'], v['y'])) == True:
+				vertices = ((top_left['x'], top_left['y']),(top_right['x'], top_right['y']),(bottom_left['x'], bottom_left['y']),(bottom_right['x'], bottom_right['y']))
+				if is_in_polygon(vertices, (v['x'], v['y'])):
 					result.append(_)
 					break
 

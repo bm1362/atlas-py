@@ -34,12 +34,10 @@ class entity(object):
             ('c4B', self.color * 4)
         )
 
-    # rotates the entity counter clockwise by theta, in degrees
-    def rotate(self, theta):
+    # rotates the entity counter clockwise by the angle
+    def rotate(self, angle):
         new_verts = []
         for _ in self.vertices:
-            new_verts.append(rotate_vector(_, theta))
+            new_verts.append(rotate_vector(_, angle))
             
         self.vertices = new_verts
-
-    # push to a util package? rotates a vector counter clockwise by theta, requires theta as a degree
