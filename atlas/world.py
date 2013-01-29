@@ -1,3 +1,5 @@
+from util.geometry import is_in_rectangle
+
 class world(object):
 	def __init__(self, width, height):
 		self.width = width
@@ -13,9 +15,18 @@ class world(object):
 		"""
 			Returns a list of objects that are within the bounding box.
 		"""
-		# may not be correct needs to be updated
-		result = filter(lambda o: o.position['x'] > top_left['x'] and o.position['x'] < top_right['x'], self.entities)
-		result = filter(lambda o: o.position['y'] > top_left['y'] and o.position['y'] < bottom_right['y'], self.entities)
+		# returns any object with a vertice within the dimensions given
+		result = []
+		for _ in self.entities:
+			for v in _.get_abs_vertices():
+				if is_in_rectangle(			(top_left['x'], top_left['y']),
+											(top_right['x'], top_right['y']),
+											(bottom_left['x'], bottom_left['y']),
+											(bottom_right['x'], bottom_right['y']),
+											(v['x'], v['y'])) == True:
+					result.append(_)
+					break
+
 		return result
 		
 	def add_entity(self, entity):

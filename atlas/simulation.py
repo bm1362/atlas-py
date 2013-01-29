@@ -71,7 +71,7 @@ class simulation(object):
         self.fps_display.draw()
 
         # draw background
-
+        
         # redraw scene
         self.scene.render()
 

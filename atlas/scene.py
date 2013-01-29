@@ -1,10 +1,11 @@
 import math
 
+from util import geometry
+
 class scene(object):
 	def __init__(self, world, **kwargs):
 		self.entities = []
 		self.world = world
-		self.counter = 0
 
 		assert(self.world is not None)
 
@@ -16,20 +17,18 @@ class scene(object):
 		self.top_left = dict(x = self.offset_x, y = self.offset_y)
 		self.top_right = dict(x = self.offset_x + self.width, y = self.offset_y)
 		self.bottom_left = dict(x = self.offset_x, y = self.offset_y + self.height)
-		self.bottom_right = dict(x = self.offset_x + self.width, y = self.offset_y + self.width)
+		self.bottom_right = dict(x = self.offset_x + self.width, y = self.offset_y + self.height)
 	
 	def update(self):
 		# ask the world for the objects we should render
 		self.entities = self.world.get_entities_in(self.top_left, self.top_right, self.bottom_left, self.bottom_right)
 
-		# print ("scene", self.top_left, self.top_right, self.bottom_left, self.bottom_right)
+		print ("scene", self.top_left, self.top_right, self.bottom_left, self.bottom_right)
 
 	def render(self):
 		# get all the entities and draw them
 		for e in self.entities:
 			e.draw(self.top_left['x'], self.top_left['y'], self.height)
-			e.rotate((self.counter))
-			self.counter += 1
 
 	def translateX(self, x):
 		if self.top_left['x'] + x < 0 or self.top_right['x'] + x > self.world.width:
@@ -48,10 +47,6 @@ class scene(object):
 		self.top_right['y'] += y
 		self.bottom_left['y'] += y
 		self.bottom_right['y'] += y
-
-	def is_in_world(x, y):
-		# detect if a point is in this world- used to prevent the scene from moving out of the world
-		pass
 
 	def add_entity(self, entity):
 		self.entities.append(entity)
