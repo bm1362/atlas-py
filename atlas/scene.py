@@ -17,13 +17,13 @@ class scene(object):
 		self.top_left = dict(x = self.offset_x, y = self.offset_y)
 		self.top_right = dict(x = self.offset_x + self.width, y = self.offset_y)
 		self.bottom_left = dict(x = self.offset_x, y = self.offset_y + self.height)
-		self.bottom_right = dict(x = self.offset_x + self.width, y = self.offset_y + self.width)
+		self.bottom_right = dict(x = self.offset_x + self.width, y = self.offset_y + self.height)
 	
 	def update(self):
 		# ask the world for the objects we should render
 		self.entities = self.world.get_entities_in(self.top_left, self.top_right, self.bottom_left, self.bottom_right)
 
-		# print ("scene", self.top_left, self.top_right, self.bottom_left, self.bottom_right)
+		print ("scene", self.top_left, self.top_right, self.bottom_left, self.bottom_right)
 
 	def render(self):
 		# get all the entities and draw them
