@@ -11,9 +11,6 @@ from entity import entity, square
         
 class simulation(object):
     def __init__(self, width, height):
-        #
-        glEnable(GL_BLEND)
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
         # create pyglet window
         self.window = pyglet.window.Window()
         self.window.on_draw = self.on_draw
@@ -31,16 +28,16 @@ class simulation(object):
         pyglet.clock.set_fps_limit(60)
 
         # create world
-        world_width = 5000
-        world_height = 5000
+        world_width = 1500
+        world_height = 1500
         self.world = world.world(world_width, world_height)
 
         # set background
         # self.background = pyglet.graphics.OrderedGroup(0)
-        # self.background_image = pyglet.image.load('assets/space.png')
+        self.background_image = pyglet.image.load('assets/space.png')
         # self.background_image.x_anchor = world_width / 2
         # self.background_image.y_anchor = world_height / 2
-        #self.background_image.blit_into(img1,0,0,0)
+        # self.background_image.blit_into(img1,0,0,0)
 
         # create scene- match dimensions of the app window
         self.scene = scene.scene(self.world, offset_x=0, offset_y=0,width=width, height=height)
@@ -80,12 +77,13 @@ class simulation(object):
         self.window.clear()
 
         # draw background
-        self.scene.draw_background()
+        self.scene.draw_background((self.scene.top_left['x'], self.scene.top_left['y']))
 
-        # background_x = self.scene.top_left['x'] / 50
-        # background_y = self.scene.top_left['y'] / 50
+        # background_x = self.scene.top_left['x'] / 1
+        # background_y = self.scene.top_left['y'] / 1
         # image = self.background_image.get_region(background_x, background_y, 1000, 500)
         # image.blit(0,0,0)
+        # #self.background_image.blit(background_x,background_y,0)
 
         # # redraw scene
         self.scene.render()

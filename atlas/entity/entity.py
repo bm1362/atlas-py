@@ -19,15 +19,19 @@ class entity(object):
             vertices.append(dict(x = self.position['x'] - _['x'], y = self.position['y'] - _['y']))
         return vertices
 
-    def draw(self, offset_x, offset_y, screen_height):
+    def get_screen_relative_vertices(self, offset_x, offset_y, screen_height):
         x = self.position['x'] - offset_x
-        # holy shit origin is bottom left
         y = screen_height - self.position['y'] + offset_y
 
         vertices = ()
         for _ in self.vertices:
             vertices += (x - _['x'],)
             vertices += (y + _['y'],)
+
+        return vertices
+
+    def draw(self, offset_x, offset_y, screen_height):
+        vertices = self.get_screen_relative_vertices(offset_x, offset_y, screen_height)
 
         pyglet.graphics.draw(len(self.vertices), pyglet.gl.GL_POLYGON,
             ('v2f', vertices),
