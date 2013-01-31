@@ -7,7 +7,8 @@ from pyglet.gl import *
 
 import scene, world
 from phys import engine
-from entity import entity, square
+from entity.square import square
+from entity.circle import circle
         
 class simulation(object):
     def __init__(self, width, height):
@@ -49,7 +50,7 @@ class simulation(object):
         for _ in xrange(0, 50):
             theta = random() * 2 * math.pi
             pos = dict(x=random() * world_width, y=random() * world_height)
-            s = square.square(position=pos, size=50)
+            s = circle(position=pos, size=50)
             s.rotate(theta)
             self.world.add_entity(s)
 
