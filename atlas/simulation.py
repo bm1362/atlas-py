@@ -34,7 +34,7 @@ class simulation(object):
 
         # set background
         # self.background = pyglet.graphics.OrderedGroup(0)
-        self.background_image = pyglet.image.load('assets/space.png')
+        # self.background_image = pyglet.image.load('assets/space.png')
         # self.background_image.x_anchor = world_width / 2
         # self.background_image.y_anchor = world_height / 2
         # self.background_image.blit_into(img1,0,0,0)
@@ -77,8 +77,9 @@ class simulation(object):
         self.window.clear()
         glClear(GL_COLOR_BUFFER_BIT)
         glLoadIdentity()
+
         # draw background
-        self.scene.draw_background((self.scene.top_left['x'], self.scene.top_left['y']))
+        self.scene.draw_background()
 
         # background_x = self.scene.top_left['x'] / 1
         # background_y = self.scene.top_left['y'] / 1
@@ -87,7 +88,7 @@ class simulation(object):
         # #self.background_image.blit(background_x,background_y,0)
 
         # # redraw scene
-        #self.scene.render()
+        self.scene.render()
 
         # draw fps clock
         self.fps_display.draw()

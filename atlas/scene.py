@@ -41,9 +41,11 @@ class scene(object):
             self.background.append((basePosition, depth, color))
 
     # find another way, using raw opengl- still showing signs of inefficency but better. need to figure out how to color the dots 
-    def draw_background(self, scrollXY):
+    def draw_background(self):
         varray = []
         carray = []
+        x = self.top_left['x']
+        y = self.top_left['y']
         
         for _ in self.background:
             basePosition = _[0]
@@ -51,7 +53,7 @@ class scene(object):
             color = _[2]
 
             #parallax scrolling and wrapping
-            realPosition = (basePosition[0] + scrollXY[0] * depth, basePosition[1] + scrollXY[1] * depth)
+            realPosition = (basePosition[0] + x * depth, basePosition[1] + y * depth)
             wrappedPosition = ( realPosition[0] % self.world.width, realPosition[1] % self.world.height)
             varray += [wrappedPosition[0], wrappedPosition[1], 0]
             carray += color
@@ -68,7 +70,6 @@ class scene(object):
         varray = (GLfloat * len(varray))(*varray)
         carray = (GLfloat * len(carray))(*carray)
 
-        # glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT)
         glVertexPointer(3, GL_FLOAT, 0, varray)
         glColorPointer(3, GL_FLOAT, 0, carray)
 
@@ -78,18 +79,12 @@ class scene(object):
         glDrawArrays(GL_POINTS, 0, len(varray)//3)
         glDisableClientState(GL_VERTEX_ARRAY);
         glDisableClientState(GL_COLOR_ARRAY);
-        # glPopClientAttrib()
-        
-        # glPopAttrib()
-
-        # glDepthMask(True)
 
     def update(self):
         # ask the world for the objects we should render
         self.entities = self.world.get_entities_in(self.top_left, self.top_right, self.bottom_left, self.bottom_right)
 
     def render(self):
-
         # get all the entities and draw them
         entities = sorted(self.entities, key = lambda e: e.z_index)
         
