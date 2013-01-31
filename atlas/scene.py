@@ -1,6 +1,6 @@
 import math
 
-import random
+from random import random, uniform, seed
 
 import pyglet
 
@@ -31,56 +31,58 @@ class scene(object):
         self.seed = 1337
 
         for i in xrange(0, 1000):
-            random.seed(self.seed + i * 10293)
+            seed(self.seed + i * 10293)
 
             # # determine i-th star's position
-            basePosition = (random.random() * self.world.width, random.random() * self.world.height);
-            depth = random.uniform(.01, .3)
+            basePosition = (random() * self.world.width, random() * self.world.height);
+            depth = uniform(.01, .3)
+            color = [random(), random(), random(), 1]
 
-            self.background.append((basePosition, depth))
+            self.background.append((basePosition, depth, color))
 
     # find another way, using raw opengl- still showing signs of inefficency but better. need to figure out how to color the dots 
     def draw_background(self, scrollXY):
         varray = []
+        carray = []
+        
         for _ in self.background:
             basePosition = _[0]
             depth = _[1]
+            color = _[2]
 
             #parallax scrolling and wrapping
             realPosition = (basePosition[0] + scrollXY[0] * depth, basePosition[1] + scrollXY[1] * depth)
             wrappedPosition = ( realPosition[0] % self.world.width, realPosition[1] % self.world.height)
             varray += [wrappedPosition[0], wrappedPosition[1], 0]
+            carray += color
 
-        # needs to be commented and understood..
-        glDepthMask(False)
-
-        glPushAttrib(GL_ENABLE_BIT | GL_CURRENT_BIT)
-        glColor3f(1, 1, 1)
-        glDisable(GL_LIGHTING)
-
+        # # needs to be commented and understood..
         glEnable(GL_BLEND)
-        pointsize=5
-        minsize=2
-        point_size = GLfloat()
+        glEnable(GL_VERTEX_PROGRAM_POINT_SIZE)
+        point_size = GLfloat(10.0)
         glGetFloatv(GL_POINT_SIZE_MAX_ARB, point_size)
-        glPointSize(pointsize) # what does this do?
+        glPointSize(point_size)
         glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, (GLfloat * 3)(0, 0, 5))
-        glPointParameterfARB(GL_POINT_SIZE_MIN_ARB, minsize) # this seems to be req'd
-        glTexEnvf(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE)
-        glEnable(GL_POINT_SPRITE_ARB)
+        glPointParameterfARB(GL_POINT_SIZE_MIN_ARB, 5)
                 
-        nump = len(varray)//3;
         varray = (GLfloat * len(varray))(*varray)
-    
-        glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT)
-        glVertexPointer(3, GL_FLOAT, 0, varray)
-        glEnableClientState(GL_VERTEX_ARRAY)
-        glDrawArrays(GL_POINTS, 0, nump)
-        glPopClientAttrib()
-        
-        glPopAttrib()
+        carray = (GLfloat * len(carray))(*carray)
 
-        glDepthMask(True)
+        # glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT)
+        glVertexPointer(3, GL_FLOAT, 0, varray)
+        glColorPointer(3, GL_FLOAT, 0, carray)
+
+        glEnableClientState(GL_VERTEX_ARRAY)
+        glEnableClientState(GL_COLOR_ARRAY)
+        
+        glDrawArrays(GL_POINTS, 0, len(varray)//3)
+        glDisableClientState(GL_VERTEX_ARRAY);
+        glDisableClientState(GL_COLOR_ARRAY);
+        # glPopClientAttrib()
+        
+        # glPopAttrib()
+
+        # glDepthMask(True)
 
     def update(self):
         # ask the world for the objects we should render

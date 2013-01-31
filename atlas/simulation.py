@@ -87,7 +87,7 @@ class simulation(object):
         # #self.background_image.blit(background_x,background_y,0)
 
         # # redraw scene
-        self.scene.render()
+        #self.scene.render()
 
         # draw fps clock
         self.fps_display.draw()
