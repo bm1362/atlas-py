@@ -4,6 +4,8 @@ import random
 
 import pyglet
 
+from pyglet.gl import *
+
 from entity.square import square
 from util.vector2 import rotate_vector
 
@@ -33,40 +35,59 @@ class scene(object):
 
             # # determine i-th star's position
             basePosition = (random.random() * self.world.width, random.random() * self.world.height);
-            vertices = ()
-            vertices += (basePosition[0], basePosition[1])
-            vertices += (basePosition[0] + random.random() * 10, basePosition[1] + random.random() * 10)
-            vertices += (basePosition[0], basePosition[1] + random.random() * 10)
+            depth = random.uniform(.01, .3)
 
-            depth = random.uniform(.5, 2)
+            self.background.append((basePosition, depth))
 
-            self.background.append((vertices, depth))
-
-    # too in efficient, need to find another method
+    # find another way, using raw opengl- still showing signs of inefficency but better. need to figure out how to color the dots 
     def draw_background(self, scrollXY):
-        batch = pyglet.graphics.Batch()
+        varray = []
         for _ in self.background:
             basePosition = _[0]
             depth = _[1]
 
             #parallax scrolling and wrapping
-            realPosition = (basePosition[0] + scrollXY[0] * depth, basePosition[1] + scrollXY[1] * depth,
-                            basePosition[2] + scrollXY[0] * depth, basePosition[3] + scrollXY[1] * depth,
-                            basePosition[4] + scrollXY[0] * depth, basePosition[5] + scrollXY[1] * depth)
+            realPosition = (basePosition[0] + scrollXY[0] * depth, basePosition[1] + scrollXY[1] * depth)
+            wrappedPosition = ( realPosition[0] % self.world.width, realPosition[1] % self.world.height)
+            varray += [wrappedPosition[0], wrappedPosition[1], 0]
 
-            wrappedPosition = ( realPosition[0] % self.world.width, realPosition[1] % self.world.height,
-                                realPosition[2] % self.world.width, realPosition[3] % self.world.height,
-                                realPosition[4] % self.world.width, realPosition[5] % self.world.height)
+        # needs to be commented and understood..
+        glDepthMask(False)
 
-            batch.add(3, pyglet.gl.GL_TRIANGLES, None, ("v2f", wrappedPosition))
+        glPushAttrib(GL_ENABLE_BIT | GL_CURRENT_BIT)
+        glColor3f(1, 1, 1)
+        glDisable(GL_LIGHTING)
 
-        batch.draw()
+        glEnable(GL_BLEND)
+        pointsize=5
+        minsize=2
+        point_size = GLfloat()
+        glGetFloatv(GL_POINT_SIZE_MAX_ARB, point_size)
+        glPointSize(pointsize) # what does this do?
+        glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, (GLfloat * 3)(0, 0, 5))
+        glPointParameterfARB(GL_POINT_SIZE_MIN_ARB, minsize) # this seems to be req'd
+        glTexEnvf(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE)
+        glEnable(GL_POINT_SPRITE_ARB)
+                
+        nump = len(varray)//3;
+        varray = (GLfloat * len(varray))(*varray)
+    
+        glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT)
+        glVertexPointer(3, GL_FLOAT, 0, varray)
+        glEnableClientState(GL_VERTEX_ARRAY)
+        glDrawArrays(GL_POINTS, 0, nump)
+        glPopClientAttrib()
+        
+        glPopAttrib()
+
+        glDepthMask(True)
 
     def update(self):
         # ask the world for the objects we should render
         self.entities = self.world.get_entities_in(self.top_left, self.top_right, self.bottom_left, self.bottom_right)
 
     def render(self):
+
         # get all the entities and draw them
         entities = sorted(self.entities, key = lambda e: e.z_index)
         

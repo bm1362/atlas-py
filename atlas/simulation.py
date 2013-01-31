@@ -46,7 +46,7 @@ class simulation(object):
         self.engine = engine.engine()
 
         # throw some objects in there for now
-        for _ in xrange(0, 100):
+        for _ in xrange(0, 500):
             theta = random() * 2 * math.pi
             pos = dict(x=random() * world_width, y=random() * world_height)
             s = square.square(position=pos, size=50)
@@ -75,7 +75,8 @@ class simulation(object):
     def on_draw(self):
         # clear window
         self.window.clear()
-
+        glClear(GL_COLOR_BUFFER_BIT)
+        glLoadIdentity()
         # draw background
         self.scene.draw_background((self.scene.top_left['x'], self.scene.top_left['y']))
 
