@@ -30,13 +30,15 @@ class scene(object):
         self.background = []
         self.seed = 1337
 
-        for i in xrange(0, 1000):
+        max_depth = .2
+
+        for i in xrange(0, 500):
             seed(self.seed + i * 10293)
 
             # # determine i-th star's position
             basePosition = (random() * self.world.width, random() * self.world.height);
-            depth = uniform(.01, .3)
-            color = [random(), random(), random(), 1]
+            depth = uniform(.001, max_depth)
+            color = [random(), random(), random(), depth/max_depth]
 
             self.background.append((basePosition, depth, color))
 
@@ -71,7 +73,7 @@ class scene(object):
         carray = (GLfloat * len(carray))(*carray)
 
         glVertexPointer(3, GL_FLOAT, 0, varray)
-        glColorPointer(3, GL_FLOAT, 0, carray)
+        glColorPointer(4, GL_FLOAT, 0, carray)
 
         glEnableClientState(GL_VERTEX_ARRAY)
         glEnableClientState(GL_COLOR_ARRAY)

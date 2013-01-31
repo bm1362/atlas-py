@@ -46,7 +46,7 @@ class simulation(object):
         self.engine = engine.engine()
 
         # throw some objects in there for now
-        for _ in xrange(0, 500):
+        for _ in xrange(0, 50):
             theta = random() * 2 * math.pi
             pos = dict(x=random() * world_width, y=random() * world_height)
             s = square.square(position=pos, size=50)
