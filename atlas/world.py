@@ -16,9 +16,7 @@ class world(object):
 			Returns a list of objects that are within the bounding box.
 		"""
 		# returns any object with a vertice within the dimensions given
-		return self.entities
 		result = []
-
 		for _ in self.entities:
 			for v in _.get_abs_vertices():
 				vertices = ((top_left['x'], top_left['y']),(top_right['x'], top_right['y']),(bottom_left['x'], bottom_left['y']),(bottom_right['x'], bottom_right['y']))

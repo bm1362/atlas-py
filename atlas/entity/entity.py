@@ -4,15 +4,16 @@ from uuid import uuid4
 from random import random
 import pyglet 
 from pyglet.gl import *
-from util.vector2 import rotate_vector
+from util.vector2 import rotate_vector, angle_between
 
 class entity(object):
     def __init__(self, **kwargs):
         self.id = uuid4()
-        self.color = kwargs.get('color', (int(random() * 255), int(random() * 255), int(random() * 255), int(random() * 255)))
+        self.color = kwargs.get('color', (int(random() * 255), int(random() * 255), int(random() * 255), 255))
         self.position = kwargs.get('position', dict(x=0, y=0))
         self.z_index = kwargs.get('z_index', 0)
         self.vertices = kwargs.get('vertices', [])
+        self.orbital_angle = kwargs.get('orbital_angle', 0)
 
     def get_abs_vertices(self):
         vertices = []
@@ -60,3 +61,11 @@ class entity(object):
             new_verts.append(rotate_vector(_, angle))
             
         self.vertices = new_verts
+
+    def orbit_around(self, origin, distance, angle):
+        self.orbital_angle += angle
+        x = origin['x'] + math.cos(self.orbital_angle * math.pi/180) * distance;
+        y = origin['y'] + math.sin(self.orbital_angle * math.pi/180) * distance;
+        self.position = dict(x=x,y=y)
+
+
