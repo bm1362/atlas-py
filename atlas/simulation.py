@@ -1,4 +1,4 @@
-from random import random
+from random import random, seed
 import math
 
 import pyglet
@@ -23,6 +23,7 @@ class simulation(object):
 
         # create fps display 
         self.fps_display = pyglet.clock.ClockDisplay()
+        self.clock = 0
 
         # sync clock
         pyglet.clock.schedule_interval(self.tick, 1.0/60.0)   
@@ -33,26 +34,40 @@ class simulation(object):
         world_height = 1500
         self.world = world.world(world_width, world_height)
 
-        # set background
-        # self.background = pyglet.graphics.OrderedGroup(0)
-        # self.background_image = pyglet.image.load('assets/space.png')
-        # self.background_image.x_anchor = world_width / 2
-        # self.background_image.y_anchor = world_height / 2
-        # self.background_image.blit_into(img1,0,0,0)
-
         # create scene- match dimensions of the app window
         self.scene = scene.scene(self.world, offset_x=0, offset_y=0,width=width, height=height)
 
         # create physics engine
         self.engine = engine.engine()
 
+        self.sun = []
+        self.moon = []
+
         # throw some objects in there for now
-        for _ in xrange(0, 50):
-            theta = random() * 2 * math.pi
-            pos = dict(x=random() * world_width, y=random() * world_height)
-            s = circle(position=pos, size=50)
-            s.rotate(theta)
-            self.world.add_entity(s)
+        moon_pos = dict(x=world_width/2, y=world_height/2)
+        moon = circle(position=moon_pos, color=(100, 100, 100, 255), radius=400, num_vertices=50, z_index=100)
+        self.world.add_entity(moon)
+        self.moon.append(moon)
+
+        moon_pos = dict(x=world_width/2, y=world_height/2)
+        moon = circle(position=moon_pos, color=(200, 200, 200, 255), radius=380, num_vertices=50, z_index=100)
+        self.world.add_entity(moon)
+        self.moon.append(moon)
+
+        sun_pos = dict(x=world_width/4, y=world_height/4)
+        sun = circle(position=sun_pos, color=(255, 255, 0, 200), radius=100, num_vertices=50, z_index=3)
+        self.world.add_entity(sun)
+        self.sun.append(sun)
+
+        sun_pos = dict(x=world_width/4, y=world_height/4)
+        sun = circle(position=sun_pos, color=(255, 215, 0, 200), radius=110, num_vertices=50, z_index=2)
+        self.world.add_entity(sun)
+        self.sun.append(sun)
+
+        sun_pos = dict(x=world_width/4, y=world_height/4)
+        sun = circle(position=sun_pos, color=(255, 150, 0, 200), radius=120, num_vertices=50, z_index=1)
+        self.world.add_entity(sun)
+        self.sun.append(sun)
 
     def tick(self, dt):
         # update physics 
@@ -60,6 +75,10 @@ class simulation(object):
 
         # update scene
         self.scene.update()
+
+        # rotate sun
+        for _ in self.sun:
+            _.orbit_around(self.moon[0].position, self.moon[0].radius + 50, (dt * 360) / 60)
 
         # move scene
         if key.LEFT in self.key_pressed:
@@ -73,6 +92,8 @@ class simulation(object):
         if key.Q in self.key_pressed:
             self.scene.rotate(.1)
 
+        self.clock += 1
+
     def on_draw(self):
         # clear window
         self.window.clear()
@@ -81,12 +102,6 @@ class simulation(object):
 
         # draw background
         self.scene.draw_background()
-
-        # background_x = self.scene.top_left['x'] / 1
-        # background_y = self.scene.top_left['y'] / 1
-        # image = self.background_image.get_region(background_x, background_y, 1000, 500)
-        # image.blit(0,0,0)
-        # #self.background_image.blit(background_x,background_y,0)
 
         # # redraw scene
         self.scene.render()
@@ -114,5 +129,5 @@ class simulation(object):
     def on_key_release(self, symbol, modifiers):
         self.key_pressed.remove(symbol)
 
-sim = simulation(1000, 500)
+sim = simulation(1500, 1000)
 pyglet.app.run()
