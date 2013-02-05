@@ -14,6 +14,7 @@ class entity(object):
         self.z_index = kwargs.get('z_index', 0)
         self.vertices = kwargs.get('vertices', [])
         self.orbital_angle = kwargs.get('orbital_angle', 0)
+        self.scale_factor = 1
 
     def get_abs_vertices(self):
         vertices = []
@@ -27,8 +28,8 @@ class entity(object):
 
         vertices = ()
         for _ in self.vertices:
-            vertices += (x - _['x'],)
-            vertices += (y + _['y'],)
+            vertices += (x - _['x'] * self.scale_factor,)
+            vertices += (y + _['y'] * self.scale_factor,)
 
         return vertices
 
@@ -56,16 +57,19 @@ class entity(object):
 
     # rotates the entity counter clockwise by the angle
     def rotate(self, angle):
-        new_verts = []
+        new_vertices = []
         for _ in self.vertices:
-            new_verts.append(rotate_vector(_, angle))
+            new_vertices.append(rotate_vector(_, angle))
             
-        self.vertices = new_verts
+        self.vertices = new_vertices
 
     def orbit_around(self, origin, distance, angle):
         self.orbital_angle += angle
         x = origin['x'] + math.cos(self.orbital_angle * math.pi/180) * distance;
         y = origin['y'] + math.sin(self.orbital_angle * math.pi/180) * distance;
         self.position = dict(x=x,y=y)
+
+    def scale(self, factor):
+        self.scale_factor = factor
 
 
