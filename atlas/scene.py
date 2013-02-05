@@ -61,13 +61,13 @@ class scene(object):
             carray += color
 
         # # needs to be commented and understood..
-        glEnable(GL_BLEND)
-        glEnable(GL_VERTEX_PROGRAM_POINT_SIZE)
-        point_size = GLfloat(10.0)
-        glGetFloatv(GL_POINT_SIZE_MAX_ARB, point_size)
-        glPointSize(point_size)
-        glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, (GLfloat * 3)(0, 0, 5))
-        glPointParameterfARB(GL_POINT_SIZE_MIN_ARB, 5)
+        # glEnable(GL_BLEND)
+        # glEnable(GL_VERTEX_PROGRAM_POINT_SIZE)
+        # point_size = GLfloat(10.0)
+        # glGetFloatv(GL_POINT_SIZE_MAX_ARB, point_size)
+        # glPointSize(point_size)
+        # glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, (GLfloat * 3)(0, 0, 5))
+        # glPointParameterfARB(GL_POINT_SIZE_MIN_ARB, 5)
                 
         varray = (GLfloat * len(varray))(*varray)
         carray = (GLfloat * len(carray))(*carray)
