@@ -4,9 +4,6 @@ class world(object):
 	def __init__(self, width, height):
 		self.width = width
 		self.height = height
-		
-		# list of objects that are within the physics environment
-		self.bodies = []
 
 		# list of objects that are in the world
 		self.entities = []
@@ -31,9 +28,3 @@ class world(object):
 
 	def remove_entity(self, entity):
 		self.entities.remove(entity)
-
-	def add_body(self, body):
-		self.bodies.append(body)
-
-	def remove_body(self, body):
-		self.bodies.remove(body)

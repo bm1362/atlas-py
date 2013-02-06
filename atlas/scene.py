@@ -16,6 +16,7 @@ class scene(object):
 
         assert self.world is not None, "Invalid world."
 
+        ### Need to rewrite this, offset_x etc to position- top_left etc should be relative not abs
         self.offset_x = kwargs.get('offset_x', 0)
         self.offset_y = kwargs.get('offset_y', 0)
         self.width = kwargs.get('width', 300)
@@ -28,12 +29,11 @@ class scene(object):
 
         # generating background
         self.background = []
-        self.seed = 1337
-
+        seed_val = 1337
         max_depth = .2
 
         for i in xrange(0, 500):
-            seed(self.seed + i * 10293)
+            seed(seed_val + i * 10293)
 
             # # determine i-th star's position
             basePosition = (random() * self.world.width, random() * self.world.height);
@@ -60,7 +60,7 @@ class scene(object):
             varray += [wrappedPosition[0], wrappedPosition[1], 0]
             carray += color
 
-        # # needs to be commented and understood..
+        # # # needs to be commented and understood..
         # glEnable(GL_BLEND)
         # glEnable(GL_VERTEX_PROGRAM_POINT_SIZE)
         # point_size = GLfloat(10.0)
@@ -87,6 +87,9 @@ class scene(object):
         self.entities = self.world.get_entities_in(self.top_left, self.top_right, self.bottom_left, self.bottom_right)
 
     def render(self):
+        # draw background
+        self.draw_background()
+
         # get all the entities and draw them
         entities = sorted(self.entities, key = lambda e: e.z_index)
         
@@ -118,8 +121,10 @@ class scene(object):
         self.bottom_left = rotate_vector(self.bottom_left, angle)
         self.bottom_right = rotate_vector(self.bottom_right, angle)
 
-    def add_entity(self, entity):
-        self.entities.append(entity)
-
-    def remove_entity(self, entity):
-        self.entities.remove(entity)
+    def center(self, x, y):
+        self.offset_x = x - self.width/2
+        self.offset_y = y - self.height/2
+        self.top_left = dict(x = self.offset_x, y = self.offset_y)
+        self.top_right = dict(x = self.offset_x + self.width, y = self.offset_y)
+        self.bottom_left = dict(x = self.offset_x, y = self.offset_y + self.height)
+        self.bottom_right = dict(x = self.offset_x + self.width, y = self.offset_y + self.height)
