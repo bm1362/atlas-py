@@ -1,3 +1,7 @@
+"""
+geometry.py: A collection of functions to aid in the movement of our entities.
+"""
+
 def is_in_polygon(vertices, point):
     x_min = vertices[0][0]
     x_max = vertices[0][0]

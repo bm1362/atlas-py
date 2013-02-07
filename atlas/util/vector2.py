@@ -1,3 +1,7 @@
+"""
+vector2.py: Contains a collection of functions that aid in the various movements of the entities in our world.
+"""
+
 import math
 
 # rotates a vector clockwise

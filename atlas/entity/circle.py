@@ -1,9 +1,14 @@
-import pyglet
+"""
+circle.py: A class representation of a circle in our world. Subclass of entity.
+"""
+
 import math
 
+import pyglet
 from pyglet.gl import *
 
 from entity import entity
+
 class circle(entity):
     def __init__(self, **kwargs):
         super(circle, self).__init__(**kwargs)

@@ -1,3 +1,7 @@
+"""
+engine.py: A class representation of the underlying physics engine for our world.
+"""
+
 class engine(object):
 	def __init__(self):
 		self.bodies = []
