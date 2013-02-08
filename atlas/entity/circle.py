@@ -4,6 +4,8 @@ import math
 from pyglet.gl import *
 
 from entity import entity
+from util.vector2 import vector2
+
 class circle(entity):
     def __init__(self, **kwargs):
         super(circle, self).__init__(**kwargs)
@@ -13,4 +15,4 @@ class circle(entity):
             theta = 2.0 * math.pi * (float(i)/self.num_vertices);   # get the current angle 
             x = self.radius * math.cos(theta) 						# calculate the x component 
             y = self.radius * math.sin(theta) 					    # calculate the y component 
-            self.vertices += [dict(x = x, y = y)];
+            self.vertices += [vector2(x = x, y = y)];

@@ -7,7 +7,6 @@ import pyglet
 from pyglet.gl import *
 
 from entity.square import square
-from util.vector2 import rotate_vector
 
 class scene(object):
     def __init__(self, world, **kwargs):
@@ -84,7 +83,7 @@ class scene(object):
 
     def update(self):
         # ask the world for the objects we should render
-        self.entities = self.world.get_entities_in(self.top_left, self.top_right, self.bottom_left, self.bottom_right)
+        self.entities = self.world.get_objects_in(self.top_left, self.top_right, self.bottom_left, self.bottom_right)
 
     def render(self):
         # draw background
@@ -113,13 +112,6 @@ class scene(object):
         self.top_right['y'] += y
         self.bottom_left['y'] += y
         self.bottom_right['y'] += y
-
-    # does not work correctly, interesting though
-    def rotate(self, angle):
-        self.top_left = rotate_vector(self.top_left, angle)
-        self.top_right = rotate_vector(self.top_right, angle)
-        self.bottom_left = rotate_vector(self.bottom_left, angle)
-        self.bottom_right = rotate_vector(self.bottom_right, angle)
 
     def center(self, x, y):
         self.offset_x = x - self.width/2

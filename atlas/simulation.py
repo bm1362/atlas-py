@@ -6,12 +6,13 @@ from pyglet.window import key, mouse
 from pyglet.gl import *
 
 import scene, world
-from phys import engine
+from phys.rigid_body import rigid_body
+from phys.force import force
 from entity.entity import entity
 from entity.square import square
 from entity.circle import circle
 from character import character
-
+from util.vector2 import vector2
 class simulation(object):
     def __init__(self, width, height):
         # create pyglet window
@@ -32,19 +33,24 @@ class simulation(object):
         pyglet.clock.set_fps_limit(60)
 
         # create world
-        world_width = 1000
-        world_height = 1000
+        world_width = 10000
+        world_height = 10000
         self.world = world.world(world_width, world_height)
 
         # create scene- match dimensions of the app window
         self.scene = scene.scene(self.world, width=width, height=height)
 
-        # create physics engine
-        self.engine = engine.engine()
+        sun = circle(radius=100, num_vertices=50, position=vector2(x=100, y=100))
+        self.world.add_entity(sun)
+
+        obj = rigid_body(entity=sun)
+        obj.add_impulse(force(vector=vector2(x=25, y=0)))
+        obj.add_force(force(vector=vector2(x=0,y=1)))
+        self.world.add_body(obj)
 
     def tick(self, dt):
         # update physics 
-        self.engine.update()
+        self.world.update(dt)
 
         # update scene
         self.scene.update()
