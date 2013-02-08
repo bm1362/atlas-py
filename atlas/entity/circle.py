@@ -1,6 +1,10 @@
-import pyglet
+"""
+circle.py: A class representation of a circle in our world. Subclass of entity.
+"""
+
 import math
 
+import pyglet
 from pyglet.gl import *
 
 from entity import entity
@@ -15,4 +19,4 @@ class circle(entity):
             theta = 2.0 * math.pi * (float(i)/self.num_vertices);   # get the current angle 
             x = self.radius * math.cos(theta) 						# calculate the x component 
             y = self.radius * math.sin(theta) 					    # calculate the y component 
-            self.vertices += [vector2(x = x, y = y)];
+            self.vertices += [vector2(x = x, y = y)]

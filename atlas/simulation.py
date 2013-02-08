@@ -1,3 +1,7 @@
+"""
+simulation.py: A class representation of the current simulation. When executed also serves as the driver for the simulation.
+"""
+
 from random import random, seed
 import math
 
@@ -101,5 +105,6 @@ class simulation(object):
     def on_key_release(self, symbol, modifiers):
         self.key_pressed.remove(symbol)
 
-sim = simulation(1000, 1000)
-pyglet.app.run()
+if __name__ == '__main__':
+    sim = simulation(1000, 1000)
+    pyglet.app.run()

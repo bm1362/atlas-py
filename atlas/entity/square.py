@@ -1,5 +1,10 @@
-import pyglet
+"""
+square.py: A class representation of a square in our world. Subclass of entity.
+"""
+
 import math
+
+import pyglet
 
 from entity import entity
 from util.vector2 import vector2

@@ -1,3 +1,7 @@
+"""
+force.py: A class representation of a square in our world. Subclass of entity.
+"""
+
 from util.vector2 import vector2
 class force(object):
 

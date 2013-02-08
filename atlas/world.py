@@ -1,3 +1,7 @@
+"""
+world.py: A class representation of our world, its contained bodies, and its physics
+"""
+
 from util.geometry import is_in_polygon
 
 class world(object):
@@ -41,4 +45,3 @@ class world(object):
 
 	def remove_body(self, body):
 		self.bodies.remove(body)
-

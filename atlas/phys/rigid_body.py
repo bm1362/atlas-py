@@ -1,28 +1,25 @@
+"""
+rigid_body.py: A class representation of an object that obeys physics rules in our world.
+"""
+
 from entity.entity import entity
 from util.vector2 import vector2
 from force import force
+import entity
+
 class rigid_body(object):
 	def __init__(self, **kwargs):
 		self.entity = kwargs.get('entity', None)
-
-		# check to ensure entity is a valid entity..
-		assert self.entity is not None, "Invalid entity."
-
 		self.forces = kwargs.get('forces', [])
-
 		self.impulses = kwargs.get('impulses', [])
-		
-		# velocity is a vector
+		self.mass = kwargs.get('mass', 1)
 		self.velocity = kwargs.get('velocity', vector2(x=0, y=0))
-
-		# acceleration is a vector
 		self.acceleration = kwargs.get('acceleration', vector2(x=0, y=0))
-
-		# momentum is a vector
 		self.momentum = kwargs.get('momentum', vector2(x=0, y=0))
+		self.resistance = .99
 
-		self.resistance = 1
-
+		assert self.mass > 0, "Invalid mass."
+		assert self.entity is not None, "Invalid entity."
 
 	def add_force(self, force):
 		self.forces.append(force)

@@ -1,9 +1,15 @@
+"""
+entity.py: A class representation of an entity in our world. Serves as the superclass for all interactable items.
+"""
+
 import math
 from math import floor
 from uuid import uuid4
 from random import random
+
 import pyglet 
 from pyglet.gl import *
+
 from util.vector2 import vector2
 
 class entity(object):

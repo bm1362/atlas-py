@@ -1,12 +1,13 @@
-import math
-from entity.entity import entity
-
-
 """
 This works but isn't ideal- we should make the character a rigid body object and add forces to him appropriately for movement( like a spaceship etc )
 
 
 """
+
+import math
+
+from entity.entity import entity
+
 class character(entity):
     def __init__(self, **kwargs):
         super(character, self).__init__(**kwargs)

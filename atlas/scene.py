@@ -1,9 +1,11 @@
-import math
+"""
+scene.py: A class representation of the current contents of the screen.
+"""
 
+import math
 from random import random, uniform, seed
 
 import pyglet
-
 from pyglet.gl import *
 
 from entity.square import square
