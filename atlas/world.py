@@ -19,6 +19,7 @@ class world(object):
 		"""
 			Returns a list of objects that are within the bounding box.
 		"""
+		return self.entities + self.bodies
 		# returns any object with a vertice within the dimensions given
 		result = []
 		for _ in self.entities:

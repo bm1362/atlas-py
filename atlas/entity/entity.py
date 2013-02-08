@@ -63,6 +63,8 @@ class entity(object):
         # draw the array
         glDrawArrays(GL_POLYGON, 0, len(vertices) // 2)
 
+        print self.position.x, self.position.y
+
     # rotates the entity counter clockwise by the angle
     def rotate(self, angle):
         self.orientation += angle

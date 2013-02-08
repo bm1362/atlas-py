@@ -44,12 +44,12 @@ class simulation(object):
         # create scene- match dimensions of the app window
         self.scene = scene.scene(self.world, width=width, height=height)
 
-        sun = square(size=100, position=vector2(x=100, y=100))
+        sun = square(size=100, position=vector2(x=750, y=750))
         self.world.add_entity(sun)
 
         obj = rigid_body(entity=sun, mass=100)
-        obj.add_impulse(force(vector=vector2(x=-1000, y=0), 
-                              offset=vector2(x=100, y=-100)))
+        obj.add_impulse(force(vector=vector2(x=1000, y=0), 
+                              offset=vector2(x=0, y=0)))
 
         self.world.add_body(obj)
 

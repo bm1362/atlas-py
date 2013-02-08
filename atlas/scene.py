@@ -92,7 +92,8 @@ class scene(object):
         self.draw_background()
 
         # get all the entities and draw them
-        entities = sorted(self.entities, key = lambda e: e.z_index)
+        #entities = sorted(self.entities, key = lambda e: e.z_index)
+        entities = self.entities
         
         for e in entities:
             e.draw(self.top_left['x'], self.top_left['y'], self.height)
