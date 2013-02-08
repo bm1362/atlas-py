@@ -48,8 +48,14 @@ class simulation(object):
         self.world.add_entity(sun)
 
         obj = rigid_body(entity=sun, mass=100)
-        obj.add_impulse(force(vector=vector2(x=1000, y=0), 
-                              offset=vector2(x=0, y=0)))
+        obj.add_force(force(vector=vector2(x=-10, y=0), 
+                              offset=vector2(x=-100, y=0)))
+        obj.add_force(force(vector=vector2(x=10, y=0), 
+                              offset=vector2(x=-50, y=-50)))
+        obj.add_force(force(vector=vector2(x=10, y=0), 
+                              offset=vector2(x=-100, y=50)))
+        obj.add_force(force(vector=vector2(x=-10, y=0), 
+                              offset=vector2(x=50, y=100)))
 
         self.world.add_body(obj)
 
