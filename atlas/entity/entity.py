@@ -17,6 +17,7 @@ class entity(object):
         self.id = uuid4()
         self.color = kwargs.get('color', (int(random() * 255), int(random() * 255), int(random() * 255), 255))
         self.position = kwargs.get('position', vector2(x = 0, y = 0))
+        self.orientation = kwargs.get('orientation', 0)
         self.z_index = kwargs.get('z_index', 0)
         self.vertices = kwargs.get('vertices', [])
         self.orbital_angle = kwargs.get('orbital_angle', 0)
@@ -35,8 +36,9 @@ class entity(object):
 
         vertices = ()
         for _ in self.vertices:
-            vertices += (x - _.x * self.scale_factor,)
-            vertices += (y + _.y * self.scale_factor,)
+            rot_v = _.rotate(self.orientation)
+            vertices += (x - rot_v.x * self.scale_factor,)
+            vertices += (y + rot_v.y * self.scale_factor,)
 
         return vertices
 
@@ -63,9 +65,7 @@ class entity(object):
 
     # rotates the entity counter clockwise by the angle
     def rotate(self, angle):
-        new_vertices = []
-        for _ in self.vertices:
-           _.rotate_vector(angle)
+        self.orientation += angle
             
     def orbit_around(self, origin, distance, angle):
         self.orbital_angle += angle
