@@ -28,7 +28,7 @@ class character(entity):
         pass
 
     def move_left(self, dx):
-        self.theta += dx
+        self.theta -= dx
 
     def move_right(self, dx):
-        self.theta -= dx
+        self.theta += dx
