@@ -16,7 +16,7 @@ class rigid_body(object):
 		self.velocity = kwargs.get('velocity', vector2(x=0, y=0))
 		self.acceleration = kwargs.get('acceleration', vector2(x=0, y=0))
 		self.momentum = kwargs.get('momentum', vector2(x=0, y=0))
-		self.resistance = .99
+		self.resistance = .5
 
 		assert self.mass > 0, "Invalid mass."
 		assert self.entity is not None, "Invalid entity."
@@ -29,27 +29,41 @@ class rigid_body(object):
 
 	# does not attempt rotational at the moment
 	def update_acceleration(self):
+		da = vector2(x=0, y=0)
+
 		for _ in self.forces:
-			self.acceleration.add_self(_.vector)
+			da.add_self(_.vector)
 
 		# add any impulses
 		for _ in self.impulses:
-			self.acceleration.add_self(_.vector)
+			da.add_self(_.vector)
 
+		da.divide_scalar_self(self.mass)
+		print self.mass
+		print da.x, da.y
+		self.acceleration.add_self(da)
 		self.impulses = []
 
 	def update(self, dt):
+		# update object's position- using eq: Xi+1 = Xi + Ti*Vi + 1/2*(Ti^2)*Ai
+		vt = self.velocity.multiply_scalar(dt)
+		at = self.acceleration.multiply_scalar(dt * dt * .5)
+		self.entity.position.add_self(vt)
+		self.entity.position.add_self(at)
+
 		# update object's acceleration
 		self.update_acceleration()
 
-		# update object's velocity
+		# update object's velocity- using eq: Vi+1 = Vi + Ti * Ai
 		self.velocity.add_self(self.acceleration.multiply_scalar(dt))
 
 		# update velocity based on resistance
 		self.velocity.multiply_scalar(self.resistance)
 
-		# update object's position
-		self.entity.translate_vector(self.velocity)
+
 
 	def add_impulse(self, force):
 		self.impulses.append(force)
+
+	def get_bounding_box(self):
+		pass

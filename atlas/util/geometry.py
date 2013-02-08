@@ -24,7 +24,7 @@ def is_in_polygon(vertices, point):
             y_max = _[1]
 
     # padding for our bounding box
-    e = ((x_max - x_min) / 100) * 3 # 1%
+    e = ((x_max - x_min) / 100) * 3 # 3 %
 
     if point[0] < (x_min-e) or point[0] > (x_max+e) or point[1] < (y_min-e) or point[1] > (y_max+e):
         return False

@@ -6,8 +6,8 @@ import math
 
 class vector2(object):
 	def __init__(self, **kwargs):
-		self.x = kwargs.get('x', 0)
-		self.y = kwargs.get('y', 0)
+		self.x = float(kwargs.get('x', 0))
+		self.y = float(kwargs.get('y', 0))
 
 	# rotates a vector clockwise
 	def rotate(self, angle):
@@ -54,14 +54,26 @@ class vector2(object):
 		return math.sqrt(self.x * self.x + self.y * self.y)
 
 	def multiply_scalar(self, scalar):
+		return vector2(x = self.x * scalar, y = self.y * scalar)
+
+	def multiply_scalar_self(self, scalar):
+
 		self.x *= scalar
 		self.y *= scalar
 		return self
 
 	def divide_scalar(self, scalar):
 		if scalar != 0:
-			self.x /= scalar
-			self.y /= scalar
+			x = float(self.x) / scalar
+			y = float(self.y) / scalar
+			return vector2(x = x, y = y)
+		else:
+			return vector2(x = 0, y = 0)
+
+	def divide_scalar_self(self, scalar):
+		if scalar != 0:
+			self.x = float(self.x) / scalar
+			self.y = float(self.y) / scalar
 		else:
 			self.x = 0
 			self.y = 0
