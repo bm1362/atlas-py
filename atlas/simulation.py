@@ -42,6 +42,8 @@ class simulation(object):
         # create physics engine
         self.engine = engine.engine()
 
+        self.world.add_entity(circle(position=dict(x=200,y=200)))
+
     def tick(self, dt):
         # update physics 
         self.engine.update()
@@ -95,5 +97,5 @@ class simulation(object):
     def on_key_release(self, symbol, modifiers):
         self.key_pressed.remove(symbol)
 
-sim = simulation(1000, 1000)
+sim = simulation(1000, 500)
 pyglet.app.run()
