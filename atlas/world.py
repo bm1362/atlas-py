@@ -24,7 +24,6 @@ class world(object):
             Returns a list of objects that are within the bounding box.
         """
 
-        return self.entities + self.bodies
         # returns any object with a vertice within the dimensions given
         result = []
         for _ in self.entities:
@@ -34,35 +33,36 @@ class world(object):
                     result.append(_)
                     break
 
+        # for _ in self.bodies:
+        #     if _.entity in result:
+        #         result.append(_)
+
         return result
 
+    # naive imp.
     def detect_collisions(self):
         body_pairs = list(itertools.combinations(self.bodies, 2))
         for i,j in body_pairs:
             if self.detect_collision(i, j):
-                print ("collision", i.forces, i.linear_velocity)
-                i.add_force(force(vector=vector2(x=-10000, y=0)))
+                v = i.entity.position.subtract(j.entity.position)
+                i.add_impulse(force(vector=v.multiply_scalar(100)))
+                j.add_impulse(force(vector=v.multiply_scalar(-100)))
 
+    # Not scaling well, need to use a better technique to determine which objects could collide
     def detect_collision(self, body1, body2):
             bb_1 = body1.get_bounding_box()
+            bb_1 = [bb_1['min_x'], bb_1['min_y'], bb_1['max_x'], bb_1['max_y']]
             bb_2 = body2.get_bounding_box()
+            bb_2 = ((bb_2['min_x'].x, bb_2['min_x'].y),
+                    (bb_2['min_y'].x, bb_2['min_y'].y), 
+                    (bb_2['max_x'].x, bb_2['max_x'].y),
+                    (bb_2['max_y'].x, bb_2['max_y'].y))
 
-            left1 = bb_1['min_x'].x
-            left2 = bb_2['min_x'].x
-            right1 = bb_1['max_x'].x
-            right2 = bb_2['max_x'].x
-            bottom1 = bb_1['max_y'].y
-            bottom2 = bb_2['max_y'].y
-            top1 = bb_1['min_y'].y
-            top2 = bb_2['min_y'].y
+            for v in bb_1:
+                if is_in_polygon(bb_2, (v.x, v.y)) == True:
+                    return True
 
-            if bottom1 < top2: return False;
-            if top1 > bottom2: return False;
-
-            if right1 < left2: return False;
-            if left1 > right2: return False;
-
-            return True
+            return False
 
     def update(self, dt):
         for _ in self.bodies:

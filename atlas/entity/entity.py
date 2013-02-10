@@ -26,9 +26,8 @@ class entity(object):
     def get_abs_vertices(self):
         vertices = []
         for _ in self.vertices:
-            # rot_v = _.rotate(self.orientation)
-            v = self.position.subtract(_)
-            v.rotate(self.orientation)
+            rot_v = _.rotate(self.orientation)
+            v = self.position.add(rot_v)
             vertices.append(v)
 
         return vertices

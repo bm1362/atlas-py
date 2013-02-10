@@ -35,7 +35,7 @@ class vector2(object):
         d2 = v2.distance_between(origin)
         d_product = d1 * d2
         dot = dot / d_product
-        dot = min(1,max(dot,-1))
+        dot = min(1, max(dot,-1))
         acos = math.acos(dot)
         return acos * 180 / math.pi
 
@@ -96,6 +96,9 @@ class vector2(object):
 
     def cross(self, v2):
         return self.x * v2.y - self.y * v2.x
+
+    def __repr__(self):
+        return "(%f %f)" % (self.x, self.y)
 
 
 # Finds the angle that passes through any two points relative to the x-axis

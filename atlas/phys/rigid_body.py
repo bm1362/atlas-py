@@ -38,7 +38,6 @@ class rigid_body(object):
     def remove_force(self, force):
         self.forces.remove(force)
 
-    # does not attempt rotational at the moment
     def update_acceleration(self, dt):
         da = vector2(x=0, y=0)
         origin = vector2(x=0, y=0)
@@ -65,11 +64,12 @@ class rigid_body(object):
         # divide the net force by the mass to get the acceleration
         da.divide_scalar_self(self.mass)
         # update acceleration
-        self.acceleration.add_self(da)
+        self.acceleration = da
         # clear impulses
         self.impulses = []
 
     def draw_forces(self, x, y):
+        pyglet.text.Label(str(self.acceleration.length() * self.mass) ,x=x, y=y).draw()
         for force in self.forces:
             pyglet.graphics.draw(2, pyglet.gl.GL_LINES,
                 ('v2f', (x+force.offset.x, y+force.offset.y, x+force.offset.x+force.vector.x , y+force.offset.y+force.vector.y)),
@@ -80,8 +80,8 @@ class rigid_body(object):
         x = self.entity.position.x - offset_x
         y = screen_height - self.entity.position.y + offset_y
 
-        self.draw_forces(x, y)
-        pyglet.text.Label(str(self.acceleration.length() * self.mass) ,x=x, y=y).draw()
+        #self.draw_forces(x, y)
+        #self.draw_bounding_box(x, y, screen_height)
 
     def update(self, dt):
         # update object's position- using eq: Xi+1 = Xi + Ti*Vi + 1/2*(Ti^2)*Ai
@@ -110,23 +110,53 @@ class rigid_body(object):
 
     def get_bounding_box(self):
         vertices = self.entity.get_abs_vertices()
+        new_verts = []
 
         max_x = vertices[0]
-        max_y = vertices[0]
-        min_x = vertices[0]
-        min_y = vertices[0]
+        max_y = vertices[1]
+        min_x = vertices[2]
+        min_y = vertices[3]
         
         for _ in vertices:
             if _.x >= max_x.x:
                 max_x = _
+                
             if _.x < min_x.x:
                 min_x = _
+                
             if _.y > max_y.y:
                 max_y = _
+                
             if _.y < min_y.y:
                 min_y = _
+                    
+        return dict(min_x = min_x.multiply_scalar(1), max_x = max_x.multiply_scalar(1), min_y = min_y.multiply_scalar(1), max_y = max_y.multiply_scalar(1))
 
-        return dict(min_x = min_x, max_x = max_x, min_y = min_y, max_y = max_y)
+    def draw_bounding_box(self, x, y, screen_height):
+        bb = self.get_bounding_box()
+        bb = [bb['min_x'], bb['min_y'], bb['max_x'], bb['max_y']]
+        vertices = ()
+        for _ in bb:
+            vertices += (_.x,)
+            vertices += (screen_height - _.y,)
 
-    def draw_bounding_box(self):
-        pass
+        # get opengl vertices of type GLfloat
+        vertices_gl = (GLfloat * len(vertices))(*vertices)
+
+        # set the color
+        # glColor4ub(*self.color);
+        glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+
+        # turn on blend for alpha channel
+        glEnable(GL_BLEND)
+
+        # tell open GL were passing a vertex array
+        glEnableClientState(GL_VERTEX_ARRAY)
+
+        # create a pointer to vertices_gl
+        glVertexPointer(2, GL_FLOAT, 0, vertices_gl)
+       
+        # draw the array
+        glDrawArrays(GL_POLYGON, 0, len(vertices) // 2)
+
+        glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );

@@ -37,39 +37,31 @@ class simulation(object):
         pyglet.clock.set_fps_limit(60)
 
         # create world
-        world_width = 10000
-        world_height = 10000
+        world_width = 2500
+        world_height = 2500
         self.world = world.world(world_width, world_height)
+
+        # seed(random() * 100000)
 
         # create scene- match dimensions of the app window
         self.scene = scene.scene(self.world, width=width, height=height)
 
-        sun = square(size=100, position=vector2(x=100, y=100))
-        self.world.add_entity(sun)
-        obj = rigid_body(entity=sun, mass=100)
-        obj.add_impulse(force(vector=vector2(x=1000, y=0), 
-                              offset=vector2(x=0, y=0)))
-        # obj.add_impulse(force(vector=vector2(x=-1000, y=0), 
-        #                       offset=vector2(x=100, y=-100)))
-        # obj.add_impulse(force(vector=vector2(x=1000, y=0), 
-        #                       offset=vector2(x=-100, y=100)))
-        # obj.add_impulse(force(vector=vector2(x=-1000, y=0), 
-        #                       offset=vector2(x=100, y=100)))
+        for _ in xrange(0, 10):
+            pos = vector2(x=random() * world_width, y=random() * world_height)
+            size = random() * 50 + 25
 
-        self.world.add_body(obj)
-        # obj.add_force(force(vector=vector2(x=-10, y=0), 
-        #                       offset=vector2(x=-100, y=0)))
-        # obj.add_force(force(vector=vector2(x=10, y=0), 
-        #                       offset=vector2(x=-50, y=-50)))
-        # obj.add_force(force(vector=vector2(x=10, y=0), 
-        #                       offset=vector2(x=-100, y=50)))
-        # obj.add_force(force(vector=vector2(x=-10, y=0), 
-        #                       offset=vector2(x=50, y=100)))
+            if _ % 2 == 0:
+                ent = circle(radius=size, position = pos)
+            else:
+                ent = square(size=size, position=pos)
 
-        sun = square(size=100, position=vector2(x=400, y=200))
-        self.world.add_entity(sun)
-        obj = rigid_body(entity=sun, mass=100)
-        self.world.add_body(obj)
+            bdy = rigid_body(entity=ent)
+            v = vector2(x = random() * 100, y = random() * 100)
+            o = vector2(x = random() * size, y = random() * size)
+            bdy.add_impulse(force(vector=v, offset=o))
+
+            self.world.add_entity(ent)
+            self.world.add_body(bdy)
 
     def tick(self, dt):
         # update physics 
