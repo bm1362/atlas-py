@@ -3,6 +3,9 @@ rigid_body.py: A class representation of an object that obeys physics rules in o
 """
 import math
 
+import pyglet
+from pyglet.gl import *
+
 from entity.entity import entity
 from util.vector2 import vector2
 from force import force
@@ -25,7 +28,6 @@ class rigid_body(object):
         self.angular_momentum = kwargs.get('angular_momentum', vector2(x=0, y=0))
         
         self.resistance = .5
-        self.dirty = False
 
         assert self.mass > 0, "Invalid mass."
         assert self.entity is not None, "Invalid entity."
@@ -67,8 +69,19 @@ class rigid_body(object):
         # clear impulses
         self.impulses = []
 
-    def draw_forces(self):
-        pass
+    def draw_forces(self, x, y):
+        for force in self.forces:
+            pyglet.graphics.draw(2, pyglet.gl.GL_LINES,
+                ('v2f', (x+force.offset.x, y+force.offset.y, x+force.offset.x+force.vector.x , y+force.offset.y+force.vector.y)),
+                ('c4B', (255,)*4*2))
+
+
+    def draw(self, offset_x, offset_y, screen_height):
+        x = self.entity.position.x - offset_x
+        y = screen_height - self.entity.position.y + offset_y
+
+        self.draw_forces(x, y)
+        pyglet.text.Label(str(self.acceleration.length() * self.mass) ,x=x, y=y).draw()
 
     def update(self, dt):
         # update object's position- using eq: Xi+1 = Xi + Ti*Vi + 1/2*(Ti^2)*Ai
@@ -91,8 +104,6 @@ class rigid_body(object):
 
         # update the angular velocity
         self.angular_velocity += self.angular_acceleration * dt
-
-        self.dirty = False
 
     def add_impulse(self, force):
         self.impulses.append(force)
