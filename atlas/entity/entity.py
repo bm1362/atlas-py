@@ -26,7 +26,10 @@ class entity(object):
     def get_abs_vertices(self):
         vertices = []
         for _ in self.vertices:
-            vertices.append(self.position.subtract(_))
+            # rot_v = _.rotate(self.orientation)
+            v = self.position.subtract(_)
+            v.rotate(self.orientation)
+            vertices.append(v)
 
         return vertices
 
@@ -82,5 +85,3 @@ class entity(object):
 
     def scale(self, factor):
         self.scale_factor = factor
-
-

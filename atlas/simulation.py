@@ -46,11 +46,21 @@ class simulation(object):
 
         sun = square(size=100, position=vector2(x=100, y=100))
         self.world.add_entity(sun)
-
         obj = rigid_body(entity=sun, mass=100)
-        obj.add_impulse(force(vector=vector2(x=-1000, y=0), 
-                              offset=vector2(x=100, y=-100)))
+        obj.add_impulse(force(vector=vector2(x=1000, y=0), 
+                              offset=vector2(x=0, y=0)))
+        # obj.add_impulse(force(vector=vector2(x=-1000, y=0), 
+        #                       offset=vector2(x=100, y=-100)))
+        # obj.add_impulse(force(vector=vector2(x=1000, y=0), 
+        #                       offset=vector2(x=-100, y=100)))
+        # obj.add_impulse(force(vector=vector2(x=-1000, y=0), 
+        #                       offset=vector2(x=100, y=100)))
 
+        self.world.add_body(obj)
+
+        sun = square(size=100, position=vector2(x=400, y=200))
+        self.world.add_entity(sun)
+        obj = rigid_body(entity=sun, mass=100)
         self.world.add_body(obj)
 
     def tick(self, dt):
@@ -101,7 +111,6 @@ class simulation(object):
             self.key_pressed.append(key.Q)
         elif symbol == key.E:
             self.key_pressed.append(key.E)
-
 
     def on_key_release(self, symbol, modifiers):
         self.key_pressed.remove(symbol)
