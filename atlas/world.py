@@ -1,14 +1,14 @@
 """
-world.py: A class representation of our world, its contained bodies, and its physics
+World.py: A class representation of our world, its contained bodies, and its physics
 """
 
 import itertools
 
-from phys.force import force
-from util.vector2 import vector2
-from util.geometry import is_in_polygon
+from Phys.Force import Force
+from Util.Vector2 import Vector2
+from Util.Geometry import is_in_polygon
 
-class world(object):
+class World(object):
     def __init__(self, width, height):
         self.width = width
         self.height = height

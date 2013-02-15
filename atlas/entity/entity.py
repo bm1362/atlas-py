@@ -1,5 +1,5 @@
 """
-entity.py: A class representation of an entity in our world. Serves as the superclass for all interactable items.
+Entity.py: A class representation of an entity in our world. Serves as the superclass for all interactable items.
 """
 
 import math
@@ -10,13 +10,13 @@ from random import random
 import pyglet 
 from pyglet.gl import *
 
-from util.vector2 import vector2
+from Util.Vector2 import Vector2
 
-class entity(object):
+class Entity(object):
     def __init__(self, **kwargs):
         self.id = uuid4()
         self.color = kwargs.get('color', (int(random() * 255), int(random() * 255), int(random() * 255), 255))
-        self.position = kwargs.get('position', vector2(x = 0, y = 0))
+        self.position = kwargs.get('position', Vector2(x = 0, y = 0))
         self.orientation = kwargs.get('orientation', 0)
         self.z_index = kwargs.get('z_index', 0)
         self.vertices = kwargs.get('vertices', [])
@@ -80,7 +80,7 @@ class entity(object):
         self.position = self.position.add(vector)
 
     def translate(self, x, y):
-        self.translate_vector(vector2(x = x, y = y))
+        self.translate_vector(Vector2(x = x, y = y))
 
     def scale(self, factor):
         self.scale_factor = factor

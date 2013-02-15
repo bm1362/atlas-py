@@ -1,10 +1,10 @@
 """
-vector2.py: Contains a collection of functions that aid in the various movements of the entities in our world.
+Vector2.py: Contains a collection of functions that aid in the various movements of the entities in our world.
 """
 
 import math
 
-class vector2(object):
+class Vector2(object):
     def __init__(self, **kwargs):
         self.x = float(kwargs.get('x', 0))
         self.y = float(kwargs.get('y', 0))
@@ -16,7 +16,7 @@ class vector2(object):
         cosa = math.cos(angle * math.pi / 180)
         sina = math.sin(angle * math.pi / 180)
 
-        return vector2(x = x * cosa - y * sina, y = x * sina + y * cosa)
+        return Vector2(x = x * cosa - y * sina, y = x * sina + y * cosa)
 
     # expects radians
     def rotate_self(self, angle):
@@ -30,7 +30,7 @@ class vector2(object):
 
     def angle_between(self, v2):
         dot = self.dot_product(v2)
-        origin = vector2(x = 0, y = 0)
+        origin = Vector2(x=0, y=0)
         d1 = self.distance_between(origin)
         d2 = v2.distance_between(origin)
         d_product = d1 * d2
@@ -48,7 +48,7 @@ class vector2(object):
         return math.sqrt(dx * dx + dy * dy)
 
     def add(self, v2):
-        return vector2(x = self.x + v2.x, y = self.y + v2.y)
+        return Vector2(x=self.x + v2.x, y=self.y + v2.y)
 
     def add_self(self, v2):
         self.x += v2.x
@@ -57,13 +57,13 @@ class vector2(object):
         return self
 
     def subtract(self, v2):
-        return vector2(x = self.x - v2.x, y = self.y - v2.y)
+        return Vector2(x=self.x - v2.x, y=self.y - v2.y)
 
     def length(self):
         return math.sqrt(self.x * self.x + self.y * self.y)
 
     def multiply_scalar(self, scalar):
-        return vector2(x = self.x * scalar, y = self.y * scalar)
+        return Vector2(x=self.x * scalar, y=self.y * scalar)
 
     def multiply_scalar_self(self, scalar):
         self.x *= scalar
@@ -74,9 +74,9 @@ class vector2(object):
         if scalar != 0:
             x = float(self.x) / scalar
             y = float(self.y) / scalar
-            return vector2(x = x, y = y)
+            return Vector2(x=x, y=y)
         else:
-            return vector2(x = 0, y = 0)
+            return Vector2(x=0, y=0)
 
     def divide_scalar_self(self, scalar):
         if scalar != 0:
@@ -110,8 +110,8 @@ def get_angle(point1, point2):
     return theta
 
 def test():
-    a = vector2(x = 50, y = 0)
-    b = vector2(x = 0, y = 50)
+    a = Vector2(x=50, y=0)
+    b = Vector2(x=0, y=50)
 
     assert a.dot_product(b) == 0, "vector2.dot_product failed."
     assert a.distance_between(b) == b.distance_between(a), "vector2.distance_between failed."
