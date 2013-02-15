@@ -1,5 +1,5 @@
 """
-geometry.py: A collection of functions to aid in the movement of our entities.
+Geometry.py: A collection of functions to aid in the movement of our entities.
 """
 
 def is_in_polygon(vertices, point):

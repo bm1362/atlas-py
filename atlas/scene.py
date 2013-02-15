@@ -1,5 +1,5 @@
 """
-scene.py: A class representation of the current contents of the screen.
+Scene.py: A class representation of the current contents of the screen.
 """
 
 import math
@@ -8,9 +8,9 @@ from random import random, uniform, seed
 import pyglet
 from pyglet.gl import *
 
-from entity.square import square
+from Entity.Square import Square
 
-class scene(object):
+class Scene(object):
     def __init__(self, world, **kwargs):
         self.entities = []
         self.world = world
@@ -23,10 +23,10 @@ class scene(object):
         self.width = kwargs.get('width', 300)
         self.height = kwargs.get('height', 300)
 
-        self.top_left = dict(x = self.offset_x, y = self.offset_y)
-        self.top_right = dict(x = self.offset_x + self.width, y = self.offset_y)
-        self.bottom_left = dict(x = self.offset_x, y = self.offset_y + self.height)
-        self.bottom_right = dict(x = self.offset_x + self.width, y = self.offset_y + self.height)
+        self.top_left = dict(x=self.offset_x, y=self.offset_y)
+        self.top_right = dict(x=self.offset_x + self.width, y=self.offset_y)
+        self.bottom_left = dict(x=self.offset_x, y=self.offset_y + self.height)
+        self.bottom_right = dict(x=self.offset_x + self.width, y=self.offset_y + self.height)
 
         # generating background
         self.background = []
@@ -119,7 +119,7 @@ class scene(object):
     def center(self, x, y):
         self.offset_x = x - self.width/2
         self.offset_y = y - self.height/2
-        self.top_left = dict(x = self.offset_x, y = self.offset_y)
-        self.top_right = dict(x = self.offset_x + self.width, y = self.offset_y)
-        self.bottom_left = dict(x = self.offset_x, y = self.offset_y + self.height)
-        self.bottom_right = dict(x = self.offset_x + self.width, y = self.offset_y + self.height)
+        self.top_left = dict(x=self.offset_x, y=self.offset_y)
+        self.top_right = dict(x=self.offset_x + self.width, y=self.offset_y)
+        self.bottom_left = dict(x=self.offset_x, y=self.offset_y + self.height)
+        self.bottom_right = dict(x=self.offset_x + self.width, y=self.offset_y + self.height)

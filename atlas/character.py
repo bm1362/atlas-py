@@ -6,9 +6,9 @@ This works but isn't ideal- we should make the character a rigid body object and
 
 import math
 
-from entity.entity import entity
+from Entity.Entity import Entity
 
-class character(entity):
+class Character(Entity):
     def __init__(self, **kwargs):
         super(character, self).__init__(**kwargs)
         self.forces = []
