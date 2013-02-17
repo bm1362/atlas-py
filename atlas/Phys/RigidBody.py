@@ -1,12 +1,11 @@
 """
 RigidBody.py: A class representation of an object that obeys physics rules in our world.
 """
-import math
 
 import pyglet
-from pyglet.gl import *
+from pyglet.gl import glPolygonMode, glDrawArrays, glEnable, GLfloat, GL_FLOAT, GL_FRONT_AND_BACK, GL_POLYGON, GL_FILL
+from pyglet.gl import GL_LINE, GL_BLEND, glEnableClientState, GL_VERTEX_ARRAY, glVertexPointer
 
-from Entity.Entity import Entity
 from Util.Vector2 import Vector2
 from Force import Force
 import Entity
@@ -80,8 +79,8 @@ class RigidBody(object):
         x = self.entity.position.x - offset_x
         y = screen_height - self.entity.position.y + offset_y
 
-        #self.draw_forces(x, y)
-        #self.draw_bounding_box(x, y, screen_height)
+        self.draw_forces(x, y)
+        self.draw_bounding_box(x, y, screen_height)
 
     def update(self, dt):
         # update object's position- using eq: Xi+1 = Xi + Ti*Vi + 1/2*(Ti^2)*Ai

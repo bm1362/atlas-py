@@ -4,8 +4,6 @@ Square.py: A class representation of a square in our world. Subclass of entity.
 
 import math
 
-import pyglet
-
 from Entity import Entity
 from Util.Vector2 import Vector2
 

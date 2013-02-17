@@ -7,7 +7,7 @@ import math
 
 import pyglet
 from pyglet.window import key, mouse
-from pyglet.gl import *
+from pyglet.gl import glClear, GL_COLOR_BUFFER_BIT, glLoadIdentity
 
 import Scene, World
 from Phys.RigidBody import RigidBody

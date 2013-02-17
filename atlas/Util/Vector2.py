@@ -1,5 +1,6 @@
 """
-Vector2.py: Contains a collection of functions that aid in the various movements of the entities in our world.
+Vector2.py: Contains a collection of functions that aid in the 
+various movements of the entities in our world.
 """
 
 import math
@@ -7,70 +8,108 @@ import math
 class Vector2(object):
     def __init__(self, **kwargs):
         self.x = float(kwargs.get('x', 0))
-        self.y = float(kwargs.get('y', 0))
+        self.y = float(kwargs.get('y',   0))
 
-    # rotates a vector clockwise
+    
     def rotate(self, angle):
+        """
+        Returns a new Vector2 that is rotated from the vector clockwise by the angle given, in degrees.
+        """
         x = self.x
         y = self.y
-        cosa = math.cos(angle * math.pi / 180)
-        sina = math.sin(angle * math.pi / 180)
+        angle = math.radians(angle)
+        cosa = math.cos(angle)
+        sina = math.sin(angle )
 
         return Vector2(x = x * cosa - y * sina, y = x * sina + y * cosa)
 
     # expects radians
     def rotate_self(self, angle):
+        """
+        Rotates the vector clockwise by the angle given, in degrees.
+        """
         x = self.x
         y = self.y
-        cosa = math.cos(angle * math.pi / 180)
-        sina = math.sin(angle * math.pi / 180)
+        angle = math.radians(angle)
+        cosa = math.cos(angle)
+        sina = math.sin(angle)
         self.x = x * cosa - y * sina
         self.y = x * sina + y * cosa
         return self
 
     def angle_between(self, v2):
+        """
+        Returns the angle between the vector and another vector given, in degrees.
+        """
         dot = self.dot_product(v2)
         origin = Vector2(x=0, y=0)
         d1 = self.distance_between(origin)
         d2 = v2.distance_between(origin)
         d_product = d1 * d2
         dot = dot / d_product
-        dot = min(1, max(dot,-1))
+        dot = min(1, max(dot, -1))
         acos = math.acos(dot)
-        return acos * 180 / math.pi
+        return math.degrees(acos)
 
     def dot_product(self, v2):
+        """
+        Returns the dot product of the vector with another vector.
+        """
         return self.x * v2.x + self.y * v2.y
 
     def distance_between(self, v2):
+        """
+        Returns the distance between the vector and another vector.
+        """
         dx = self.x - v2.x
         dy = self.y - v2.y
         return math.sqrt(dx * dx + dy * dy)
 
     def add(self, v2):
+        """
+        Returns a new Vector2 that is equal to the addition of the vector with another.
+        """
         return Vector2(x=self.x + v2.x, y=self.y + v2.y)
 
     def add_self(self, v2):
+        """
+        Adds the vector given to the vector.
+        """
         self.x += v2.x
         self.y += v2.y
 
         return self
 
     def subtract(self, v2):
+        """
+        Returns a new Vector2 that is equal to the subtraction of the vector with another.
+        """
         return Vector2(x=self.x - v2.x, y=self.y - v2.y)
 
     def length(self):
+        """
+        Returns the length of the vector, from the origin.
+        """
         return math.sqrt(self.x * self.x + self.y * self.y)
 
     def multiply_scalar(self, scalar):
+        """
+        Returns a new Vector2 that is the result of the product of the scalar given and the vector.
+        """
         return Vector2(x=self.x * scalar, y=self.y * scalar)
 
     def multiply_scalar_self(self, scalar):
+        """
+        Multiplies the vector by the scalar given.
+        """
         self.x *= scalar
         self.y *= scalar
         return self
 
     def divide_scalar(self, scalar):
+        """
+        Returns a new Vector2 that is the result of the division of the vector by the scalar given.
+        """
         if scalar != 0:
             x = float(self.x) / scalar
             y = float(self.y) / scalar
@@ -79,6 +118,9 @@ class Vector2(object):
             return Vector2(x=0, y=0)
 
     def divide_scalar_self(self, scalar):
+        """
+        Divides the vector by the given scalar.
+        """
         if scalar != 0:
             self.x = float(self.x) / scalar
             self.y = float(self.y) / scalar
@@ -89,20 +131,31 @@ class Vector2(object):
         return self
 
     def normalize(self):
+        """
+        Normalizes the vector
+        """
         return self.divide_scalar(self.length())
 
     def equal(self, v2):
+        """
+        Returns true if both the vector and the vector2 given are equal.
+        """
         return self.x == v2.x and self.y == v2.y
 
     def cross(self, v2):
+        """
+        Returns the cross product of the vector with the given vector.
+        """
         return self.x * v2.y - self.y * v2.x
 
     def __repr__(self):
         return "(%f %f)" % (self.x, self.y)
 
 
-# Finds the angle that passes through any two points relative to the x-axis
 def get_angle(point1, point2):
+    """
+    Finds the angle that passes through any two points relative to the x-axis.
+    """
     opp = math.fabs(point1['x'] - point2['x'])
     adj = math.fabs(point1['y'] - point2['y'])
     theta = math.atan2(opp, adj)
@@ -110,22 +163,25 @@ def get_angle(point1, point2):
     return theta
 
 def test():
-    a = Vector2(x=50, y=0)
-    b = Vector2(x=0, y=50)
+    """
+    Unit tests for the vector2 class.
+    """
+    v_a = Vector2(x=50, y=0)
+    v_b = Vector2(x=0, y=50)
 
-    assert a.dot_product(b) == 0, "vector2.dot_product failed."
-    assert a.distance_between(b) == b.distance_between(a), "vector2.distance_between failed."
-    assert a.angle_between(b) == 90, "vector2.angle_between failed."
-    assert a.normalize().length() == 1, "vector2.normalize failed."
-    assert a.multiply_scalar(50).x == 50, "vector2.mulitply_scalar failed"
+    assert v_a.dot_product(v_b) == 0, "vector2.dot_product failed."
+    assert v_a.distance_between(v_b) == v_b.distance_between(v_a), "vector2.distance_between failed."
+    assert v_a.angle_between(v_b) == 90, "vector2.angle_between failed."
+    assert v_a.normalize().length() == 1, "vector2.normalize failed."
+    assert v_a.multiply_scalar(50).x == 50, "vector2.mulitply_scalar failed"
 
-    c = a.add(b)
-    assert c.x == 50 and c.y == 50, "vector2.add failed."
+    v_c = v_a.add(v_b)
+    assert v_c.x == 50 and v_c.y == 50, "vector2.add failed."
     
-    d = a.subtract(b)
-    assert d.x == 50 and d.y == -50, "vector2.substract failed."
+    v_d = v_a.subtract(v_b)
+    assert v_d.x == 50 and v_d.y == -50, "vector2.substract failed."
 
-    e = b.add(a)
-    assert c.equal(e) == True, "vector2.equal failed"
+    v_e = v_b.add(v_a)
+    assert v_c.equal(v_e) == True, "vector2.equal failed"
 
     print "passed all tests"

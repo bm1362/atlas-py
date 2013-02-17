@@ -4,9 +4,6 @@ Circle.py: A class representation of a circle in our world. Subclass of entity.
 
 import math
 
-import pyglet
-from pyglet.gl import *
-
 from Entity import Entity
 from Util.Vector2 import Vector2
 

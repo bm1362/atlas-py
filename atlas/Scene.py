@@ -6,7 +6,8 @@ import math
 from random import random, uniform, seed
 
 import pyglet
-from pyglet.gl import *
+from pyglet.gl import glEnable, glVertexPointer, glDrawArrays, glColorPointer, glEnableClientState, glDisableClientState, GLfloat
+from pyglet.gl import GL_FLOAT, GL_BLEND, GL_POINTS, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_VERTEX_PROGRAM_POINT_SIZE, GL_POINT_SIZE_MAX_ARB
 
 from Entity.Square import Square
 

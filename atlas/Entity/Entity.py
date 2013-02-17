@@ -8,7 +8,7 @@ from uuid import uuid4
 from random import random
 
 import pyglet 
-from pyglet.gl import *
+from pyglet.gl import glColor4ub, glEnable, glVertexPointer, glDrawArrays, GLfloat, GL_BLEND, GL_POLYGON, GL_VERTEX_ARRAY, glEnableClientState, GL_FLOAT
 
 from Util.Vector2 import Vector2
 
