@@ -81,11 +81,10 @@ class RigidBody(object):
         x = self.entity.position.x - offset_x
         y = screen_height - self.entity.position.y + offset_y
 
-        self.draw_forces(x, y)
-        self.draw_bounding_box(x, y, screen_height)
+        # self.draw_forces(x, y)
+        # self.draw_bounding_box(x, y, screen_height)
 
     def update(self, dt):   
-        print (self.entity.id, self.linear_velocity)
         # update object's position- using eq: Xi+1 = Xi + Ti*Vi + 1/2*(Ti^2)*Ai
         vt = self.linear_velocity.multiply_scalar(dt)
         at = self.acceleration.multiply_scalar(dt * dt * .5)
@@ -99,7 +98,7 @@ class RigidBody(object):
         self.update_acceleration(dt)
 
         # update object's velocity- using eq: Vi+1 = Vi + Ti * Ai
-        self.linear_velocity.add_self(self.acceleration)
+        self.linear_velocity.add_self(self.acceleration.multiply_scalar(dt))
 
         # update velocity based on resistance
         self.linear_velocity.multiply_scalar_self(self.resistance)
@@ -120,7 +119,7 @@ class RigidBody(object):
         if isinstance(self.entity, Square) == True:
             return math.sqrt(2 * (self.entity.size / 2)**2) * 1.5
 
-        return 0
+        return 1
 
     def get_bounding_box(self):
         vertices = self.entity.abs_vertices

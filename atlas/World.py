@@ -9,6 +9,7 @@ from Util.Vector2 import Vector2
 from Util.Geometry import is_in_polygon
 from Entity.Circle import Circle
 from Entity.Square import Square
+from Entity.Plane import Plane
 
 class World(object):
     def __init__(self, width, height):
@@ -88,14 +89,17 @@ class World(object):
                 j.linear_velocity = vj
 
     def detect_collision(self, body1, body2):
-        body1_radius = body1.get_bounding_radius()
-        body2_radius = body2.get_bounding_radius()
-        dist = body2.entity.position.distance_between(body1.entity.position)
-
-        if dist > (body1_radius + body2_radius):
-            return False
-        else:
+        if isinstance(body1, Plane) or isinstance(body2, Plane):
             return True
+        else:
+            body1_radius = body1.get_bounding_radius()
+            body2_radius = body2.get_bounding_radius()
+            dist = body2.entity.position.distance_between(body1.entity.position)
+
+            if dist > (body1_radius + body2_radius):
+                return False
+            else:
+                return True
 
         # bb_1 = body1.get_bounding_box()
         # bb_1 = [bb_1['min_x'], bb_1['min_y'], bb_1['max_x'], bb_1['max_y']]

@@ -54,7 +54,7 @@ class Entity(object):
 
     def draw(self, offset_x, offset_y, screen_height):
         vertices = self.get_screen_relative_vertices(offset_x, offset_y, screen_height)
-
+        
         # get opengl vertices of type GLfloat
         vertices_gl = (GLfloat * len(vertices))(*vertices)
 

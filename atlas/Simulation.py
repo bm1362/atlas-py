@@ -16,6 +16,7 @@ from Phys.Force import Force
 from Entity.Entity import Entity
 from Entity.Square import Square
 from Entity.Circle import Circle
+from Entity.Plane import Plane
 from Character import Character
 from Util.Vector2 import Vector2
 
@@ -45,38 +46,25 @@ class Simulation(object):
 
         # create scene- match dimensions of the app window
         self.scene = Scene.Scene(self.world, width=width, height=height)
-        pos = Vector2(x=600, y=100)
-        ent = Square(size=50, position=pos)
-        bdy = RigidBody(entity=ent, mass=1000)
-        v = Vector2(x=-10000, y=0)
-        o = Vector2(x=0, y=0)
-        bdy.add_impulse(Force(vector=v, offset=o))
-        self.world.add_entity(ent)
-        self.world.add_body(bdy)
 
-        pos = Vector2(x=300, y=150)
-        ent2 = Square(size=50, position=pos)
-        bdy2 = RigidBody(entity=ent2, mass=1000)
-        bdy2.add_impulse(Force(vector=Vector2(x=100000, y=0)))
-        self.world.add_entity(ent2)
-        self.world.add_body(bdy2)
+        plane = Plane(position=Vector2(x=world_width/2, y=world_height - 10))
+        self.world.add_entity(plane)
+        self.world.add_body(RigidBody(entity=plane, mass=1000000))
 
-        # for _ in xrange(0, 10):
-        #     pos = Vector2(x=random() * world_width, y=random() * world_height)
-        #     size = random() * 50 
+        self.boxes = []
+        for _ in xrange(0, 10):
+            pos = Vector2(x=random() * world_width, y=random() * world_height)
+            size = random() * 50 
 
-        #     if _ % 2 == 0:
-        #         ent = Circle(radius=size, position = pos)
-        #     else:
-        #         ent = Square(size=size, position=pos)
+            ent = Square(size=size, position=pos)
 
-        #     bdy = RigidBody(entity=ent)
-        #     v = Vector2(x=random() * 100, y=random() * 100)
-        #     o = Vector2(x=random() * size, y=random() * size)
-        #     bdy.add_impulse(Force(vector=v, offset=o))
+            bdy = RigidBody(entity=ent)
+            v = Vector2(x=random() * 100, y=random() * 100)
+            o = Vector2(x=random() * size, y=random() * size)
+            bdy.add_impulse(Force(vector=v, offset=o))
 
-        #     self.world.add_entity(ent)
-        #     self.world.add_body(bdy)
+            self.world.add_entity(ent)
+            self.world.add_body(bdy)
 
     def tick(self, dt):
         # update physics 
