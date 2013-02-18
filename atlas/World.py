@@ -1,12 +1,14 @@
 """
 World.py: A class representation of our world, its contained bodies, and its physics
 """
-
+from random import random
 import itertools
 
 from Phys.Force import Force
 from Util.Vector2 import Vector2
 from Util.Geometry import is_in_polygon
+from Entity.Circle import Circle
+from Entity.Square import Square
 
 class World(object):
     def __init__(self, width, height):
@@ -21,46 +23,91 @@ class World(object):
 
     def get_objects_in(self, top_left, top_right, bottom_left, bottom_right):
         """
-            Returns a list of objects that are within the bounding box.
+            Returns a list of objects that should be drawn.
         """
-
-        # returns any object with a vertex within the dimensions given
-        result = []
-        for _ in self.entities:
-            for v in _.get_abs_vertices():
-                vertices = ((top_left['x'], top_left['y']),(top_right['x'], top_right['y']),(bottom_left['x'], bottom_left['y']),(bottom_right['x'], bottom_right['y']))
-                if is_in_polygon(vertices, (v.x, v.y)):
-                    result.append(_)
-                    break
-
-        for _ in self.bodies:
-            if _.entity in result:
-                result.append(_)
-
-        return result
+        return self.entities + self.bodies
 
     # naive imp.
     def detect_collisions(self):
         body_pairs = list(itertools.combinations(self.bodies, 2))
         for i,j in body_pairs:
             if self.detect_collision(i, j):
-                v = i.entity.position.subtract(j.entity.position)
-                i.add_impulse(force(vector=v.multiply_scalar(100)))
-                j.add_impulse(force(vector=v.multiply_scalar(-100)))
+                dist = i.entity.position.distance_between(j.entity.position)
+                i_radius = i.get_bounding_radius()
+                j_radius = j.get_bounding_radius()
 
-    # Not scaling well, need to use a better technique to determine which objects could collide
+                # move back until not intersecting
+                d_v = i.entity.position.subtract(j.entity.position).normalize().multiply_scalar((i_radius + j_radius) - dist)
+                i.entity.position.add_self(d_v)
+
+                # calculate momentum
+                # i_momentum = i.linear_velocity.multiply_scalar(i.mass)
+                # j_momentum = j.linear_velocity.multiply_scalar(j.mass)
+
+                total_mass = i.mass + j.mass
+                v1i = ((i.mass - j.mass) / total_mass)
+                v1i = i.linear_velocity.multiply_scalar(v1i)
+
+                v2i = (2 * j.mass) / total_mass
+                v2i = j.linear_velocity.multiply_scalar(v2i)
+
+                vi = v1i.add(v2i)
+
+                v1j = ((j.mass - i.mass) / total_mass)
+                v1j = j.linear_velocity.multiply_scalar(v1j)
+
+                v2j = (2 * i.mass) / total_mass
+                v2j = i.linear_velocity.multiply_scalar(v2j)
+
+                vj = v1j.add(v2j)
+
+                # final momentum
+                # i_momentum_f = vi.multiply_scalar(i.mass)
+                # j_momentum_f = vj.multiply_scalar(j.mass)
+
+                # # delta momentum
+                # d_i_momentum = i_momentum_f.subtract(i_momentum)
+                # d_j_momentum = j_momentum_f.subtract(j_momentum)
+
+                # dvi = vi.add(i.linear_velocity)
+                # dvj = vj.add(j.linear_velocity)
+                
+                new_color = tuple((int(random() * 255), int(random() * 255), int(random() * 255), 255))
+                i.entity.color = new_color
+                j.entity.color = new_color
+
+                # apply forces
+                i_offset = i.entity.position.subtract(j.entity.position).normalize().multiply_scalar(i_radius)
+                j_offset = j.entity.position.subtract(i.entity.position).normalize().multiply_scalar(j_radius)
+
+                ### not working 100%, shouldn't need to set linear_velocity
+                i.add_impulse(Force(vector=vi.multiply_scalar(i.mass), offset=i_offset))
+                j.add_impulse(Force(vector=vj.multiply_scalar(j.mass), offset=j_offset))
+
+                i.linear_velocity = vi
+                j.linear_velocity = vj
+
     def detect_collision(self, body1, body2):
-        bb_1 = body1.get_bounding_box()
-        bb_1 = [bb_1['min_x'], bb_1['min_y'], bb_1['max_x'], bb_1['max_y']]
-        bb_2 = body2.get_bounding_box()
-        bb_2 = ((bb_2['min_x'].x, bb_2['min_x'].y),
-                (bb_2['min_y'].x, bb_2['min_y'].y), 
-                (bb_2['max_x'].x, bb_2['max_x'].y),
-                (bb_2['max_y'].x, bb_2['max_y'].y))
+        body1_radius = body1.get_bounding_radius()
+        body2_radius = body2.get_bounding_radius()
+        dist = body2.entity.position.distance_between(body1.entity.position)
 
-        for v in bb_1:
-            if is_in_polygon(bb_2, (v.x, v.y)) == True:
-                return True
+        if dist > (body1_radius + body2_radius):
+            return False
+        else:
+            return True
+
+        # bb_1 = body1.get_bounding_box()
+        # bb_1 = [bb_1['min_x'], bb_1['min_y'], bb_1['max_x'], bb_1['max_y']]
+        # bb_2 = body2.get_bounding_box()
+        # bb_2 = ((bb_2['min_x'].x, bb_2['min_x'].y),
+        #         (bb_2['min_y'].x, bb_2['min_y'].y), 
+        #         (bb_2['max_x'].x, bb_2['max_x'].y),
+        #         (bb_2['max_y'].x, bb_2['max_y'].y))
+
+        # for v in bb_1:
+        #     if is_in_polygon(bb_2, (v.x, v.y)) == True:
+        #         return True
 
         return False
 

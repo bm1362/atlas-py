@@ -17,3 +17,5 @@ class Circle(Entity):
             x = self.radius * math.cos(theta) 						# calculate the x component 
             y = self.radius * math.sin(theta) 					    # calculate the y component 
             self.vertices += [Vector2(x = x, y = y)]
+
+        self.update()

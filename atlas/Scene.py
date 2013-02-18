@@ -31,12 +31,10 @@ class Scene(object):
 
         # generating background
         self.background = []
-        seed_val = 1337
+        seed_val = 133700
         max_depth = .2
 
         for i in xrange(0, 500):
-            seed(seed_val + i * 10293)
-
             # # determine i-th star's position
             basePosition = (random() * self.world.width, random() * self.world.height);
             depth = uniform(.001, max_depth)

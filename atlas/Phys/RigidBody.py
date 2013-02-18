@@ -1,14 +1,16 @@
 """
 RigidBody.py: A class representation of an object that obeys physics rules in our world.
 """
+import math
 
 import pyglet
-from pyglet.gl import glPolygonMode, glDrawArrays, glEnable, GLfloat, GL_FLOAT, GL_FRONT_AND_BACK, GL_POLYGON, GL_FILL
+from pyglet.gl import glPolygonMode, glDrawArrays, glEnable, GLfloat, GL_FLOAT, GL_FRONT_AND_BACK, GL_POLYGON, GL_FILL, glColor4ub
 from pyglet.gl import GL_LINE, GL_BLEND, glEnableClientState, GL_VERTEX_ARRAY, glVertexPointer
 
 from Util.Vector2 import Vector2
 from Force import Force
-import Entity
+from Entity.Square import Square
+from Entity.Circle import Circle
 
 class RigidBody(object):
     def __init__(self, **kwargs):
@@ -26,7 +28,7 @@ class RigidBody(object):
         self.angular_velocity = kwargs.get('angular_velocity', 0)
         self.angular_momentum = kwargs.get('angular_momentum', Vector2(x=0, y=0))
         
-        self.resistance = .5
+        self.resistance = 1
 
         assert self.mass > 0, "Invalid mass."
         assert self.entity is not None, "Invalid entity."
@@ -82,21 +84,25 @@ class RigidBody(object):
         self.draw_forces(x, y)
         self.draw_bounding_box(x, y, screen_height)
 
-    def update(self, dt):
+    def update(self, dt):   
+        print (self.entity.id, self.linear_velocity)
         # update object's position- using eq: Xi+1 = Xi + Ti*Vi + 1/2*(Ti^2)*Ai
         vt = self.linear_velocity.multiply_scalar(dt)
         at = self.acceleration.multiply_scalar(dt * dt * .5)
-        self.entity.position.add_self(vt)
-        self.entity.position.add_self(at)
+        new_pos = self.entity.position.multiply_scalar(1)
+
+        new_pos.add_self(vt)
+        new_pos.add_self(at)
+        self.entity.set_position(new_pos)
 
         # update object's acceleration
         self.update_acceleration(dt)
 
         # update object's velocity- using eq: Vi+1 = Vi + Ti * Ai
-        self.linear_velocity.add_self(self.acceleration.multiply_scalar(dt))
+        self.linear_velocity.add_self(self.acceleration)
 
         # update velocity based on resistance
-        self.linear_velocity.multiply_scalar(self.resistance)
+        self.linear_velocity.multiply_scalar_self(self.resistance)
 
         # update the rotation
         self.entity.orientation += .5 * self.angular_velocity * dt
@@ -107,9 +113,17 @@ class RigidBody(object):
     def add_impulse(self, force):
         self.impulses.append(force)
 
+    def get_bounding_radius(self):
+        if isinstance(self.entity, Circle) == True:
+            return self.entity.radius
+
+        if isinstance(self.entity, Square) == True:
+            return math.sqrt(2 * (self.entity.size / 2)**2) * 1.5
+
+        return 0
+
     def get_bounding_box(self):
-        vertices = self.entity.get_abs_vertices()
-        new_verts = []
+        vertices = self.entity.abs_vertices
 
         max_x = vertices[0]
         max_y = vertices[1]
@@ -143,7 +157,7 @@ class RigidBody(object):
         vertices_gl = (GLfloat * len(vertices))(*vertices)
 
         # set the color
-        # glColor4ub(*self.color);
+        glColor4ub(0, 255, 0, 255);
         glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
         # turn on blend for alpha channel

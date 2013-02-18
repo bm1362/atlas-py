@@ -17,3 +17,5 @@ class Square(Entity):
             Vector2(x = self.size, y = -self.size),
             Vector2(x = -self.size, y = -self.size)
         ]
+
+        self.update()

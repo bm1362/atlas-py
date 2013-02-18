@@ -3,6 +3,7 @@ Simulation.py: A class representation of the current simulation. When executed a
 """
 
 from random import random, seed
+from time import time
 import math
 
 import pyglet
@@ -38,31 +39,44 @@ class Simulation(object):
         pyglet.clock.set_fps_limit(60)
 
         # create world
-        world_width = 2500
-        world_height = 2500
+        world_width = 1000
+        world_height = 500
         self.world = World.World(world_width, world_height)
-
-        # seed(random() * 100000)
 
         # create scene- match dimensions of the app window
         self.scene = Scene.Scene(self.world, width=width, height=height)
+        pos = Vector2(x=600, y=100)
+        ent = Square(size=50, position=pos)
+        bdy = RigidBody(entity=ent, mass=1000)
+        v = Vector2(x=-10000, y=0)
+        o = Vector2(x=0, y=0)
+        bdy.add_impulse(Force(vector=v, offset=o))
+        self.world.add_entity(ent)
+        self.world.add_body(bdy)
 
-        for _ in xrange(0, 10):
-            pos = Vector2(x=random() * world_width, y=random() * world_height)
-            size = random() * 50 + 25
+        pos = Vector2(x=300, y=150)
+        ent2 = Square(size=50, position=pos)
+        bdy2 = RigidBody(entity=ent2, mass=1000)
+        bdy2.add_impulse(Force(vector=Vector2(x=100000, y=0)))
+        self.world.add_entity(ent2)
+        self.world.add_body(bdy2)
 
-            if _ % 2 == 0:
-                ent = Circle(radius=size, position = pos)
-            else:
-                ent = Square(size=size, position=pos)
+        # for _ in xrange(0, 10):
+        #     pos = Vector2(x=random() * world_width, y=random() * world_height)
+        #     size = random() * 50 
 
-            bdy = RigidBody(entity=ent)
-            v = Vector2(x=random() * 100, y=random() * 100)
-            o = Vector2(x=random() * size, y=random() * size)
-            bdy.add_impulse(Force(vector=v, offset=o))
+        #     if _ % 2 == 0:
+        #         ent = Circle(radius=size, position = pos)
+        #     else:
+        #         ent = Square(size=size, position=pos)
 
-            self.world.add_entity(ent)
-            self.world.add_body(bdy)
+        #     bdy = RigidBody(entity=ent)
+        #     v = Vector2(x=random() * 100, y=random() * 100)
+        #     o = Vector2(x=random() * size, y=random() * size)
+        #     bdy.add_impulse(Force(vector=v, offset=o))
+
+        #     self.world.add_entity(ent)
+        #     self.world.add_body(bdy)
 
     def tick(self, dt):
         # update physics 
@@ -88,9 +102,7 @@ class Simulation(object):
     def on_draw(self):
         # clear window
         self.window.clear()
-        glClear(GL_COLOR_BUFFER_BIT)
-        glLoadIdentity()
-
+        
         # redraw scene
         self.scene.render()
 
@@ -117,5 +129,5 @@ class Simulation(object):
         self.key_pressed.remove(symbol)
 
 if __name__ == '__main__':
-    sim = Simulation(1000, 1000)
+    sim = Simulation(1000, 500)
     pyglet.app.run()

@@ -20,8 +20,16 @@ class Entity(object):
         self.orientation = kwargs.get('orientation', 0)
         self.z_index = kwargs.get('z_index', 0)
         self.vertices = kwargs.get('vertices', [])
+        self.abs_vertices = self.get_abs_vertices()
         self.orbital_angle = kwargs.get('orbital_angle', 0)
         self.scale_factor = 1
+
+    def update(self):
+        self.update_abs_vertices()
+        # self.update_relative_vertices()
+
+    def update_abs_vertices(self):
+        self.abs_vertices = self.get_abs_vertices()
 
     def get_abs_vertices(self):
         vertices = []
@@ -68,6 +76,7 @@ class Entity(object):
     # rotates the entity counter clockwise by the angle
     def rotate(self, angle):
         self.orientation += angle
+        self.update()
             
     def orbit_around(self, origin, distance, angle):
         self.orbital_angle += angle
@@ -75,12 +84,20 @@ class Entity(object):
         y = origin['y'] + math.sin(self.orbital_angle * math.pi/180) * distance;
         self.position.x = x
         self.position.y = y
+        self.update()
 
     def translate_vector(self, vector):
         self.position = self.position.add(vector)
+        self.update()
 
     def translate(self, x, y):
         self.translate_vector(Vector2(x = x, y = y))
+        self.update()
 
     def scale(self, factor):
         self.scale_factor = factor
+        self.update()
+
+    def set_position(self, position_vector):
+        self.position = position_vector
+        self.update()
