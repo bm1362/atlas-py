@@ -27,6 +27,8 @@ class RigidBody(object):
 
         self.angular_velocity = kwargs.get('angular_velocity', 0)
         self.angular_momentum = kwargs.get('angular_momentum', Vector2(x=0, y=0))
+
+        self.temp_velocity = Vector2(x=0, y=0)
         
         self.resistance = 1
 
@@ -99,6 +101,8 @@ class RigidBody(object):
 
         # update object's velocity- using eq: Vi+1 = Vi + Ti * Ai
         self.linear_velocity.add_self(self.acceleration.multiply_scalar(dt))
+        self.linear_velocity.add_self(self.temp_velocity)
+        self.temp_velocity = Vector2(x=0, y=0)
 
         # update velocity based on resistance
         self.linear_velocity.multiply_scalar_self(self.resistance)

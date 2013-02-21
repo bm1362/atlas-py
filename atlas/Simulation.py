@@ -10,14 +10,15 @@ import pyglet
 from pyglet.window import key, mouse
 from pyglet.gl import glClear, GL_COLOR_BUFFER_BIT, glLoadIdentity
 
-import Scene, World
+from Scene import Scene
+
+from Phys.World import World
 from Phys.RigidBody import RigidBody
 from Phys.Force import Force
 from Entity.Entity import Entity
 from Entity.Square import Square
 from Entity.Circle import Circle
 from Entity.Plane import Plane
-from Character import Character
 from Util.Vector2 import Vector2
 
 class Simulation(object):
@@ -41,49 +42,111 @@ class Simulation(object):
 
         # create world
         world_width = 1000
-        world_height = 500
-        self.world = World.World(world_width, world_height)
+        world_height = 1000
+        self.world = World(world_width, world_height)
 
         # create scene- match dimensions of the app window
-        self.scene = Scene.Scene(self.world, width=width, height=height)
+        self.scene = Scene(width=width, height=height, background_width=world_width, background_height=world_height)
 
-        plane = Plane(position=Vector2(x=world_width/2, y=world_height - 10))
-        self.world.add_entity(plane)
-        self.world.add_body(RigidBody(entity=plane, mass=1000000))
+        # obj1 = Circle(radius=10, position=Vector2(x=world_width/2, y=world_height/2))
+        # bdy1 = RigidBody(mass=1000000000, entity=obj1)
+        # self.scene.entities.append(obj1)
+        # self.world.add_body(bdy1)
+        
+        # obj2 = Circle(radius=10, position=Vector2(x=world_width/2, y=world_height/2 - 100))
+        # bdy2 = RigidBody(mass=10000000000000, entity=obj2)
+        # bdy2.add_impulse(Force(vector=Vector2(y=0, x=1000000000000000)))
+        # self.scene.entities.append(obj2)
+        # self.world.add_body(bdy2)
 
-        self.boxes = []
-        for _ in xrange(0, 10):
-            pos = Vector2(x=random() * world_width, y=random() * world_height)
-            size = random() * 50 
+        # mag = 100000
+        # offset = 100
+        # sq1 = Square(size=50, position=Vector2(x=offset, y=offset))
+        # self.scene.entities.append(sq1)
+        # body1 = RigidBody(entity=sq1, mass=100)
+        # body1.add_impulse(Force(vector=Vector2(x=mag, y=mag)))
+        # self.world.add_body(body1)
 
-            ent = Square(size=size, position=pos)
+        # sq2 = Circle(size=50, position=Vector2(x=world_width-offset, y=offset))
+        # self.scene.entities.append(sq2)
+        # body2 = RigidBody(entity=sq2, mass=100)
+        # body2.add_impulse(Force(vector=Vector2(x=-mag, y=mag)))
+        # self.world.add_body(body2)
 
-            bdy = RigidBody(entity=ent)
-            v = Vector2(x=random() * 100, y=random() * 100)
-            o = Vector2(x=random() * size, y=random() * size)
-            bdy.add_impulse(Force(vector=v, offset=o))
+        # sq3 = Square(size=50, position=Vector2(x=offset, y=world_height/2-offset))
+        # self.scene.entities.append(sq3)
+        # body3 = RigidBody(entity=sq3, mass=100)
+        # body3.add_impulse(Force(vector=Vector2(x=mag, y=-0)))
+        # self.world.add_body(body3)
 
-            self.world.add_entity(ent)
+        # sq4 = Circle(size=50, position=Vector2(x=world_width - offset, y=world_height/2-offset))
+        # self.scene.entities.append(sq4)
+        # body4 = RigidBody(entity=sq4, mass=100)
+        # body4.add_impulse(Force(vector=Vector2(x=-mag, y=0)))
+        # self.world.add_body(body4)
+
+        # # self.boxes = []
+        # for _ in xrange(0, 10):
+        #     pos = Vector2(x=random() * world_width, y=random() * world_height)
+        #     size = random() * 50 + 25
+
+        #     ent = Circle(radius=size, position=pos, num_vertices=10)
+
+        #     bdy = RigidBody(entity=ent, mass=100)
+        #     v = Vector2(x=random() * 100, y=random() * 100)
+        #     o = Vector2(x=random() * size, y=random() * size)
+        #     bdy.add_impulse(Force(vector=v, offset=o))
+
+        #     self.scene.entities.append(ent)
+        #     self.world.add_body(bdy)
+
+        for i in xrange(0, 10):
+            size = 25
+            pos = Vector2(x=(i * size * 1.5) + world_width/2 - (size * 5), y=world_height/2)
+
+            ent = Circle(radius=size, position=pos, num_vertices=10)
+
+            bdy = RigidBody(entity=ent, mass=100)
+                # v = Vector2(x=random() * 100, y=random() * 100)
+                # o = Vector2(x=random() * size, y=random() * size)
+                # bdy.add_impulse(Force(vector=v, offset=o))
+
+            self.scene.entities.append(ent)
             self.world.add_body(bdy)
+
+        for i in xrange(0, 10):
+            size = 50
+            pos = Vector2(x=(i * size) + world_width/2 - (size * 5), y=world_height/2 + size)
+
+            ent = Square(size=size, position=pos, num_vertices=10)
+
+            bdy = RigidBody(entity=ent, mass=100)
+            # v = Vector2(x=random() * 100, y=random() * 100)
+            # o = Vector2(x=random() * size, y=random() * size)
+            # bdy.add_impulse(Force(vector=v, offset=o))
+
+            self.scene.entities.append(ent)
+            self.world.add_body(bdy)
+
+        sq4 = Square(size=100, position=Vector2(x=world_width/2, y=100))
+        self.scene.entities.append(sq4)
+        body4 = RigidBody(entity=sq4, mass=100)
+        body4.add_impulse(Force(vector=Vector2(x=0, y=100000)))
+        self.world.add_body(body4)        
 
     def tick(self, dt):
         # update physics 
         self.world.update(dt)
 
-        # update scene
-        self.scene.update()
-
         # move scene
         if key.LEFT in self.key_pressed:
-            self.scene.translateX(-10)
+            self.scene.translate_x(-10)
         if key.RIGHT in self.key_pressed:
-            self.scene.translateX(10)
+            self.scene.translate_x(10)
         if key.UP in self.key_pressed:
-            self.scene.translateY(-10)
+            self.scene.translate_y(-10)
         if key.DOWN in self.key_pressed:
-            self.scene.translateY(10)
-        if key.Q in self.key_pressed:
-            self.scene.rotate(.1)
+            self.scene.translate_y(10)
 
         self.clock += 1
 
@@ -117,5 +180,5 @@ class Simulation(object):
         self.key_pressed.remove(symbol)
 
 if __name__ == '__main__':
-    sim = Simulation(1000, 500)
+    sim = Simulation(1000, 1000)
     pyglet.app.run()

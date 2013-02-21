@@ -10,39 +10,38 @@ from pyglet.gl import glEnable, glVertexPointer, glDrawArrays, glColorPointer, g
 from pyglet.gl import GL_FLOAT, GL_BLEND, GL_POINTS, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_VERTEX_PROGRAM_POINT_SIZE, GL_POINT_SIZE_MAX_ARB
 
 from Entity.Square import Square
+from Util.Vector2 import Vector2
 
 class Scene(object):
-    def __init__(self, world, **kwargs):
-        self.entities = []
-        self.world = world
-
-        assert self.world is not None, "Invalid world."
-
-        ### Need to rewrite this, offset_x etc to position- top_left etc should be relative not abs
-        self.offset_x = kwargs.get('offset_x', 0)
-        self.offset_y = kwargs.get('offset_y', 0)
+    def __init__(self, **kwargs):
+        self.position = kwargs.get('position', Vector2(x=0, y=0))
         self.width = kwargs.get('width', 300)
         self.height = kwargs.get('height', 300)
 
-        self.top_left = dict(x=self.offset_x, y=self.offset_y)
-        self.top_right = dict(x=self.offset_x + self.width, y=self.offset_y)
-        self.bottom_left = dict(x=self.offset_x, y=self.offset_y + self.height)
-        self.bottom_right = dict(x=self.offset_x + self.width, y=self.offset_y + self.height)
+        self.top_left = dict(x=self.position.x, y=self.position.y)
+        self.top_right = dict(x=self.position.x + self.width, y=self.position.y)
+        self.bottom_left = dict(x=self.position.x, y=self.position.y + self.height)
+        self.bottom_right = dict(x=self.position.x + self.width, y=self.position.y + self.height)
 
-        # generating background
+        # list of entities
+        self.entities = []
+
+        self.background_width = kwargs.get('background_width', self.width)
+        self.background_height = kwargs.get('background_height', self.height)
+
+        # generating background needs to generalized
         self.background = []
         seed_val = 133700
         max_depth = .2
 
         for i in xrange(0, 500):
             # # determine i-th star's position
-            basePosition = (random() * self.world.width, random() * self.world.height);
+            basePosition = (random() * self.background_width, random() * self.background_height);
             depth = uniform(.001, max_depth)
             color = [random(), random(), random(), depth/max_depth]
 
             self.background.append((basePosition, depth, color))
 
-    # find another way, using raw opengl- still showing signs of inefficency but better. need to figure out how to color the dots 
     def draw_background(self):
         varray = []
         carray = []
@@ -56,7 +55,7 @@ class Scene(object):
 
             #parallax scrolling and wrapping
             realPosition = (basePosition[0] + x * depth, basePosition[1] + y * depth)
-            wrappedPosition = ( realPosition[0] % self.world.width, realPosition[1] % self.world.height)
+            wrappedPosition = ( realPosition[0] % self.background_width, realPosition[1] % self.background_height)
             varray += [wrappedPosition[0], wrappedPosition[1], 0]
             carray += color
 
@@ -82,23 +81,17 @@ class Scene(object):
         glDisableClientState(GL_VERTEX_ARRAY);
         glDisableClientState(GL_COLOR_ARRAY);
 
-    def update(self):
-        # ask the world for the objects we should render
-        self.entities = self.world.get_objects_in(self.top_left, self.top_right, self.bottom_left, self.bottom_right)
-
     def render(self):
         # draw background
         self.draw_background()
 
         # get all the entities and draw them
-        #entities = sorted(self.entities, key = lambda e: e.z_index)
-        entities = self.entities
-        
+        entities = sorted(self.entities, key = lambda e: e.z_index)
         for e in entities:
             e.draw(self.top_left['x'], self.top_left['y'], self.height)
 
-    def translateX(self, x):
-        if self.top_left['x'] + x < 0 or self.top_right['x'] + x > self.world.width:
+    def translate_x(self, x):
+        if self.top_left['x'] + x < 0 or self.top_right['x'] + x > self.background_width:
             x = 0
 
         self.top_left['x'] += x
@@ -106,8 +99,8 @@ class Scene(object):
         self.bottom_left['x'] += x
         self.bottom_right['x'] += x
 
-    def translateY(self, y):
-        if self.top_left['y'] + y < 0 or self.bottom_left['y'] + y > self.world.height:
+    def translate_y(self, y):
+        if self.top_left['y'] + y < 0 or self.bottom_left['y'] + y > self.background_height:
             y = 0
 
         self.top_left['y'] += y
@@ -116,9 +109,9 @@ class Scene(object):
         self.bottom_right['y'] += y
 
     def center(self, x, y):
-        self.offset_x = x - self.width/2
-        self.offset_y = y - self.height/2
-        self.top_left = dict(x=self.offset_x, y=self.offset_y)
-        self.top_right = dict(x=self.offset_x + self.width, y=self.offset_y)
-        self.bottom_left = dict(x=self.offset_x, y=self.offset_y + self.height)
-        self.bottom_right = dict(x=self.offset_x + self.width, y=self.offset_y + self.height)
+        self.position.x = x - self.width/2
+        self.position.y = y - self.height/2
+        self.top_left = dict(x=self.position.x, y=self.position.y)
+        self.top_right = dict(x=self.position.x + self.width, y=self.position.y)
+        self.bottom_left = dict(x=self.position.x, y=self.position.y + self.height)
+        self.bottom_right = dict(x=self.position.x + self.width, y=self.position.y + self.height)

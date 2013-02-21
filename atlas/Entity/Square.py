@@ -12,10 +12,10 @@ class Square(Entity):
         super(Square, self).__init__(**kwargs)
         self.size = kwargs.get('size', 5)
         self.vertices = [
-            Vector2(x = -self.size, y = self.size),
-            Vector2(x = self.size, y = self.size),
-            Vector2(x = self.size, y = -self.size),
-            Vector2(x = -self.size, y = -self.size)
+            Vector2(x = -self.size/2, y = self.size/2),
+            Vector2(x = self.size/2, y = self.size/2),
+            Vector2(x = self.size/2, y = -self.size/2),
+            Vector2(x = -self.size/2, y = -self.size/2)
         ]
 
         self.update()
