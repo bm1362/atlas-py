@@ -142,7 +142,7 @@ class World(object):
 
         # add mtv to body_a position- this will ensure that we never have overlapping bodies
         body_a.entity.position.add_self(min_translational_vector)
-        #body_b.entity.position.add_self(min_translational_vector.multiply_scalar(-1))
+        body_b.entity.position.add_self(min_translational_vector.multiply_scalar(-1))
         return True
             
     def update(self, dt):

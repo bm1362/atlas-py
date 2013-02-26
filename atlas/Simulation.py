@@ -107,9 +107,9 @@ class Simulation(object):
             ent = Square(size=size, position=pos, num_vertices=10)
 
             bdy = RigidBody(entity=ent, mass=100)
-                # v = Vector2(x=random() * 100, y=random() * 100)
-                # o = Vector2(x=random() * size, y=random() * size)
-                # bdy.add_impulse(Force(vector=v, offset=o))
+            v = Vector2(x=random() * 100, y=random() * 100)
+            o = Vector2(x=random() * size, y=random() * size)
+            bdy.add_impulse(Force(vector=v, offset=o))
 
             self.scene.entities.append(ent)
             self.world.add_body(bdy)
@@ -144,8 +144,8 @@ class Simulation(object):
 
         sq4 = Circle(radius=25, position=Vector2(x=world_width/2 + 10, y=100))
         self.scene.entities.append(sq4)
-        body4 = RigidBody(entity=sq4, mass=100000)
-        body4.add_impulse(Force(vector=Vector2(x=0, y=100000000)))
+        body4 = RigidBody(entity=sq4, mass=10)
+        body4.add_impulse(Force(vector=Vector2(x=0, y=100000)))
         self.world.add_body(body4)        
 
     def tick(self, dt):
