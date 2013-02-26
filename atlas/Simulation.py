@@ -28,12 +28,12 @@ class Simulation(object):
         background_sound.play()
 
         # create pyglet window
-        self.window = pyglet.window.Window()
+        self.window = pyglet.window.Window(resizable=True)
         self.window.on_draw = self.on_draw
         self.window.on_key_press = self.on_key_press
         self.window.on_key_release = self.on_key_release
         self.window.width = width
-        self.window.height = height/2
+        self.window.height = height
         self.key_pressed = []
 
         # create fps display 
