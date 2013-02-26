@@ -20,12 +20,11 @@ from Entity.Square import Square
 from Entity.Circle import Circle
 from Entity.Plane import Plane
 from Util.Vector2 import Vector2
+from Sound.Music import Music
 
 class Simulation(object):
     def __init__(self, width, height):
 
-        background_sound = pyglet.resource.media('assets/mrrogers.wav')
-        background_sound.play()
 
         # create pyglet window
         self.window = pyglet.window.Window(resizable=True)
@@ -56,6 +55,10 @@ class Simulation(object):
         bdy1 = RigidBody(mass=1000000000, entity=obj1)
         self.scene.entities.append(obj1)
         self.world.add_body(bdy1)
+
+        # initialize background music
+        self.music = Music()
+        self.music.play_bg()
         
         # obj2 = Circle(radius=10, position=Vector2(x=world_width/2, y=world_height/2 - 100))
         # bdy2 = RigidBody(mass=10000000000000, entity=obj2)
