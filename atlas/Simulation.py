@@ -45,8 +45,8 @@ class Simulation(object):
         pyglet.clock.set_fps_limit(60)
 
         # create world
-        world_width = 2000
-        world_height = 2000
+        world_width = 1000
+        world_height = 1000
         self.world = World(world_width, world_height)
 
         # create scene- match dimensions of the app window
@@ -184,5 +184,5 @@ class Simulation(object):
         self.key_pressed.remove(symbol)
 
 if __name__ == '__main__':
-    sim = Simulation(1000, 700)
+    sim = Simulation(1000, 500)
     pyglet.app.run()
