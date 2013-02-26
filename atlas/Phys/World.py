@@ -34,7 +34,7 @@ class World(object):
             a_radius = body_a.get_bounding_radius() + 5
             b_radius = body_b.get_bounding_radius() + 5
 
-            restitution = .5
+            restitution = .75
 
             ma = body_a.mass
             mb = body_b.mass
