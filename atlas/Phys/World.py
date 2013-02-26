@@ -34,37 +34,23 @@ class World(object):
             a_radius = body_a.get_bounding_radius() + 5
             b_radius = body_b.get_bounding_radius() + 5
 
-            # calculate momentum
-            # i_momentum = va.linear_velocity.multiply_scalar(va.mass)
-            # j_momentum = j.linear_velocity.multiply_scalar(j.mass)
+            restitution = .5
 
-            total_mass = body_a.mass + body_b.mass
-            v1a = ((body_a.mass - body_b.mass) / total_mass)
-            v1a = body_a.linear_velocity.multiply_scalar(v1a)
+            ma = body_a.mass
+            mb = body_b.mass
 
-            v2a = (2 * body_b.mass) / total_mass
-            v2a = body_b.linear_velocity.multiply_scalar(v2a)
+            va = body_a.linear_velocity
+            vb = body_b.linear_velocity
 
-            va = v1a.add(v2a)
+            ma_va = va.multiply_scalar(ma)
+            mb_vb = vb.multiply_scalar(mb)
 
-            v1b = ((body_b.mass - body_a.mass) / total_mass)
-            v1b = body_b.linear_velocity.multiply_scalar(v1b)
+            ma_va_ma_vb = ma_va.add(mb_vb)
 
-            v2b = (2 * body_a.mass) / total_mass
-            v2b = body_a.linear_velocity.multiply_scalar(v2b)
+            total_mass = ma + mb
 
-            vb = v1b.add(v2b)
-
-            # final momentum
-            # i_momentum_f = vva.multiply_scalar(va.mass)
-            # j_momentum_f = vj.multiply_scalar(j.mass)
-
-            # # delta momentum
-            # d_i_momentum = i_momentum_f.subtract(i_momentum)
-            # d_j_momentum = j_momentum_f.subtract(j_momentum)
-
-            # dvi = vva.add(va.linear_velocity)
-            # dvj = vj.add(j.linear_velocity)
+            vaf = vb.subtract(va).multiply_scalar_self(restitution * mb).add_self(ma_va_ma_vb).divide_scalar_self(total_mass)
+            vbf = va.subtract(vb).multiply_scalar_self(restitution * ma).add_self(ma_va_ma_vb).divide_scalar_self(total_mass)
             
             new_color = tuple((int(random() * 255), int(random() * 255), int(random() * 255), 255))
             body_a.entity.color = new_color
@@ -75,11 +61,12 @@ class World(object):
             b_offset = body_b.entity.position.subtract(body_a.entity.position).normalize().multiply_scalar(b_radius)
 
             ### not working 100%, shouldn't need to set linear_velocity
-            body_a.add_impulse(Force(vector=va.multiply_scalar(body_a.mass), offset=a_offset))
-            body_b.add_impulse(Force(vector=vb.multiply_scalar(body_b.mass), offset=b_offset))
+            body_a.add_impulse(Force(vector=vaf.multiply_scalar(body_a.mass), offset=a_offset))
+            body_b.add_impulse(Force(vector=vbf.multiply_scalar(body_b.mass), offset=b_offset))
 
-            body_a.linear_velocity = va
-            body_b.linear_velocity = vb
+            body_a.linear_velocity = (vaf)
+            body_b.linear_velocity = (vbf)
+
 
     def detect_collision_bounding_radius(self, body1, body2):
         if isinstance(body1, Plane) or isinstance(body2, Plane):
@@ -149,12 +136,13 @@ class World(object):
         # determine if the mtv is in the direction of object b, if it is we need to reverse direction
         d_pos = body_a.entity.position.subtract(body_b.entity.position)
         
+        # ensure the mtv is in the opposite direction of the collision
         if min_translational_vector.dot_product(d_pos) < 0:
             min_translational_vector.multiply_scalar_self(-1)
 
         # add mtv to body_a position- this will ensure that we never have overlapping bodies
         body_a.entity.position.add_self(min_translational_vector)
-
+        #body_b.entity.position.add_self(min_translational_vector.multiply_scalar(-1))
         return True
             
     def update(self, dt):
@@ -179,14 +167,10 @@ class World(object):
         G = 6.37 * 10**-11
         dist = body_a.entity.position.distance_between(body_b.entity.position)
 
-        g_a = G * (body_a.mass / dist**2)
-        g_b = G * (body_b.mass / dist**2)
+        grav_force = G * (body_a.mass * body_b.mass) / dist**2
 
-        fa_grav = body_a.mass * g_a
-        force_a = body_b.entity.position.subtract(body_a.entity.position).multiply_scalar(fa_grav)
-
-        fb_grav = body_b.mass * g_b
-        force_b = body_a.entity.position.subtract(body_b.entity.position).multiply_scalar(fb_grav)
+        force_a = body_b.entity.position.subtract(body_a.entity.position).multiply_scalar(grav_force)
+        force_b = body_a.entity.position.subtract(body_b.entity.position).multiply_scalar(grav_force)
 
         body_a.add_impulse(Force(vector=force_a))
         body_b.add_impulse(Force(vector=force_b))

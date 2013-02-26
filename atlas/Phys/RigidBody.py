@@ -58,7 +58,7 @@ class RigidBody(object):
                 torque = r.cross(_.vector)                              # calculate torque
 
                 # update the angular acceleration
-                self.angular_acceleration += torque / self.moment_of_inertia
+                self.angular_acceleration -= torque / self.moment_of_inertia
 
                 # use parallel component to add a translational force
                 trans_force = Force(vector=parallel_component)

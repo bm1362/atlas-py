@@ -49,13 +49,13 @@ class Simulation(object):
         self.scene = Scene(width=width, height=height, background_width=world_width, background_height=world_height)
 
         # obj1 = Circle(radius=10, position=Vector2(x=world_width/2, y=world_height/2))
-        # bdy1 = RigidBody(mass=1000000000, entity=obj1)
+        # bdy1 = RigidBody(mass=1000000000000, entity=obj1)
         # self.scene.entities.append(obj1)
         # self.world.add_body(bdy1)
         
         # obj2 = Circle(radius=10, position=Vector2(x=world_width/2, y=world_height/2 - 100))
-        # bdy2 = RigidBody(mass=10000000000000, entity=obj2)
-        # bdy2.add_impulse(Force(vector=Vector2(y=0, x=1000000000000000)))
+        # bdy2 = RigidBody(mass=1000000000000, entity=obj2)
+        # bdy2.add_impulse(Force(vector=Vector2(y=0, x=100000000000000)))
         # self.scene.entities.append(obj2)
         # self.world.add_body(bdy2)
 
@@ -85,7 +85,7 @@ class Simulation(object):
         # body4.add_impulse(Force(vector=Vector2(x=-mag, y=0)))
         # self.world.add_body(body4)
 
-        # # self.boxes = []
+        # self.boxes = []
         # for _ in xrange(0, 10):
         #     pos = Vector2(x=random() * world_width, y=random() * world_height)
         #     size = random() * 50 + 25
@@ -100,11 +100,11 @@ class Simulation(object):
         #     self.scene.entities.append(ent)
         #     self.world.add_body(bdy)
 
-        for i in xrange(0, 10):
-            size = 25
-            pos = Vector2(x=(i * size * 1.5) + world_width/2 - (size * 5), y=world_height/2)
+        for i in xrange(0, 5):
+            size = 50
+            pos = Vector2(x=(i * size * 1) + world_width/2 - (size * 3), y=world_height/2)
 
-            ent = Circle(radius=size, position=pos, num_vertices=10)
+            ent = Square(size=size, position=pos, num_vertices=10)
 
             bdy = RigidBody(entity=ent, mass=100)
                 # v = Vector2(x=random() * 100, y=random() * 100)
@@ -114,9 +114,9 @@ class Simulation(object):
             self.scene.entities.append(ent)
             self.world.add_body(bdy)
 
-        for i in xrange(0, 10):
+        for i in xrange(0, 5):
             size = 50
-            pos = Vector2(x=(i * size) + world_width/2 - (size * 5), y=world_height/2 + size)
+            pos = Vector2(x=(i * size * 1) + world_width/2 - (size * 3), y=world_height/2 + size)
 
             ent = Square(size=size, position=pos, num_vertices=10)
 
@@ -128,10 +128,24 @@ class Simulation(object):
             self.scene.entities.append(ent)
             self.world.add_body(bdy)
 
-        sq4 = Square(size=100, position=Vector2(x=world_width/2, y=100))
+        for i in xrange(0, 5):
+            size = 50
+            pos = Vector2(x=(i * size * 1) + world_width/2 - (size * 3), y=world_height/2 + 2 * size)
+
+            ent = Square(size=size, position=pos, num_vertices=10)
+
+            bdy = RigidBody(entity=ent, mass=100)
+            # v = Vector2(x=random() * 100, y=random() * 100)
+            # o = Vector2(x=random() * size, y=random() * size)
+            # bdy.add_impulse(Force(vector=v, offset=o))
+
+            self.scene.entities.append(ent)
+            self.world.add_body(bdy)
+
+        sq4 = Circle(radius=25, position=Vector2(x=world_width/2 + 10, y=100))
         self.scene.entities.append(sq4)
-        body4 = RigidBody(entity=sq4, mass=100)
-        body4.add_impulse(Force(vector=Vector2(x=0, y=100000)))
+        body4 = RigidBody(entity=sq4, mass=100000)
+        body4.add_impulse(Force(vector=Vector2(x=0, y=100000000)))
         self.world.add_body(body4)        
 
     def tick(self, dt):
