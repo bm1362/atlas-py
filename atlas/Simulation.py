@@ -33,7 +33,7 @@ class Simulation(object):
         self.window.on_key_press = self.on_key_press
         self.window.on_key_release = self.on_key_release
         self.window.width = width
-        self.window.height = height
+        self.window.height = height/2
         self.key_pressed = []
 
         # create fps display 
