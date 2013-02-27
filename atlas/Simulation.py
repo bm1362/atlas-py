@@ -20,6 +20,7 @@ from Entity.Square import Square
 from Entity.Circle import Circle
 from Entity.Plane import Plane
 from Util.Vector2 import Vector2
+from Util.Geometry import is_in_polygon
 
 class Simulation(object):
     def __init__(self, width, height):
@@ -28,9 +29,15 @@ class Simulation(object):
         self.window.on_draw = self.on_draw
         self.window.on_key_press = self.on_key_press
         self.window.on_key_release = self.on_key_release
+        self.window.on_mouse_press = self.on_mouse_press
+        self.window.on_mouse_release = self.on_mouse_release
+        self.window.on_mouse_drag = self.on_mouse_drag
         self.window.width = width
         self.window.height = height
         self.key_pressed = []
+        self.clicked_object = None
+        self.clicked_dx = 0
+        self.clicked_dy = 0
 
         # create fps display 
         self.fps_display = pyglet.clock.ClockDisplay()
@@ -181,6 +188,53 @@ class Simulation(object):
 
             self.scene.entities.append(ent)
             self.world.add_body(bdy)
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        #Clear the stored dx and dy
+        self.clicked_dx = 0
+        self.clicked_dy = 0
+
+        #If there is an item under the pointer, remove it from bodies,
+        #keep track of it by itself, and zero out all forces
+        for body in self.world.bodies:
+            if is_in_polygon(body.entity.get_screen_relative_vertices_vectors(
+                self.scene.top_left['x'], self.scene.top_left['y'], 
+                self.scene.height), Vector2(x=x, y=y)):
+                self.world.remove_body(body)
+                self.clicked_object = body
+                self.clicked_object.zero_forces()
+                return
+
+        #If there was no object under the pointer, create a new object but 
+        #keep it free from physics for now
+        entity = Circle(size=50, position=Vector2(
+            x=x + self.scene.top_left['y'], 
+            y=self.scene.height - y + self.scene.top_left['y']))
+        self.scene.entities.append(entity)
+        self.clicked_object = RigidBody(entity=entity, mass=100)
+
+
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+        #Store the dx and dy since mouse release does not track movements
+        self.clicked_dx = dx
+        self.clicked_dy = dy
+        
+        #If there is an item being clicked on, move it.
+        if self.clicked_object is not None:
+            self.clicked_object.entity.translate_vector(Vector2(x=dx, y=-dy))
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        #If there is an object being clicked on, release it with the velocity
+        #determined from self.dx and self.dy
+        if self.clicked_object is not None:
+            self.world.add_body(self.clicked_object)
+            self.clicked_object.add_impulse(Force(vector=Vector2(
+                x=self.clicked_dx*100000, y=-self.clicked_dy*100000)))
+
+        #Clear the stored dx, dy, as well as the object being clicked on
+        self.clicked_dx = 0
+        self.clicked_dy = 0
+        self.clicked_object = None
 
 if __name__ == '__main__':
     sim = Simulation(1000, 1000)

@@ -8,10 +8,10 @@ class Force(object):
     def __init__(self, **kwargs):
         
         # represents the offset from the center of mass
-        self.offset = kwargs.get("offset", Vector2(x = 0, y = 0))
+        self.offset = kwargs.get("offset", Vector2(x=0 , y=0))
 
         # represents the actual force vector
-        self.vector = kwargs.get("vector", Vector2(x = 0, y = 0))
+        self.vector = kwargs.get("vector", Vector2(x=0, y=0))
 
     def __unicode__(self):
         return "magnitude = %s" % (self.vector.length())

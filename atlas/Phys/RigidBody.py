@@ -35,6 +35,17 @@ class RigidBody(object):
         assert self.mass > 0, "Invalid mass."
         assert self.entity is not None, "Invalid entity."
 
+    def zero_forces(self):
+        self.forces = []
+        self.impulses = []
+        self.acceleration = Vector2(x=0, y=0)
+        self.angular_acceleration = 0
+        self.linear_velocity = Vector2(x=0, y=0)
+        self.linear_momentum = Vector2(x=0, y=0)
+        self.angular_velocity = 0
+        self.angular_momentum = Vector2(x=0, y=0)
+
+
     def add_force(self, force):
         self.forces.append(force)
 
