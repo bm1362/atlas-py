@@ -49,8 +49,8 @@ class Simulation(object):
         pyglet.clock.set_fps_limit(60)
 
         # create world
-        world_width = 1000
-        world_height = 1000
+        world_width = 3000
+        world_height = 3000
         self.world = World(world_width, world_height)
 
         # create scene- match dimensions of the app window
@@ -217,11 +217,10 @@ class Simulation(object):
         #If there was no object under the pointer, create a new object but 
         #keep it free from physics for now
         entity = Circle(size=50, position=Vector2(
-            x=x + self.scene.top_left['y'], 
+            x=x + self.scene.top_left['x'], 
             y=self.scene.height - y + self.scene.top_left['y']))
         self.scene.entities.append(entity)
         self.clicked_object = RigidBody(entity=entity, mass=100)
-
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
         #Store the dx and dy since mouse release does not track movements
@@ -237,13 +236,14 @@ class Simulation(object):
         #determined from self.dx and self.dy
         if self.clicked_object is not None:
             self.world.add_body(self.clicked_object)
-            self.clicked_object.add_impulse(Force(vector=Vector2(
-                x=self.clicked_dx*100000, y=-self.clicked_dy*100000)))
+            self.clicked_object.add_impulse(Force(
+                vector=Vector2(x=self.clicked_dx*100000, y=-self.clicked_dy*100000)))
 
         #Clear the stored dx, dy, as well as the object being clicked on
         self.clicked_dx = 0
         self.clicked_dy = 0
         self.clicked_object = None
+        self.clicked_offset = None
 
 if __name__ == '__main__':
     sim = Simulation(1000, 500)
