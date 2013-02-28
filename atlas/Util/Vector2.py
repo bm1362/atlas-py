@@ -134,7 +134,7 @@ class Vector2(object):
         """
         Normalizes the vector
         """
-        return self.divide_scalar(self.length())
+        return self.divide_scalar_self(self.length())
 
     def equal(self, v2):
         """
@@ -175,6 +175,7 @@ def test():
     assert v_a.normalize().length() == 1, "vector2.normalize failed."
     assert v_a.multiply_scalar(50).x == 50, "vector2.mulitply_scalar failed"
 
+    v_a = Vector2(x=50, y=0)
     v_c = v_a.add(v_b)
     assert v_c.x == 50 and v_c.y == 50, "vector2.add failed."
     

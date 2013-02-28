@@ -21,11 +21,12 @@ from Entity.Circle import Circle
 from Entity.Plane import Plane
 from Util.Vector2 import Vector2
 from Util.Geometry import is_in_polygon
+from Sound.Music import Music
 
 class Simulation(object):
     def __init__(self, width, height):
         # create pyglet window
-        self.window = pyglet.window.Window()
+        self.window = pyglet.window.Window(resizable=True)
         self.window.on_draw = self.on_draw
         self.window.on_key_press = self.on_key_press
         self.window.on_key_release = self.on_key_release
@@ -55,9 +56,13 @@ class Simulation(object):
         # create scene- match dimensions of the app window
         self.scene = Scene(width=width, height=height, background_width=world_width, background_height=world_height)
 
-        self.demo_1(world_width, world_height)
-        self.demo_2(world_width, world_height)
+        #self.demo_1(world_width, world_height)
+        #self.demo_2(world_width, world_height)
         #self.demo_3(world_width, world_height)
+
+        # initialize background music
+        self.music = Music()
+        self.music.play_bg()
 
     def tick(self, dt):
         # update physics 
@@ -72,6 +77,8 @@ class Simulation(object):
             self.scene.translate_y(-10)
         if key.DOWN in self.key_pressed:
             self.scene.translate_y(10)
+        if key.M in self.key_pressed:
+            self.music.stop_bg()
 
         self.clock += 1
 
@@ -100,6 +107,8 @@ class Simulation(object):
             self.key_pressed.append(key.Q)
         elif symbol == key.E:
             self.key_pressed.append(key.E)
+        elif symbol == key.M:
+            self.key_pressed.append(key.M)
 
     def on_key_release(self, symbol, modifiers):
         self.key_pressed.remove(symbol)
@@ -237,5 +246,5 @@ class Simulation(object):
         self.clicked_object = None
 
 if __name__ == '__main__':
-    sim = Simulation(1000, 1000)
+    sim = Simulation(1000, 500)
     pyglet.app.run()
