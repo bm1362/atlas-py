@@ -50,7 +50,15 @@ class Entity(object):
             vertices += (x - rot_v.x * self.scale_factor,)
             vertices += (y + rot_v.y * self.scale_factor,)
 
+
         return vertices
+
+    def get_screen_relative_vertices_vectors(self, offset_x, offset_y, screen_height):
+        vertices = self.get_screen_relative_vertices(offset_x, offset_y, screen_height)
+
+        vectors = [Vector2(x=vertices[i], y=vertices[i+1]) for i in xrange(0, len(vertices), 2)]
+
+        return vectors
 
     def draw(self, offset_x, offset_y, screen_height):
         vertices = self.get_screen_relative_vertices(offset_x, offset_y, screen_height)
