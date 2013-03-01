@@ -1,21 +1,25 @@
 import pyglet 
 
+
 class Music(object):
 	def __init__(self):
 
-		self.bg_music_location = 'assets/mrrogers.wav'
-		self.bg_music = pyglet.resource.media(self.bg_music_location)
+		self.location = 'assets/mrrogers.wav'
+		self.source = pyglet.resource.media(self.location)
+		self.player = pyglet.media.Player()
+		self.player.queue(self.source)
+
+		print self.player.eos_action
+
+		self.player.eos_action = 'loop'
+
+		print self.player.eos_action
 
 
 	def play_bg(self):
-		self.bg_music.play()
-
-	def stop_bg(self):
-		self.bg_music.stop()
+		self.player.play()
+		pass
 
 	def pause_bg(self):
-		self.bg_music.pause()
-
-
-	# def demo_sounds()
-	# 	sounds = 
+		self.player.pause()
+		pass

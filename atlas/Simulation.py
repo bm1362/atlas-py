@@ -80,7 +80,7 @@ class Simulation(object):
         if key.DOWN in self.key_pressed:
             self.scene.translate_y(10)
         if key.M in self.key_pressed:
-            self.music.stop_bg()
+            self.music.pause_bg()
 
         self.clock += 1
 
