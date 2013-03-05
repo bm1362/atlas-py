@@ -8,6 +8,7 @@ class Music(object):
 		self.source = pyglet.resource.media(self.location)
 		self.player = pyglet.media.Player()
 		self.player.queue(self.source)
+		self.playing = True
 
 		print self.player.eos_action
 
@@ -21,5 +22,10 @@ class Music(object):
 		pass
 
 	def pause_bg(self):
-		self.player.pause()
+		if self.playing == True:
+			self.player.pause()
+			self.playing = False
+		else:
+			self.player.play()
+			self.playing = True
 		pass
