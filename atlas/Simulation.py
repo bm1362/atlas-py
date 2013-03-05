@@ -81,6 +81,7 @@ class Simulation(object):
             self.scene.translate_y(10)
         if key.M in self.key_pressed:
             self.music.pause_bg()
+            self.key_pressed.remove(key.M)
 
         self.clock += 1
 
@@ -113,7 +114,8 @@ class Simulation(object):
             self.key_pressed.append(key.M)
 
     def on_key_release(self, symbol, modifiers):
-        self.key_pressed.remove(symbol)
+        if symbol in self.key_pressed:
+            self.key_pressed.remove(symbol)
 
     def demo_1(self, world_width, world_height):
         mag = 100000
