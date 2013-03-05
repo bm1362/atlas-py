@@ -1,4 +1,4 @@
-import pyglet 
+# import pyglet 
 
 
 class Music(object):
@@ -9,19 +9,15 @@ class Music(object):
 		self.source = pyglet.resource.media(self.location)
 		self.player = pyglet.media.Player()
 		self.player.queue(self.source)
-		self.playing = True
-		self.pausing = 0
 
-		self.player.eosaction = 'loop'
+		# self.player.eosaction = 'loop'
 
 
 	def play_bg(self):
 		self.player.play()
-		pass
+		
 
 	def pause_bg(self):
-		self.pausing += 1
-		print 'pausing ', self.pausing
 		if self.player.playing == True:
 			self.player.pause()
 		else:
