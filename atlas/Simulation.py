@@ -26,6 +26,8 @@ from Sound.Music import Music
 class Simulation(object):
     def __init__(self, width, height):
 
+        self.welcomescreen = pyglet.sprite.Sprite(assets/test.jpg)
+
 
         # create pyglet window
         self.window = pyglet.window.Window(resizable=True)
