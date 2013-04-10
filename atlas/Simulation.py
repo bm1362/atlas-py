@@ -57,11 +57,6 @@ class Simulation(object):
         world_height = 3000
         self.world = World(world_width, world_height)
 
-        # self.image = pyglet.image.load('assets/space_4.png')
-        # self.image.anchor_x = 0
-        # self.image.achor_y = 0
-        # self.welcomescreen = pyglet.sprite.Sprite(self.image)
-
 
         # create scene- match dimensions of the app window
         self.scene = Scene(width=width, height=height, background_width=world_width, background_height=world_height)
@@ -100,7 +95,6 @@ class Simulation(object):
         # redraw scene
         self.scene.render()
 
-        # self.welcomescreen.draw()
 
         # draw fps clock
         self.fps_display.draw()
