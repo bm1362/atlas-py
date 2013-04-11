@@ -20,6 +20,8 @@ class VectorClassTestCases(unittest.TestCase):
 
 		self.v100_100 = Vector2(x=100, y=100)
 
+		self.v500000_500000 = Vector2(x=500000, y=500000)
+
 	def test__init__(self):
 		self.assertEquals(self.v1_2.x, 1)
 		self.assertEquals(self.v1_2.y, 2)
@@ -68,8 +70,30 @@ class VectorClassTestCases(unittest.TestCase):
 	def test_length(self):
 		pass
 
-	# def test_multiply_scalar_self(self):
-	# 	self.assertEquals(self.v50_0.multiply_scalar(50).x, 50)
+	def test_multiply_scalar_self(self):
+
+		self.assertEquals(self.v1_2.multiply_scalar(50).x, 50)
+		self.assertEquals(self.v1_2.multiply_scalar(50).y, 100)
+
+		self.assertEquals(self.v5_5.multiply_scalar(.5).x, 2.5, 2)
+		self.assertEquals(self.v5_5.multiply_scalar(.5).y, 2.5, 2)
+
+		self.assertEquals(self.vMAX_MAX.multiply_scalar(0).x, 0)
+		self.assertEquals(self.vMAX_MAX.multiply_scalar(0).y, 0)
+
+		self.assertEquals(self.vMIN_MIN.multiply_scalar(0).x, 0)
+		self.assertEquals(self.vMIN_MIN.multiply_scalar(0).y, 0)
+
+		self.assertEquals(self.v50_0.multiply_scalar(50).x, 2500)
+		self.assertEquals(self.v50_0.multiply_scalar(50).y, 0)
+
+		self.assertEquals(self.v100_0.multiply_scalar(50).x, 5000)
+		self.assertEquals(self.v100_0.multiply_scalar(50).y, 0)
+
+		self.assertAlmostEqual(self.v100_100.multiply_scalar(100).x, 10000)
+
+		self.assertAlmostEqual(self.v500000_500000.multiply_scalar(.5).x, 250000)
+		self.assertAlmostEqual(self.v500000_500000.multiply_scalar(.5).y, 250000)
 
 	def test_divide_scalar(self):
 		pass
@@ -78,7 +102,20 @@ class VectorClassTestCases(unittest.TestCase):
 		pass
 
 	def test_normalize(self):
-		assert self.v50_0.normalize().length() == 1, "vector2.normalize failed."
+		self.assertAlmostEqual(self.v1_2.normalize().length(), 1)
+		self.assertAlmostEqual(self.v5_5.normalize().length(), 1)
+
+		# MAXFLOAT AND MINFLOAT FAIL
+		# self.assertAlmostEqual(self.vMAX_MAX.normalize().length(), 1)
+		# self.assertAlmostEqual(self.vMIN_MIN.normalize().length(), 1)
+
+		self.assertAlmostEqual(self.v50_0.normalize().length(), 1)
+		self.assertAlmostEqual(self.v0_50.normalize().length(), 1)
+
+		self.assertAlmostEqual(self.v100_0.normalize().length(), 1)
+		self.assertAlmostEqual(self.v0_100.normalize().length(), 1)
+
+		self.assertAlmostEqual(self.v100_100.normalize().length(), 1)
 
 	def test_equal(self):
 		pass
@@ -100,7 +137,7 @@ class VectorClassTestCases(unittest.TestCase):
 		test_add_self()
 		test_subtract()
 	 	test_length()
-		# test_multiply_scalar_self()
+		test_multiply_scalar_self()
 		test_divide_scalar()
 		test_divide_scalar_self()
 		test_normalize()
