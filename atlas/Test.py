@@ -4,6 +4,7 @@ import unittest
 
 class VectorClassTestCases(unittest.TestCase):
 
+#	This function runs as part of every test
 	def setUp(self):
 		self.v1 = Vector2(x=1, y=2)
 		self.v2 = Vector2(x=5, y=5)
@@ -22,8 +23,8 @@ class VectorClassTestCases(unittest.TestCase):
 		self.assertAlmostEqual(self.v3.x, 1.7976931348623157e+308)
 		self.assertAlmostEqual(self.v3.y, 1.7976931348623157e+308)
 
-		self.assertAlmostEqual(self.v3.x, -1.7976931348623157e+308)
-		self.assertAlmostEqual(self.v3.y, -1.7976931348623157e+308)
+		self.assertAlmostEqual(self.v4.x, -1.7976931348623157e+308)
+		self.assertAlmostEqual(self.v4.y, -1.7976931348623157e+308)
 
 	def test_rotate(self):
 		self.testVector = self.v2.rotate(180)
