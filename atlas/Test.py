@@ -8,6 +8,7 @@ class VectorClassTestCases(unittest.TestCase):
 		self.v1 = Vector2(x=1, y=2)
 		self.v2 = Vector2(x=5, y=5)
 		self.v3 = Vector2(x=1.7976931348623157e+308, y=1.7976931348623157e+308)
+		self.v4 = Vector2(x=-1.7976931348623157e+308, y=-1.7976931348623157e+308)
 		self.v_a = Vector2(x=50, y=0)
 		self.v_b = Vector2(x=0, y=50)
 
@@ -20,6 +21,9 @@ class VectorClassTestCases(unittest.TestCase):
 
 		self.assertAlmostEqual(self.v3.x, 1.7976931348623157e+308)
 		self.assertAlmostEqual(self.v3.y, 1.7976931348623157e+308)
+
+		self.assertAlmostEqual(self.v3.x, -1.7976931348623157e+308)
+		self.assertAlmostEqual(self.v3.y, -1.7976931348623157e+308)
 
 	def test_rotate(self):
 		self.testVector = self.v2.rotate(180)
