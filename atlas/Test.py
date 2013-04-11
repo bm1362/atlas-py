@@ -6,45 +6,52 @@ class VectorClassTestCases(unittest.TestCase):
 
 #	This function runs as part of every test
 	def setUp(self):
-		self.v1 = Vector2(x=1, y=2)
-		self.v2 = Vector2(x=5, y=5)
-		self.v3 = Vector2(x=1.7976931348623157e+308, y=1.7976931348623157e+308)
-		self.v4 = Vector2(x=-1.7976931348623157e+308, y=-1.7976931348623157e+308)
-		self.v_a = Vector2(x=50, y=0)
-		self.v_b = Vector2(x=0, y=50)
+		self.v1_2 = Vector2(x=1, y=2)
+		self.v5_5 = Vector2(x=5, y=5)
+
+		self.vMAX_MAX = Vector2(x=1.7976931348623157e+308, y=1.7976931348623157e+308)
+		self.vMIN_MIN = Vector2(x=-1.7976931348623157e+308, y=-1.7976931348623157e+308)
+
+		self.v50_0 = Vector2(x=50, y=0)
+		self.v0_50 = Vector2(x=0, y=50)
+
+		self.v100_0 = Vector2(x=100, y=0)
+		self.v0_100 = Vector2(x=0, y=100)
+
+		self.v100_100 = Vector2(x=100, y=100)
 
 	def test__init__(self):
-		self.assertEquals(self.v1.x, 1)
-		self.assertEquals(self.v1.y, 2)
+		self.assertEquals(self.v1_2.x, 1)
+		self.assertEquals(self.v1_2.y, 2)
 
-		self.assertAlmostEqual(self.v2.x, 5)
-		self.assertAlmostEqual(self.v2.y, 5)
+		self.assertAlmostEqual(self.v5_5.x, 5)
+		self.assertAlmostEqual(self.v5_5.y, 5)
 
-		self.assertAlmostEqual(self.v3.x, 1.7976931348623157e+308)
-		self.assertAlmostEqual(self.v3.y, 1.7976931348623157e+308)
+		self.assertAlmostEqual(self.vMAX_MAX.x, 1.7976931348623157e+308)
+		self.assertAlmostEqual(self.vMAX_MAX.y, 1.7976931348623157e+308)
 
-		self.assertAlmostEqual(self.v4.x, -1.7976931348623157e+308)
-		self.assertAlmostEqual(self.v4.y, -1.7976931348623157e+308)
+		self.assertAlmostEqual(self.vMIN_MIN.x, -1.7976931348623157e+308)
+		self.assertAlmostEqual(self.vMIN_MIN.y, -1.7976931348623157e+308)
 
 	def test_rotate(self):
-		self.testVector = self.v2.rotate(180)
+		self.testVector = self.v5_5.rotate(180)
 		self.assertAlmostEqual(self.testVector.x, -5)
 		self.assertAlmostEqual(self.testVector.y, -5)
 
 	def test_rotate_self(self):
-		self.v2.rotate_self(180)
-		self.assertAlmostEqual(self.v2.x, -5)
-		self.assertAlmostEqual(self.v2.y, -5)
+		self.v5_5.rotate_self(180)
+		self.assertAlmostEqual(self.v5_5.x, -5)
+		self.assertAlmostEqual(self.v5_5.y, -5)
 
 	def test_angle_between(self):
-		self.assertAlmostEqual(self.v1.angle_between(self.v2), 18.43, places=2)
-		assert self.v_a.angle_between(self.v_b) == 90, "vector2.angle_between failed."
+		self.assertAlmostEqual(self.v1_2.angle_between(self.v5_5), 18.43, places=2)
+		assert self.v50_0.angle_between(self.v0_50) == 90, "vector2.angle_between failed."
 
 	def test_dot_product(self):
-		 assert self.v_a.dot_product(self.v_b) == 0, "vector2.dot_product failed."
+		 assert self.v50_0.dot_product(self.v0_50) == 0, "vector2.dot_product failed."
 
 	def test_distance_between(self):
-		self.assertEquals(self.v_a.distance_between(self.v_b), self.v_b.distance_between(self.v_a))
+		self.assertEquals(self.v50_0.distance_between(self.v0_50), self.v0_50.distance_between(self.v50_0))
 
 	def test_add(self):
 		pass
@@ -62,7 +69,7 @@ class VectorClassTestCases(unittest.TestCase):
 		pass
 
 	# def test_multiply_scalar_self(self):
-	# 	self.assertEquals(self.v_a.multiply_scalar(50).x, 50)
+	# 	self.assertEquals(self.v50_0.multiply_scalar(50).x, 50)
 
 	def test_divide_scalar(self):
 		pass
@@ -71,7 +78,7 @@ class VectorClassTestCases(unittest.TestCase):
 		pass
 
 	def test_normalize(self):
-		assert self.v_a.normalize().length() == 1, "vector2.normalize failed."
+		assert self.v50_0.normalize().length() == 1, "vector2.normalize failed."
 
 	def test_equal(self):
 		pass
@@ -106,28 +113,28 @@ if __name__ == '__main__':
 
 
 
-# v1 = Vector2(x=1, y=1)
-# v2 = Vector2(x=5, y=5)
+# v1_2 = Vector2(x=1, y=1)
+# v5_5 = Vector2(x=5, y=5)
 
 
 # print 'I am running a test'
 
-# assert v1.x == 1, 'vectors initialization error v1x'
-# assert v1.y == 1, 'vector initialization error v1y'
-# assert v2.x == 5, 'vectors initialization error v2x'
-# assert v2.y == 5, 'vectors initialization error v2y'
+# assert v1_2.x == 1, 'vectors initialization error v1x'
+# assert v1_2.y == 1, 'vector initialization error v1y'
+# assert v5_5.x == 5, 'vectors initialization error v2x'
+# assert v5_5.y == 5, 'vectors initialization error v2y'
 
-# v3 = v2.rotate(180)
-# print v2.x
-# print v2.y
+# vMAX_MAX = v5_5.rotate(180)
+# print v5_5.x
+# print v5_5.y
 
-# print v3.x
-# print v3.y
+# print vMAX_MAX.x
+# print vMAX_MAX.y
 
-# assert v3.x == -5, 'yo dawn'
-# assert v3.y == -5, 'yo dawg'
-# # assertAlmostEqual v3.x, -5.0), 'rotation by 180 degrees'
-# # assertAlmostEqual(v3.y, -5.0), 'rotation by 180 degrees'
+# assert vMAX_MAX.x == -5, 'yo dawn'
+# assert vMAX_MAX.y == -5, 'yo dawg'
+# # assertAlmostEqual vMAX_MAX.x, -5.0), 'rotation by 180 degrees'
+# # assertAlmostEqual(vMAX_MAX.y, -5.0), 'rotation by 180 degrees'
 
 
 
