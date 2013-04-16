@@ -68,7 +68,21 @@ class VectorClassTestCases(unittest.TestCase):
 		pass
 
 	def test_length(self):
-		pass
+		self.assertAlmostEqual(self.v1_2.length(), 2.23607)
+		# assertAlmostEqual(self.v5_5 = Vector2(x=5, y=5)
+
+		# assertAlmostEqual(self.vMAX_MAX = Vector2(x=1.7976931348623157e+308, y=1.7976931348623157e+308)
+		# assertAlmostEqual(self.vMIN_MIN = Vector2(x=-1.7976931348623157e+308, y=-1.7976931348623157e+308)
+
+		# assertAlmostEqual(self.v50_0 = Vector2(x=50, y=0)
+		# assertAlmostEqual(self.v0_50 = Vector2(x=0, y=50)
+
+		# assertAlmostEqual(self.v100_0 = Vector2(x=100, y=0)
+		# assertAlmostEqual(self.v0_100 = Vector2(x=0, y=100)
+
+		# assertAlmostEqual(self.v100_100 = Vector2(x=100, y=100)
+
+		# assertAlmostEqual(self.v500000_500000 = Vector2(x=500000, y=500000)
 
 	def test_multiply_scalar_self(self):
 
