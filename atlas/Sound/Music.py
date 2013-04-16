@@ -15,7 +15,3 @@ class Music(object):
 
 	def pause_bg(self):
 		self.bg_music.pause()
-
-
-	# def demo_sounds()
-	# 	sounds = 

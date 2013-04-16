@@ -45,12 +45,11 @@ class Simulation(object):
         self.clock = 0
 
         # sync clock
-        pyglet.clock.schedule_interval(self.tick, 1.0/60.0)   
-        pyglet.clock.set_fps_limit(60)
+        pyglet.clock.schedule_interval(self.tick, 1.0/10000.0)   
 
         # create world
-        world_width = 3000
-        world_height = 3000
+        world_width = width
+        world_height = height
         self.world = World(world_width, world_height)
 
         # create scene- match dimensions of the app window
@@ -58,11 +57,8 @@ class Simulation(object):
 
         #self.demo_1(world_width, world_height)
         #self.demo_2(world_width, world_height)
-        #self.demo_3(world_width, world_height)
-
-        # initialize background music
-        self.music = Music()
-        self.music.play_bg()
+        #self.demo_4(world_width, world_height)
+        self.gravity_well_demo(world_width, world_height)
 
     def tick(self, dt):
         # update physics 
@@ -79,6 +75,12 @@ class Simulation(object):
             self.scene.translate_y(10)
         if key.M in self.key_pressed:
             self.music.stop_bg()
+        if key.H in self.key_pressed:
+            self.scene.scale(self.scene.scale_factor - .001)
+            print self.scene.scale_factor
+        if key.J in self.key_pressed:
+            self.scene.scale(self.scene.scale_factor + .001)
+            print self.scene.scale_factor
 
         self.clock += 1
 
@@ -95,20 +97,7 @@ class Simulation(object):
         # draw foreground/ui ? in here or scene
 
     def on_key_press(self, symbol, modifiers):
-        if symbol == key.LEFT:
-            self.key_pressed.append(key.LEFT)
-        elif symbol == key.RIGHT:
-            self.key_pressed.append(key.RIGHT)
-        elif symbol == key.UP:
-            self.key_pressed.append(key.UP)
-        elif symbol == key.DOWN:
-            self.key_pressed.append(key.DOWN)
-        elif symbol == key.Q:
-            self.key_pressed.append(key.Q)
-        elif symbol == key.E:
-            self.key_pressed.append(key.E)
-        elif symbol == key.M:
-            self.key_pressed.append(key.M)
+        self.key_pressed.append(symbol)
 
     def on_key_release(self, symbol, modifiers):
         self.key_pressed.remove(symbol)
@@ -180,7 +169,7 @@ class Simulation(object):
         sq4 = Circle(radius=25, position=Vector2(x=world_width/2 + 10, y=100))
         self.scene.entities.append(sq4)
         body4 = RigidBody(entity=sq4, mass=10)
-        body4.add_impulse(Force(vector=Vector2(x=0, y=100000)))
+        body4.add_impulse(Force(vector=Vector2(x=0, y=100)))
         self.world.add_body(body4)
 
     def demo_3(self, world_width, world_height):
@@ -193,10 +182,68 @@ class Simulation(object):
             bdy = RigidBody(entity=ent, mass=100)
             v = Vector2(x=random() * 100, y=random() * 100)
             o = Vector2(x=random() * size, y=random() * size)
-            bdy.add_impulse(Force(vector=v, offset=o))
+            bdy.add_force(Force(vector=v, offset=o))
 
             self.scene.entities.append(ent)
             self.world.add_body(bdy)
+
+    def demo_4(self, world_width, world_height):
+        pos = Vector2(x=world_width/2, y=world_height/2)
+        size = 100
+
+        ent = Square(size=size, position=pos, num_vertices=10)
+
+        bdy = RigidBody(entity=ent, mass=1)
+
+        # # top left
+        # v = Vector2(x=0, y=100)
+        # o = Vector2(x=-50, y=-50)
+        # bdy.add_impulse(Force(vector=v, offset=o))
+
+        # top right
+        v = Vector2(x=0, y=100)
+        o = Vector2(x=50, y=-50)
+        bdy.add_impulse(Force(vector=v, offset=o))
+
+        # bottom left
+        v = Vector2(x=0, y=-100)
+        o = Vector2(x=-50, y=50)
+        bdy.add_impulse(Force(vector=v, offset=o))
+
+        # # bottom right
+        # v = Vector2(x=0, y=-100)
+        # o = Vector2(x=50, y=50)
+        # bdy.add_impulse(Force(vector=v, offset=o))
+
+        self.scene.entities.append(ent)
+        self.world.add_body(bdy)
+
+    def gravity_well_demo(self, world_width, world_height):
+        earth_pos = Vector2(x=world_width/2, y=world_height/2)
+        earth_mass = 5.972E24 #kg
+        earth_radius = 6371 #km
+        earth_size = earth_radius
+
+        moon_mass = 7.34767309E22 #kg
+        moon_radius = 1737 #km
+        moon_dist = 384400#10 km / unit
+        moon_pos = Vector2(x=world_width/2 + moon_dist, y=world_height/2)
+        moon_size = moon_radius
+
+        earth_ent = Circle(size=earth_size, position=earth_pos, num_vertices=100)
+        earth_body = RigidBody(entity=earth_ent, mass=earth_mass, movable=False)
+
+        moon_ent = Circle(size=moon_size, position=moon_pos, num_vertices=100)
+        moon_body = RigidBody(entity=moon_ent, mass=moon_mass, movable=True)
+
+        self.scene.entities.append(earth_ent)
+        self.world.add_body(earth_body)
+
+        self.scene.entities.append(moon_ent)
+        self.world.add_body(moon_body)
+
+        self.scene.scale_factor = .009
+        self.scene.center(0, 0)
 
     def on_mouse_press(self, x, y, button, modifiers):
         #Clear the stored dx and dy
@@ -216,9 +263,9 @@ class Simulation(object):
 
         #If there was no object under the pointer, create a new object but 
         #keep it free from physics for now
-        entity = Circle(size=50, position=Vector2(
-            x=x + self.scene.top_left['x'], 
-            y=self.scene.height - y + self.scene.top_left['y']))
+        entity = Circle(size=500, position=Vector2(
+            x=(x * (1.0/self.scene.scale_factor)) + self.scene.top_left['x'], 
+            y=self.scene.height - (y * (1/self.scene.scale_factor)) + self.scene.top_left['y'] ))
         self.scene.entities.append(entity)
         self.clicked_object = RigidBody(entity=entity, mass=100)
 
@@ -246,5 +293,5 @@ class Simulation(object):
         self.clicked_offset = None
 
 if __name__ == '__main__':
-    sim = Simulation(1000, 500)
+    sim = Simulation(1000, 1000)
     pyglet.app.run()

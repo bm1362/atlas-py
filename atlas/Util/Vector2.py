@@ -8,9 +8,8 @@ import math
 class Vector2(object):
     def __init__(self, **kwargs):
         self.x = float(kwargs.get('x', 0))
-        self.y = float(kwargs.get('y',   0))
+        self.y = float(kwargs.get('y', 0))
 
-    
     def rotate(self, angle):
         """
         Returns a new Vector2 that is rotated from the vector clockwise by the angle given, in degrees.
@@ -86,6 +85,15 @@ class Vector2(object):
         """
         return Vector2(x=self.x - v2.x, y=self.y - v2.y)
 
+    def subtract_self(self, v2):
+        """
+        Subtraction of the vector with another.
+        """
+        self.x -= v2.x
+        self.y -= v2.y
+
+        return self
+
     def length(self):
         """
         Returns the length of the vector, from the origin.
@@ -148,19 +156,25 @@ class Vector2(object):
         """
         return self.x * v2.y - self.y * v2.x
 
+    def clamp(self, maximum=1000000, minimum=-1000000):
+
+        self.x = max(minimum, self.x)
+        self.x = min(maximum, self.x)
+        self.y = max(minimum, self.y)
+        self.y = min(maximum, self.y)
+
+        return self
+
+    def clean(self, threshhold=.01):
+        self.x = 0 if abs(self.x) < threshhold else self.x
+        self.y = 0 if abs(self.y) < threshhold else self.y
+
     def __repr__(self):
-        return "(%f %f)" % (self.x, self.y)
+        return "(%f, %f)" % (self.x, self.y)
 
+def vector2_from_vector3(v3):
 
-def get_angle(point1, point2):
-    """
-    Finds the angle that passes through any two points relative to the x-axis.
-    """
-    opp = math.fabs(point1['x'] - point2['x'])
-    adj = math.fabs(point1['y'] - point2['y'])
-    theta = math.atan2(opp, adj)
-
-    return theta
+    return Vector2(x=v3.x, y=v3.y)
 
 def test():
     """

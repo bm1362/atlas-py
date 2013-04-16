@@ -11,21 +11,34 @@ import pyglet
 from pyglet.gl import glColor4ub, glEnable, glVertexPointer, glDrawArrays, GLfloat, GL_BLEND, GL_POLYGON, GL_VERTEX_ARRAY, glEnableClientState, GL_FLOAT
 
 from Util.Vector2 import Vector2
+from Util.Matrix3 import Matrix3
 
 class Entity(object):
     def __init__(self, **kwargs):
         self.id = uuid4()
         self.color = kwargs.get('color', (int(random() * 255), int(random() * 255), int(random() * 255), 255))
         self.position = kwargs.get('position', Vector2(x = 0, y = 0))
-        self.orientation = kwargs.get('orientation', 0)
+        self.orientation = kwargs.get('orientation', Matrix3())
+        self.orientation.set(1, 0, 0, 
+                             0, 1, 0, 
+                             0, 0, 1)
+
         self.z_index = kwargs.get('z_index', 0)
         self.vertices = kwargs.get('vertices', [])
         self.abs_vertices = self.get_abs_vertices()
         self.orbital_angle = kwargs.get('orbital_angle', 0)
         self.scale_factor = 1
+        self.scale_matrix = Matrix3()
+        self.scale_matrix.set(1, 0, 0, 
+                              0, 1, 0, 
+                              0, 0, 1)
+
+        self.cached_vertices = None
+        self.dirty = True
 
     def update(self):
         self.update_abs_vertices()
+        self.dirty = True
         # self.update_relative_vertices()
 
     def update_abs_vertices(self):
@@ -34,7 +47,7 @@ class Entity(object):
     def get_abs_vertices(self):
         vertices = []
         for _ in self.vertices:
-            rot_v = _.rotate(self.orientation)
+            rot_v = self.orientation.multiply_vector2(_)
             v = self.position.add(rot_v)
             vertices.append(v)
 
@@ -46,10 +59,13 @@ class Entity(object):
 
         vertices = ()
         for _ in self.vertices:
-            rot_v = _.rotate(self.orientation)
-            vertices += (x - rot_v.x * self.scale_factor,)
-            vertices += (y + rot_v.y * self.scale_factor,)
+            rot_v = self.orientation.multiply_vector2(_)
+            v = Vector2(x = x-rot_v.x, y=y + rot_v.y)
+            scale = self.scale_matrix.multiply_vector2(v)
+            vertices += (scale.x, scale.y,)
 
+        self.dirty = False
+        self.cached_vertices = vertices
 
         return vertices
 
@@ -60,8 +76,11 @@ class Entity(object):
 
         return vectors
 
-    def draw(self, offset_x, offset_y, screen_height):
-        vertices = self.get_screen_relative_vertices(offset_x, offset_y, screen_height)
+    def draw(self, offset_x, offset_y, screen_height, dirty=False):
+        if dirty or self.dirty:
+            vertices = self.get_screen_relative_vertices(offset_x, offset_y, screen_height)
+        else:
+            vertices = self.cached_vertices
         
         # get opengl vertices of type GLfloat
         vertices_gl = (GLfloat * len(vertices))(*vertices)
@@ -103,6 +122,9 @@ class Entity(object):
         self.update()
 
     def scale(self, factor):
+        self.scale_matrix.set(factor, 0, 0, 
+                             0, factor, 0, 
+                             0, 0, 1)
         self.scale_factor = factor
         self.update()
 

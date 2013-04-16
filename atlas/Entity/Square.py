@@ -11,6 +11,7 @@ class Square(Entity):
     def __init__(self, **kwargs):
         super(Square, self).__init__(**kwargs)
         self.size = kwargs.get('size', 5)
+        self.radius = self.size
         self.vertices = [
             Vector2(x = -self.size/2, y = self.size/2),
             Vector2(x = self.size/2, y = self.size/2),
