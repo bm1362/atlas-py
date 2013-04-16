@@ -45,7 +45,7 @@ class Simulation(object):
         self.clock = 0
 
         # sync clock
-        pyglet.clock.schedule_interval(self.tick, 1.0/10000.0)   
+        pyglet.clock.schedule_interval(self.tick, 1.0/60.0)   
 
         # create world
         world_width = width
@@ -76,10 +76,10 @@ class Simulation(object):
         if key.M in self.key_pressed:
             self.music.stop_bg()
         if key.H in self.key_pressed:
-            self.scene.scale(self.scene.scale_factor - .001)
+            self.scene.scale(self.scene.scale_factor - .000001)
             print self.scene.scale_factor
         if key.J in self.key_pressed:
-            self.scene.scale(self.scene.scale_factor + .001)
+            self.scene.scale(self.scene.scale_factor + .000001)
             print self.scene.scale_factor
 
         self.clock += 1
@@ -221,12 +221,12 @@ class Simulation(object):
     def gravity_well_demo(self, world_width, world_height):
         earth_pos = Vector2(x=world_width/2, y=world_height/2)
         earth_mass = 5.972E24 #kg
-        earth_radius = 6371 #km
+        earth_radius = 6371000 #m
         earth_size = earth_radius
 
         moon_mass = 7.34767309E22 #kg
-        moon_radius = 1737 #km
-        moon_dist = 384400#10 km / unit
+        moon_radius = 1737000 #m
+        moon_dist = 384400000#m
         moon_pos = Vector2(x=world_width/2 + moon_dist, y=world_height/2)
         moon_size = moon_radius
 
@@ -242,7 +242,7 @@ class Simulation(object):
         self.scene.entities.append(moon_ent)
         self.world.add_body(moon_body)
 
-        self.scene.scale_factor = .009
+        self.scene.scale_factor = .000001
         self.scene.center(0, 0)
 
     def on_mouse_press(self, x, y, button, modifiers):
