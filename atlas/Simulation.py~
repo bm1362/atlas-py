@@ -69,7 +69,7 @@ class Simulation(object):
         # Making the player here (testing)
         mag = 40000
         offset = 400
-        player_type = Triangle(size=20, position=Vector2(x=offset, y=offset))
+        player_type = Triangle(size=10, position=Vector2(x=offset, y=offset))
         self.scene.entities.append(player_type)
         self.player = Player(entity=player_type, mass=100)
         self.world.add_body(self.player)
