@@ -14,10 +14,7 @@ from Util.Geometry import is_in_polygon, get_polygon_edges, project_polygon, get
 from Entity.Circle import Circle
 from Entity.Square import Square
 from Entity.Plane import Plane
-
-class Contact(object):
-    def __init__(self):
-        pass
+from CollisionContact import CollisionContact
 
 class World(object):
     def __init__(self, width, height):
@@ -27,11 +24,29 @@ class World(object):
         # list of bodies that are in the world
         self.bodies = []
 
+        # list of contacts in the world to be resolved
+        self.contacts = []
+
     def add_body(self, body):
         self.bodies.append(body)
 
     def remove_body(self, body):
         self.bodies.remove(body)
+
+    def add_contact(self, contact):
+        self.contacts.append(contact)
+
+    def remove_contact(self, contact):
+        self.contacts.remove(contact)
+
+    def update(self, dt):
+        self.update_gravitational_forces()
+        self.detect_collisions()
+        self.handle_contacts()
+
+        for b in self.bodies:
+            if b.is_moving():
+                b.update(dt)
 
     # naive imp. could use trees
     def detect_collisions(self):
@@ -41,8 +56,7 @@ class World(object):
                 for j in xrange(i+1, lbodies):
                     a = self.bodies[i]
                     b = self.bodies[j]
-                    if self.detect_collision(a, b):
-                        a.generate_contact(b)
+                    self.detect_collision(a, b)
 
     def detect_collision(self, body_a, body_b):
         radius_sum = body_a.size + body_b.size
@@ -90,56 +104,18 @@ class World(object):
             if min_translational_vector.dot_product(d_pos) < 0:
                 min_translational_vector.multiply_scalar_self(-1)
 
-            if body_a.movable and body_b.movable:
-                body_b.translate(min_translational_vector.multiply_scalar(-1))
-                body_a.translate(min_translational_vector)
-            else:
-                if body_a.movable and not body_b.movable:
-                    body_a.translate(min_translational_vector.multiply_scalar(1))
-                else:
-                    body_b.translate(min_translational_vector.multiply_scalar(-1))
-
-            # # handling linear and angular momentum           
-            # collision_point = collision_normal.multiply_scalar(body_a.size)
-            # collision_point = vector3_from_vector2(collision_point)
-            # cn = vector3_from_vector2(collision_normal)
-
-            # p1 = vector3_from_vector2(body_a.position)
-            # p2 = vector3_from_vector2(body_b.position)
-            # r1 = collision_point.subtract(p1)
-            # r2 = collision_point.subtract(p2)
-
-            # v1 = vector3_from_vector2(body_a.linear_velocity)
-            # vel1 = v1.add(body_a.angular_velocity.cross(r1))
-
-            # v2 = vector3_from_vector2(body_b.linear_velocity)
-            # vel2 = v2.add(body_b.angular_velocity.cross(r2))
-            # relative_velocity = vector2_from_vector3(vel1.subtract(vel2))
-            # dot_normal = relative_velocity.dot_product(collision_normal)
-
-            # if dot_normal < 0:
-            #     return True
-
-            # modified_velocity = dot_normal / (body_a.inv_mass + body_b.inv_mass)
-
-            # j1 = -modified_velocity # need to add elasticity here
-            # j2 = -modified_velocity
-
-            # body_a.linear_velocity.add_self(collision_normal.multiply_scalar(j1 * body_a.inv_mass))
-            # body_b.linear_velocity.subtract_self(collision_normal.multiply_scalar(j2 * body_b.inv_mass))
+            contact = CollisionContact(body_a, body_b, min_interval_distance, translation_axis, min_translational_vector)
+            self.add_contact(contact)
 
             return True
         else: 
             return False
-            
-    def update(self, dt):
-        # these are performance drags
-        self.update_gravitational_forces()
-        self.detect_collisions()
-        # self.handle_contacts()
+    
+    def handle_contacts(self):
+        for c in self.contacts:
+            c.solve()
 
-        for _ in self.bodies:
-            _.update(dt)
+        self.contacts = []
 
     def update_gravitational_forces(self):
         body_pairs = list(itertools.combinations(self.bodies, 2))
@@ -149,24 +125,12 @@ class World(object):
     def apply_gravity(self, body_a, body_b):
         G = 6.37 * 10**-21
         dist = body_a.entity.position.distance_between(body_b.entity.position)
-
-        # if dist > 100000: return
-        if dist < (body_a.size + body_b.size): 
-            mass_ratio_a = body_a.mass / body_b.mass
-            mass_ratio_b = body_b.mass / body_a.mass
-            # if mass_ratio_a < .01:
-            #     body_a.zero_forces()
-            # if mass_ratio_b < .01:
-            #     body_b.zero_forces()
-
-            return
-
         grav_force = G * (body_a.mass * body_b.mass) / dist**2
 
         force_a = body_b.entity.position.subtract(body_a.entity.position).multiply_scalar(grav_force)
         force_b = body_a.entity.position.subtract(body_b.entity.position).multiply_scalar(grav_force)
-        # force_a.clean(.1)
-        # force_b.clean(.1)
+        force_a.clean(.1)
+        force_b.clean(.1)
 
         body_a.add_impulse(Force(vector=force_a))
         body_b.add_impulse(Force(vector=force_b))

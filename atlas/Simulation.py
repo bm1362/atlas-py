@@ -39,6 +39,7 @@ class Simulation(object):
         self.clicked_object = None
         self.clicked_dx = 0
         self.clicked_dy = 0
+        self.scale_step = .01
 
         # create fps display 
         self.fps_display = pyglet.clock.ClockDisplay()
@@ -58,7 +59,7 @@ class Simulation(object):
         #self.demo_1(world_width, world_height)
         #self.demo_2(world_width, world_height)
         #self.demo_4(world_width, world_height)
-        self.gravity_well_demo(world_width, world_height)
+        #self.gravity_well_demo(world_width, world_height)
 
     def tick(self, dt):
         # update physics 
@@ -76,10 +77,10 @@ class Simulation(object):
         if key.M in self.key_pressed:
             self.music.stop_bg()
         if key.H in self.key_pressed:
-            self.scene.scale(self.scene.scale_factor - .000001)
+            self.scene.scale(self.scene.scale_factor - self.scale_step)
             print self.scene.scale_factor
         if key.J in self.key_pressed:
-            self.scene.scale(self.scene.scale_factor + .000001)
+            self.scene.scale(self.scene.scale_factor + self.scale_step)
             print self.scene.scale_factor
 
         self.clock += 1
@@ -263,11 +264,11 @@ class Simulation(object):
 
         #If there was no object under the pointer, create a new object but 
         #keep it free from physics for now
-        entity = Circle(size=500, position=Vector2(
+        entity = Circle(size=50, position=Vector2(
             x=(x * (1.0/self.scene.scale_factor)) + self.scene.top_left['x'], 
             y=self.scene.height - (y * (1/self.scene.scale_factor)) + self.scene.top_left['y'] ))
         self.scene.entities.append(entity)
-        self.clicked_object = RigidBody(entity=entity, mass=100)
+        self.clicked_object = RigidBody(entity=entity, mass=1000, restitution=.25)
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
         #Store the dx and dy since mouse release does not track movements

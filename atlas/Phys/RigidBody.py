@@ -34,6 +34,7 @@ class RigidBody(object):
         self.angular_momentum = kwargs.get("angular_momentum", Vector3(x=0,y=0,z=0))
         self.orientation = kwargs.get('orientation', Matrix3())
         self.orientation = self.entity.orientation.clone()
+        self.restitution = kwargs.get("restitution", 1)
 
         self.inertia_tensor = kwargs.get('inertia_tensor', 1.0/12.0 * self.mass * (1250))
         self.inv_inertia_tensor = 1/self.inertia_tensor
@@ -139,7 +140,7 @@ class RigidBody(object):
         return dict(left=left, top=top, right=right, bottom=bot)
 
     def is_moving(self):
-        return (not self.linear_velocity.equal(Vector2())) or (not self.angular_velocity.equal(Vector3()))
+        return (not self.linear_velocity.equal(Vector2())) or (not self.angular_velocity.equal(Vector3())) or len(self._forces) != 0 or len(self._impulses) != 0
 
     def get_abs_vertices(self):
         vertices = []
