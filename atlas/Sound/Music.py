@@ -2,11 +2,10 @@ import pyglet
 
 class Music(object):
 	def __init__(self):
-		pass
-		# self.location = 'assets/mrrogers.wav'
-		# self.source = pyglet.resource.media(self.location)
+		self.location = 'mrrogers.wav'
+		self.source = pyglet.resource.media(self.location)
 		self.player = pyglet.media.Player()
-		# self.player.queue(self.source)
+		self.player.queue(self.source)
 
 	def play_bg(self):
 		self.player.play()
