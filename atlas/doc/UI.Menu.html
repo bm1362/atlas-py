@@ -1,0 +1,410 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module UI.Menu</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="UI.html"><font color="#ffffff">UI</font></a>.Menu</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/kylej/atlas-py/atlas/UI/Menu.py">/home/kylej/atlas-py/atlas/UI/Menu.py</a></font></td></tr></table>
+    <p><tt>This&nbsp;is&nbsp;<a href="#Menu">Menu</a>.py.&nbsp;It&nbsp;holds&nbsp;the&nbsp;definition&nbsp;and&nbsp;implememtation&nbsp;of&nbsp;the&nbsp;<a href="#Menu">Menu</a>&nbsp;class</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="pyglet.window.key.html">pyglet.window.key</a><br>
+</td><td width="25%" valign=top><a href="pyglet.html">pyglet</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="pyglet.window.xlib.html#XlibWindow">pyglet.window.xlib.XlibWindow</a>(<a href="pyglet.window.html#BaseWindow">pyglet.window.BaseWindow</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="UI.Menu.html#Menu">Menu</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Menu">class <strong>Menu</strong></a>(<a href="pyglet.window.xlib.html#XlibWindow">pyglet.window.xlib.XlibWindow</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>This&nbsp;is&nbsp;the&nbsp;<a href="#Menu">Menu</a>&nbsp;class.&nbsp;It&nbsp;is&nbsp;used&nbsp;for&nbsp;selecting&nbsp;the&nbsp;size,&nbsp;shape,&nbsp;and&nbsp;mass&nbsp;<br>
+of&nbsp;the&nbsp;next&nbsp;object&nbsp;created&nbsp;by&nbsp;mouse&nbsp;click&nbsp;in&nbsp;the&nbsp;simulation.<br>
+&nbsp;<br>
+It&nbsp;is&nbsp;derived&nbsp;from&nbsp;pyglet.window.Window&nbsp;for&nbsp;the&nbsp;event&nbsp;handling<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="UI.Menu.html#Menu">Menu</a></dd>
+<dd><a href="pyglet.window.xlib.html#XlibWindow">pyglet.window.xlib.XlibWindow</a></dd>
+<dd><a href="pyglet.window.html#BaseWindow">pyglet.window.BaseWindow</a></dd>
+<dd><a href="pyglet.event.html#EventDispatcher">pyglet.event.EventDispatcher</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Menu-__init__"><strong>__init__</strong></a>(self, parent, **kwargs)</dt></dl>
+
+<dl><dt><a name="Menu-on_draw"><strong>on_draw</strong></a>(self)</dt><dd><tt>This&nbsp;method&nbsp;overwrites&nbsp;the&nbsp;same&nbsp;method&nbsp;in&nbsp;the&nbsp;superclass.<br>
+&nbsp;<br>
+It&nbsp;clears&nbsp;the&nbsp;screen&nbsp;and&nbsp;then&nbsp;draws&nbsp;all&nbsp;of&nbsp;the&nbsp;items&nbsp;in&nbsp;the&nbsp;entities&nbsp;<br>
+and&nbsp;labels&nbsp;lists</tt></dd></dl>
+
+<dl><dt><a name="Menu-on_key_press"><strong>on_key_press</strong></a>(self, symbol, modifiers)</dt><dd><tt>This&nbsp;method&nbsp;overwrites&nbsp;the&nbsp;same&nbsp;method&nbsp;in&nbsp;the&nbsp;superclass.<br>
+&nbsp;<br>
+It&nbsp;is&nbsp;part&nbsp;of&nbsp;a&nbsp;guard&nbsp;against&nbsp;opening&nbsp;multiple&nbsp;menu&nbsp;windows&nbsp;at&nbsp;once.</tt></dd></dl>
+
+<dl><dt><a name="Menu-on_mouse_drag"><strong>on_mouse_drag</strong></a>(self, x, y, dx, dy, buttons, modifiers)</dt><dd><tt>This&nbsp;method&nbsp;overwrites&nbsp;the&nbsp;same&nbsp;method&nbsp;in&nbsp;the&nbsp;superclass.<br>
+&nbsp;<br>
+It&nbsp;updates&nbsp;position&nbsp;of&nbsp;the&nbsp;entities&nbsp;on&nbsp;the&nbsp;sliders.&nbsp;The&nbsp;movement&nbsp;is&nbsp;<br>
+restricted&nbsp;to&nbsp;the&nbsp;x&nbsp;direction&nbsp;as&nbsp;well&nbsp;as&nbsp;within&nbsp;the&nbsp;preset&nbsp;min&nbsp;and&nbsp;max</tt></dd></dl>
+
+<dl><dt><a name="Menu-on_mouse_press"><strong>on_mouse_press</strong></a>(self, x, y, button, modifiers)</dt><dd><tt>This&nbsp;method&nbsp;overwrites&nbsp;the&nbsp;same&nbsp;method&nbsp;in&nbsp;the&nbsp;superclass.<br>
+&nbsp;<br>
+It&nbsp;adds&nbsp;in&nbsp;the&nbsp;checking&nbsp;for&nbsp;a&nbsp;click&nbsp;on&nbsp;the&nbsp;shape&nbsp;or&nbsp;on&nbsp;the&nbsp;size/mass&nbsp;<br>
+sliders</tt></dd></dl>
+
+<dl><dt><a name="Menu-on_mouse_release"><strong>on_mouse_release</strong></a>(self, x, y, button, modifiers)</dt><dd><tt>This&nbsp;method&nbsp;overwrites&nbsp;the&nbsp;same&nbsp;method&nbsp;in&nbsp;the&nbsp;superclass.<br>
+&nbsp;<br>
+It&nbsp;updates&nbsp;the&nbsp;current&nbsp;status&nbsp;slider&nbsp;and&nbsp;finalizes&nbsp;the&nbsp;information&nbsp;<br>
+for&nbsp;the&nbsp;future&nbsp;objects&nbsp;to&nbsp;be&nbsp;created&nbsp;in&nbsp;the&nbsp;simulation.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="pyglet.window.xlib.html#XlibWindow">pyglet.window.xlib.XlibWindow</a>:<br>
+<dl><dt><a name="Menu-activate"><strong>activate</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Menu-close"><strong>close</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Menu-dispatch_events"><strong>dispatch_events</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Menu-dispatch_pending_events"><strong>dispatch_pending_events</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Menu-dispatch_platform_event"><strong>dispatch_platform_event</strong></a>(self, e)</dt></dl>
+
+<dl><dt><a name="Menu-flip"><strong>flip</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Menu-get_caption"><strong>get_caption</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Menu-get_location"><strong>get_location</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Menu-get_size"><strong>get_size</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Menu-get_system_mouse_cursor"><strong>get_system_mouse_cursor</strong></a>(self, name)</dt></dl>
+
+<dl><dt><a name="Menu-maximize"><strong>maximize</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Menu-minimize"><strong>minimize</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Menu-set_caption"><strong>set_caption</strong></a>(self, caption)</dt></dl>
+
+<dl><dt><a name="Menu-set_exclusive_keyboard"><strong>set_exclusive_keyboard</strong></a>(self, exclusive<font color="#909090">=True</font>)</dt></dl>
+
+<dl><dt><a name="Menu-set_exclusive_mouse"><strong>set_exclusive_mouse</strong></a>(self, exclusive<font color="#909090">=True</font>)</dt></dl>
+
+<dl><dt><a name="Menu-set_icon"><strong>set_icon</strong></a>(self, *images)</dt></dl>
+
+<dl><dt><a name="Menu-set_location"><strong>set_location</strong></a>(self, x, y)</dt></dl>
+
+<dl><dt><a name="Menu-set_maximum_size"><strong>set_maximum_size</strong></a>(self, width, height)</dt></dl>
+
+<dl><dt><a name="Menu-set_minimum_size"><strong>set_minimum_size</strong></a>(self, width, height)</dt></dl>
+
+<dl><dt><a name="Menu-set_mouse_platform_visible"><strong>set_mouse_platform_visible</strong></a>(self, platform_visible<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="Menu-set_size"><strong>set_size</strong></a>(self, width, height)</dt></dl>
+
+<dl><dt><a name="Menu-set_visible"><strong>set_visible</strong></a>(self, visible<font color="#909090">=True</font>)</dt></dl>
+
+<dl><dt><a name="Menu-set_vsync"><strong>set_vsync</strong></a>(self, vsync)</dt></dl>
+
+<dl><dt><a name="Menu-switch_to"><strong>switch_to</strong></a>(self)</dt></dl>
+
+<hr>
+Methods inherited from <a href="pyglet.window.html#BaseWindow">pyglet.window.BaseWindow</a>:<br>
+<dl><dt><a name="Menu-clear"><strong>clear</strong></a>(self)</dt><dd><tt>Clear&nbsp;the&nbsp;window.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;a&nbsp;convenience&nbsp;method&nbsp;for&nbsp;clearing&nbsp;the&nbsp;color&nbsp;and&nbsp;depth<br>
+buffer.&nbsp;&nbsp;The&nbsp;window&nbsp;must&nbsp;be&nbsp;the&nbsp;active&nbsp;context&nbsp;(see&nbsp;`switch_to`).</tt></dd></dl>
+
+<dl><dt><a name="Menu-dispatch_event"><strong>dispatch_event</strong></a>(self, *args)</dt></dl>
+
+<dl><dt><a name="Menu-draw_mouse_cursor"><strong>draw_mouse_cursor</strong></a>(self)</dt><dd><tt>Draw&nbsp;the&nbsp;custom&nbsp;mouse&nbsp;cursor.<br>
+&nbsp;<br>
+If&nbsp;the&nbsp;current&nbsp;mouse&nbsp;cursor&nbsp;has&nbsp;``drawable``&nbsp;set,&nbsp;this&nbsp;method<br>
+is&nbsp;called&nbsp;before&nbsp;the&nbsp;buffers&nbsp;are&nbsp;flipped&nbsp;to&nbsp;render&nbsp;it.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;always&nbsp;leaves&nbsp;the&nbsp;``GL_MODELVIEW``&nbsp;matrix&nbsp;as&nbsp;current,<br>
+regardless&nbsp;of&nbsp;what&nbsp;it&nbsp;was&nbsp;set&nbsp;to&nbsp;previously.&nbsp;&nbsp;No&nbsp;other&nbsp;GL&nbsp;state<br>
+is&nbsp;affected.<br>
+&nbsp;<br>
+There&nbsp;is&nbsp;little&nbsp;need&nbsp;to&nbsp;override&nbsp;this&nbsp;method;&nbsp;instead,&nbsp;subclass<br>
+``MouseCursor``&nbsp;and&nbsp;provide&nbsp;your&nbsp;own&nbsp;``draw``&nbsp;method.</tt></dd></dl>
+
+<dl><dt><a name="Menu-on_close"><strong>on_close</strong></a>(self)</dt><dd><tt>Default&nbsp;on_close&nbsp;handler.</tt></dd></dl>
+
+<dl><dt><a name="Menu-on_resize"><strong>on_resize</strong></a>(self, width, height)</dt><dd><tt>A&nbsp;default&nbsp;resize&nbsp;event&nbsp;handler.<br>
+&nbsp;<br>
+This&nbsp;default&nbsp;handler&nbsp;updates&nbsp;the&nbsp;GL&nbsp;viewport&nbsp;to&nbsp;cover&nbsp;the&nbsp;entire<br>
+window&nbsp;and&nbsp;sets&nbsp;the&nbsp;``GL_PROJECTION``&nbsp;matrix&nbsp;to&nbsp;be&nbsp;orthogonal&nbsp;in<br>
+window&nbsp;space.&nbsp;&nbsp;The&nbsp;bottom-left&nbsp;corner&nbsp;is&nbsp;(0,&nbsp;0)&nbsp;and&nbsp;the&nbsp;top-right<br>
+corner&nbsp;is&nbsp;the&nbsp;width&nbsp;and&nbsp;height&nbsp;of&nbsp;the&nbsp;window&nbsp;in&nbsp;pixels.<br>
+&nbsp;<br>
+Override&nbsp;this&nbsp;event&nbsp;handler&nbsp;with&nbsp;your&nbsp;own&nbsp;to&nbsp;create&nbsp;another<br>
+projection,&nbsp;for&nbsp;example&nbsp;in&nbsp;perspective.</tt></dd></dl>
+
+<dl><dt><a name="Menu-set_fullscreen"><strong>set_fullscreen</strong></a>(self, fullscreen<font color="#909090">=True</font>, screen<font color="#909090">=None</font>)</dt><dd><tt>Toggle&nbsp;to&nbsp;or&nbsp;from&nbsp;fullscreen.<br>
+&nbsp;<br>
+After&nbsp;toggling&nbsp;fullscreen,&nbsp;the&nbsp;GL&nbsp;context&nbsp;should&nbsp;have&nbsp;retained&nbsp;its<br>
+state&nbsp;and&nbsp;objects,&nbsp;however&nbsp;the&nbsp;buffers&nbsp;will&nbsp;need&nbsp;to&nbsp;be&nbsp;cleared&nbsp;and<br>
+redrawn.<br>
+&nbsp;<br>
+:Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`fullscreen`&nbsp;:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;if&nbsp;the&nbsp;window&nbsp;should&nbsp;be&nbsp;made&nbsp;fullscreen,&nbsp;False&nbsp;if&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;be&nbsp;windowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`screen`&nbsp;:&nbsp;Screen<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;not&nbsp;None&nbsp;and&nbsp;fullscreen&nbsp;is&nbsp;True,&nbsp;the&nbsp;window&nbsp;is&nbsp;moved&nbsp;to&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;given&nbsp;screen.&nbsp;&nbsp;The&nbsp;screen&nbsp;must&nbsp;belong&nbsp;to&nbsp;the&nbsp;same&nbsp;display&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;window.</tt></dd></dl>
+
+<dl><dt><a name="Menu-set_mouse_cursor"><strong>set_mouse_cursor</strong></a>(self, cursor<font color="#909090">=None</font>)</dt><dd><tt>Change&nbsp;the&nbsp;appearance&nbsp;of&nbsp;the&nbsp;mouse&nbsp;cursor.<br>
+&nbsp;<br>
+The&nbsp;appearance&nbsp;of&nbsp;the&nbsp;mouse&nbsp;cursor&nbsp;is&nbsp;only&nbsp;changed&nbsp;while&nbsp;it&nbsp;is<br>
+within&nbsp;this&nbsp;window.<br>
+&nbsp;<br>
+:Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`cursor`&nbsp;:&nbsp;`MouseCursor`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;cursor&nbsp;to&nbsp;set,&nbsp;or&nbsp;None&nbsp;to&nbsp;restore&nbsp;the&nbsp;default&nbsp;cursor.</tt></dd></dl>
+
+<dl><dt><a name="Menu-set_mouse_visible"><strong>set_mouse_visible</strong></a>(self, visible<font color="#909090">=True</font>)</dt><dd><tt>Show&nbsp;or&nbsp;hide&nbsp;the&nbsp;mouse&nbsp;cursor.<br>
+&nbsp;<br>
+The&nbsp;mouse&nbsp;cursor&nbsp;will&nbsp;only&nbsp;be&nbsp;hidden&nbsp;while&nbsp;it&nbsp;is&nbsp;positioned&nbsp;within<br>
+this&nbsp;window.&nbsp;&nbsp;Mouse&nbsp;events&nbsp;will&nbsp;still&nbsp;be&nbsp;processed&nbsp;as&nbsp;usual.<br>
+&nbsp;<br>
+:Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`visible`&nbsp;:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;the&nbsp;mouse&nbsp;cursor&nbsp;will&nbsp;be&nbsp;visible,&nbsp;otherwise&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;be&nbsp;hidden.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="pyglet.window.html#BaseWindow">pyglet.window.BaseWindow</a>:<br>
+<dl><dt><strong>caption</strong></dt>
+<dd><tt>The&nbsp;window&nbsp;caption&nbsp;(title).&nbsp;&nbsp;Read-only.<br>
+&nbsp;<br>
+:type:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>config</strong></dt>
+<dd><tt>A&nbsp;GL&nbsp;config&nbsp;describing&nbsp;the&nbsp;context&nbsp;of&nbsp;this&nbsp;window.&nbsp;&nbsp;Read-only.<br>
+&nbsp;<br>
+:type:&nbsp;`pyglet.gl.Config`</tt></dd>
+</dl>
+<dl><dt><strong>context</strong></dt>
+<dd><tt>The&nbsp;OpenGL&nbsp;context&nbsp;attached&nbsp;to&nbsp;this&nbsp;window.&nbsp;&nbsp;Read-only.<br>
+&nbsp;<br>
+:type:&nbsp;`pyglet.gl.Context`</tt></dd>
+</dl>
+<dl><dt><strong>display</strong></dt>
+<dd><tt>The&nbsp;display&nbsp;this&nbsp;window&nbsp;belongs&nbsp;to.&nbsp;&nbsp;Read-only.<br>
+&nbsp;<br>
+:type:&nbsp;`Display`</tt></dd>
+</dl>
+<dl><dt><strong>fullscreen</strong></dt>
+<dd><tt>True&nbsp;if&nbsp;the&nbsp;window&nbsp;is&nbsp;currently&nbsp;fullscreen.&nbsp;&nbsp;Read-only.<br>
+&nbsp;<br>
+:type:&nbsp;bool</tt></dd>
+</dl>
+<dl><dt><strong>height</strong></dt>
+<dd><tt>The&nbsp;height&nbsp;of&nbsp;the&nbsp;window,&nbsp;in&nbsp;pixels.&nbsp;&nbsp;Read-write.<br>
+&nbsp;<br>
+:type:&nbsp;int</tt></dd>
+</dl>
+<dl><dt><strong>resizable</strong></dt>
+<dd><tt>True&nbsp;if&nbsp;the&nbsp;window&nbsp;is&nbsp;resizable.&nbsp;&nbsp;Read-only.<br>
+&nbsp;<br>
+:type:&nbsp;bool</tt></dd>
+</dl>
+<dl><dt><strong>screen</strong></dt>
+<dd><tt>The&nbsp;screen&nbsp;this&nbsp;window&nbsp;is&nbsp;fullscreen&nbsp;in.&nbsp;&nbsp;Read-only.<br>
+&nbsp;<br>
+:type:&nbsp;`Screen`</tt></dd>
+</dl>
+<dl><dt><strong>style</strong></dt>
+<dd><tt>The&nbsp;window&nbsp;style;&nbsp;one&nbsp;of&nbsp;the&nbsp;``WINDOW_STYLE_*``&nbsp;constants.<br>
+Read-only.<br>
+&nbsp;<br>
+:type:&nbsp;int</tt></dd>
+</dl>
+<dl><dt><strong>visible</strong></dt>
+<dd><tt>True&nbsp;if&nbsp;the&nbsp;window&nbsp;is&nbsp;currently&nbsp;visible.&nbsp;&nbsp;Read-only.<br>
+&nbsp;<br>
+:type:&nbsp;bool</tt></dd>
+</dl>
+<dl><dt><strong>vsync</strong></dt>
+<dd><tt>True&nbsp;if&nbsp;buffer&nbsp;flips&nbsp;are&nbsp;synchronised&nbsp;to&nbsp;the&nbsp;screen's&nbsp;vertical<br>
+retrace.&nbsp;&nbsp;Read-only.<br>
+&nbsp;<br>
+:type:&nbsp;bool</tt></dd>
+</dl>
+<dl><dt><strong>width</strong></dt>
+<dd><tt>The&nbsp;width&nbsp;of&nbsp;the&nbsp;window,&nbsp;in&nbsp;pixels.&nbsp;&nbsp;Read-write.<br>
+&nbsp;<br>
+:type:&nbsp;int</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="pyglet.window.html#BaseWindow">pyglet.window.BaseWindow</a>:<br>
+<dl><dt><strong>CURSOR_CROSSHAIR</strong> = 'crosshair'</dl>
+
+<dl><dt><strong>CURSOR_DEFAULT</strong> = None</dl>
+
+<dl><dt><strong>CURSOR_HAND</strong> = 'hand'</dl>
+
+<dl><dt><strong>CURSOR_HELP</strong> = 'help'</dl>
+
+<dl><dt><strong>CURSOR_NO</strong> = 'no'</dl>
+
+<dl><dt><strong>CURSOR_SIZE</strong> = 'size'</dl>
+
+<dl><dt><strong>CURSOR_SIZE_DOWN</strong> = 'size_down'</dl>
+
+<dl><dt><strong>CURSOR_SIZE_DOWN_LEFT</strong> = 'size_down_left'</dl>
+
+<dl><dt><strong>CURSOR_SIZE_DOWN_RIGHT</strong> = 'size_down_right'</dl>
+
+<dl><dt><strong>CURSOR_SIZE_LEFT</strong> = 'size_left'</dl>
+
+<dl><dt><strong>CURSOR_SIZE_LEFT_RIGHT</strong> = 'size_left_right'</dl>
+
+<dl><dt><strong>CURSOR_SIZE_RIGHT</strong> = 'size_right'</dl>
+
+<dl><dt><strong>CURSOR_SIZE_UP</strong> = 'size_up'</dl>
+
+<dl><dt><strong>CURSOR_SIZE_UP_DOWN</strong> = 'size_up_down'</dl>
+
+<dl><dt><strong>CURSOR_SIZE_UP_LEFT</strong> = 'size_up_left'</dl>
+
+<dl><dt><strong>CURSOR_SIZE_UP_RIGHT</strong> = 'size_up_right'</dl>
+
+<dl><dt><strong>CURSOR_TEXT</strong> = 'text'</dl>
+
+<dl><dt><strong>CURSOR_WAIT</strong> = 'wait'</dl>
+
+<dl><dt><strong>CURSOR_WAIT_ARROW</strong> = 'wait_arrow'</dl>
+
+<dl><dt><strong>WINDOW_STYLE_BORDERLESS</strong> = 'borderless'</dl>
+
+<dl><dt><strong>WINDOW_STYLE_DEFAULT</strong> = None</dl>
+
+<dl><dt><strong>WINDOW_STYLE_DIALOG</strong> = 'dialog'</dl>
+
+<dl><dt><strong>WINDOW_STYLE_TOOL</strong> = 'tool'</dl>
+
+<dl><dt><strong>__metaclass__</strong> = &lt;class 'pyglet.window._WindowMetaclass'&gt;<dd><tt>Sets&nbsp;the&nbsp;_platform_event_names&nbsp;class&nbsp;variable&nbsp;on&nbsp;the&nbsp;window<br>
+subclass.</tt></dl>
+
+<dl><dt><strong>event_types</strong> = ['on_key_press', 'on_key_release', 'on_text', 'on_text_motion', 'on_text_motion_select', 'on_mouse_motion', 'on_mouse_drag', 'on_mouse_press', 'on_mouse_release', 'on_mouse_scroll', 'on_mouse_enter', 'on_mouse_leave', 'on_close', 'on_expose', 'on_resize', 'on_move', 'on_activate', 'on_deactivate', 'on_show', 'on_hide', ...]</dl>
+
+<dl><dt><strong>has_exit</strong> = False</dl>
+
+<dl><dt><strong>invalid</strong> = True</dl>
+
+<hr>
+Methods inherited from <a href="pyglet.event.html#EventDispatcher">pyglet.event.EventDispatcher</a>:<br>
+<dl><dt><a name="Menu-event"><strong>event</strong></a>(self, *args)</dt><dd><tt>Function&nbsp;decorator&nbsp;for&nbsp;an&nbsp;event&nbsp;handler.<br>
+&nbsp;<br>
+Usage::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;=&nbsp;window.Window()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@win.event<br>
+&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;<a href="#Menu-on_resize">on_resize</a>(self,&nbsp;width,&nbsp;height):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;...<br>
+&nbsp;<br>
+or::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@win.<a href="#Menu-event">event</a>('on_resize')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;foo(self,&nbsp;width,&nbsp;height):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;...</tt></dd></dl>
+
+<dl><dt><a name="Menu-pop_handlers"><strong>pop_handlers</strong></a>(self)</dt><dd><tt>Pop&nbsp;the&nbsp;top&nbsp;level&nbsp;of&nbsp;event&nbsp;handlers&nbsp;off&nbsp;the&nbsp;stack.</tt></dd></dl>
+
+<dl><dt><a name="Menu-push_handlers"><strong>push_handlers</strong></a>(self, *args, **kwargs)</dt><dd><tt>Push&nbsp;a&nbsp;level&nbsp;onto&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;handler&nbsp;stack,&nbsp;then&nbsp;attach&nbsp;zero&nbsp;or<br>
+more&nbsp;event&nbsp;handlers.<br>
+&nbsp;<br>
+If&nbsp;keyword&nbsp;arguments&nbsp;are&nbsp;given,&nbsp;they&nbsp;name&nbsp;the&nbsp;event&nbsp;type&nbsp;to&nbsp;attach.<br>
+Otherwise,&nbsp;a&nbsp;callable's&nbsp;`__name__`&nbsp;attribute&nbsp;will&nbsp;be&nbsp;used.&nbsp;&nbsp;Any&nbsp;other<br>
+object&nbsp;may&nbsp;also&nbsp;be&nbsp;specified,&nbsp;in&nbsp;which&nbsp;case&nbsp;it&nbsp;will&nbsp;be&nbsp;searched&nbsp;for<br>
+callables&nbsp;with&nbsp;event&nbsp;names.</tt></dd></dl>
+
+<dl><dt><a name="Menu-remove_handler"><strong>remove_handler</strong></a>(self, name, handler)</dt><dd><tt>Remove&nbsp;a&nbsp;single&nbsp;event&nbsp;handler.<br>
+&nbsp;<br>
+The&nbsp;given&nbsp;event&nbsp;handler&nbsp;is&nbsp;removed&nbsp;from&nbsp;the&nbsp;first&nbsp;handler&nbsp;stack&nbsp;frame<br>
+it&nbsp;appears&nbsp;in.&nbsp;&nbsp;The&nbsp;handler&nbsp;must&nbsp;be&nbsp;the&nbsp;exact&nbsp;same&nbsp;callable&nbsp;as&nbsp;passed<br>
+to&nbsp;`set_handler`,&nbsp;`set_handlers`&nbsp;or&nbsp;`push_handlers`;&nbsp;and&nbsp;the&nbsp;name<br>
+must&nbsp;match&nbsp;the&nbsp;event&nbsp;type&nbsp;it&nbsp;is&nbsp;bound&nbsp;to.<br>
+&nbsp;<br>
+No&nbsp;error&nbsp;is&nbsp;raised&nbsp;if&nbsp;the&nbsp;event&nbsp;handler&nbsp;is&nbsp;not&nbsp;set.<br>
+&nbsp;<br>
+:Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`name`&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name&nbsp;of&nbsp;the&nbsp;event&nbsp;type&nbsp;to&nbsp;remove.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`handler`&nbsp;:&nbsp;callable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Event&nbsp;handler&nbsp;to&nbsp;remove.</tt></dd></dl>
+
+<dl><dt><a name="Menu-remove_handlers"><strong>remove_handlers</strong></a>(self, *args, **kwargs)</dt><dd><tt>Remove&nbsp;event&nbsp;handlers&nbsp;from&nbsp;the&nbsp;event&nbsp;stack.<br>
+&nbsp;<br>
+See&nbsp;`push_handlers`&nbsp;for&nbsp;the&nbsp;accepted&nbsp;argument&nbsp;types.&nbsp;&nbsp;All&nbsp;handlers<br>
+are&nbsp;removed&nbsp;from&nbsp;the&nbsp;first&nbsp;stack&nbsp;frame&nbsp;that&nbsp;contains&nbsp;any&nbsp;of&nbsp;the&nbsp;given<br>
+handlers.&nbsp;&nbsp;No&nbsp;error&nbsp;is&nbsp;raised&nbsp;if&nbsp;any&nbsp;handler&nbsp;does&nbsp;not&nbsp;appear&nbsp;in&nbsp;that<br>
+frame,&nbsp;or&nbsp;if&nbsp;no&nbsp;stack&nbsp;frame&nbsp;contains&nbsp;any&nbsp;of&nbsp;the&nbsp;given&nbsp;handlers.<br>
+&nbsp;<br>
+If&nbsp;the&nbsp;stack&nbsp;frame&nbsp;is&nbsp;empty&nbsp;after&nbsp;removing&nbsp;the&nbsp;handlers,&nbsp;it&nbsp;is<br>
+removed&nbsp;from&nbsp;the&nbsp;stack.&nbsp;&nbsp;Note&nbsp;that&nbsp;this&nbsp;interferes&nbsp;with&nbsp;the&nbsp;expected<br>
+symmetry&nbsp;of&nbsp;`push_handlers`&nbsp;and&nbsp;`pop_handlers`.</tt></dd></dl>
+
+<dl><dt><a name="Menu-set_handler"><strong>set_handler</strong></a>(self, name, handler)</dt><dd><tt>Attach&nbsp;a&nbsp;single&nbsp;event&nbsp;handler.<br>
+&nbsp;<br>
+:Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`name`&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name&nbsp;of&nbsp;the&nbsp;event&nbsp;type&nbsp;to&nbsp;attach&nbsp;to.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`handler`&nbsp;:&nbsp;callable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Event&nbsp;handler&nbsp;to&nbsp;attach.</tt></dd></dl>
+
+<dl><dt><a name="Menu-set_handlers"><strong>set_handlers</strong></a>(self, *args, **kwargs)</dt><dd><tt>Attach&nbsp;one&nbsp;or&nbsp;more&nbsp;event&nbsp;handlers&nbsp;to&nbsp;the&nbsp;top&nbsp;level&nbsp;of&nbsp;the&nbsp;handler<br>
+stack.<br>
+&nbsp;<br>
+See&nbsp;`push_handlers`&nbsp;for&nbsp;the&nbsp;accepted&nbsp;argument&nbsp;types.</tt></dd></dl>
+
+<hr>
+Class methods inherited from <a href="pyglet.event.html#EventDispatcher">pyglet.event.EventDispatcher</a>:<br>
+<dl><dt><a name="Menu-register_event_type"><strong>register_event_type</strong></a>(cls, name)<font color="#909090"><font face="helvetica, arial"> from <a href="pyglet.window.html#_WindowMetaclass">pyglet.window._WindowMetaclass</a></font></font></dt><dd><tt>Register&nbsp;an&nbsp;event&nbsp;type&nbsp;with&nbsp;the&nbsp;dispatcher.<br>
+&nbsp;<br>
+Registering&nbsp;event&nbsp;types&nbsp;allows&nbsp;the&nbsp;dispatcher&nbsp;to&nbsp;validate&nbsp;event<br>
+handler&nbsp;names&nbsp;as&nbsp;they&nbsp;are&nbsp;attached,&nbsp;and&nbsp;to&nbsp;search&nbsp;attached&nbsp;objects&nbsp;for<br>
+suitable&nbsp;handlers.<br>
+&nbsp;<br>
+:Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`name`&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name&nbsp;of&nbsp;the&nbsp;event&nbsp;to&nbsp;register.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="pyglet.event.html#EventDispatcher">pyglet.event.EventDispatcher</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

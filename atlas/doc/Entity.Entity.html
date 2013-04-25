@@ -1,0 +1,107 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Entity.Entity</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="Entity.html"><font color="#ffffff">Entity</font></a>.Entity</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/kylej/atlas-py/atlas/Entity/Entity.py">/home/kylej/atlas-py/atlas/Entity/Entity.py</a></font></td></tr></table>
+    <p><tt><a href="#Entity">Entity</a>.py:&nbsp;A&nbsp;class&nbsp;representation&nbsp;of&nbsp;an&nbsp;entity&nbsp;in&nbsp;our&nbsp;world.&nbsp;Serves&nbsp;as&nbsp;the&nbsp;superclass&nbsp;for&nbsp;all&nbsp;interactable&nbsp;items.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="pyglet.html">pyglet</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="Entity.Entity.html#Entity">Entity</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Entity">class <strong>Entity</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Entity-__init__"><strong>__init__</strong></a>(self, **kwargs)</dt></dl>
+
+<dl><dt><a name="Entity-draw"><strong>draw</strong></a>(self, offset_x, offset_y, screen_height)</dt></dl>
+
+<dl><dt><a name="Entity-get_abs_vertices"><strong>get_abs_vertices</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Entity-get_screen_relative_vertices"><strong>get_screen_relative_vertices</strong></a>(self, offset_x, offset_y, screen_height)</dt></dl>
+
+<dl><dt><a name="Entity-get_screen_relative_vertices_vectors"><strong>get_screen_relative_vertices_vectors</strong></a>(self, offset_x, offset_y, screen_height)</dt></dl>
+
+<dl><dt><a name="Entity-orbit_around"><strong>orbit_around</strong></a>(self, origin, distance, angle)</dt></dl>
+
+<dl><dt><a name="Entity-rotate"><strong>rotate</strong></a>(self, angle)</dt><dd><tt>#&nbsp;rotates&nbsp;the&nbsp;entity&nbsp;counter&nbsp;clockwise&nbsp;by&nbsp;the&nbsp;angle</tt></dd></dl>
+
+<dl><dt><a name="Entity-scale"><strong>scale</strong></a>(self, factor)</dt></dl>
+
+<dl><dt><a name="Entity-set_position"><strong>set_position</strong></a>(self, position_vector)</dt></dl>
+
+<dl><dt><a name="Entity-translate"><strong>translate</strong></a>(self, x, y)</dt></dl>
+
+<dl><dt><a name="Entity-translate_vector"><strong>translate_vector</strong></a>(self, vector)</dt></dl>
+
+<dl><dt><a name="Entity-update"><strong>update</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Entity-update_abs_vertices"><strong>update_abs_vertices</strong></a>(self)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-floor"><strong>floor</strong></a>(...)</dt><dd><tt><a href="#-floor">floor</a>(x)<br>
+&nbsp;<br>
+Return&nbsp;the&nbsp;floor&nbsp;of&nbsp;x&nbsp;as&nbsp;a&nbsp;float.<br>
+This&nbsp;is&nbsp;the&nbsp;largest&nbsp;integral&nbsp;value&nbsp;&lt;=&nbsp;x.</tt></dd></dl>
+ <dl><dt><a name="-random"><strong>random</strong></a>(...)</dt><dd><tt><a href="#-random">random</a>()&nbsp;-&gt;&nbsp;x&nbsp;in&nbsp;the&nbsp;interval&nbsp;[0,&nbsp;1).</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>GL_BLEND</strong> = 3042<br>
+<strong>GL_FLOAT</strong> = 5126<br>
+<strong>GL_POLYGON</strong> = 9<br>
+<strong>GL_VERTEX_ARRAY</strong> = 32884<br>
+<strong>glColor4ub</strong> = &lt;_FuncPtr object&gt;<br>
+<strong>glDrawArrays</strong> = &lt;_FuncPtr object&gt;<br>
+<strong>glEnable</strong> = &lt;_FuncPtr object&gt;<br>
+<strong>glEnableClientState</strong> = &lt;_FuncPtr object&gt;<br>
+<strong>glVertexPointer</strong> = &lt;_FuncPtr object&gt;</td></tr></table>
+</body></html>

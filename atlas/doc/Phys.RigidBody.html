@@ -1,0 +1,97 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Phys.RigidBody</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="Phys.html"><font color="#ffffff">Phys</font></a>.RigidBody</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/kylej/atlas-py/atlas/Phys/RigidBody.py">/home/kylej/atlas-py/atlas/Phys/RigidBody.py</a></font></td></tr></table>
+    <p><tt><a href="#RigidBody">RigidBody</a>.py:&nbsp;A&nbsp;class&nbsp;representation&nbsp;of&nbsp;an&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;that&nbsp;obeys&nbsp;physics&nbsp;rules&nbsp;in&nbsp;our&nbsp;world.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="pyglet.html">pyglet</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="Phys.RigidBody.html#RigidBody">RigidBody</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="RigidBody">class <strong>RigidBody</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="RigidBody-__init__"><strong>__init__</strong></a>(self, **kwargs)</dt></dl>
+
+<dl><dt><a name="RigidBody-add_force"><strong>add_force</strong></a>(self, force)</dt></dl>
+
+<dl><dt><a name="RigidBody-add_impulse"><strong>add_impulse</strong></a>(self, force)</dt></dl>
+
+<dl><dt><a name="RigidBody-draw"><strong>draw</strong></a>(self, offset_x, offset_y, screen_height)</dt></dl>
+
+<dl><dt><a name="RigidBody-draw_bounding_box"><strong>draw_bounding_box</strong></a>(self, x, y, screen_height)</dt></dl>
+
+<dl><dt><a name="RigidBody-draw_forces"><strong>draw_forces</strong></a>(self, x, y)</dt></dl>
+
+<dl><dt><a name="RigidBody-get_bounding_box"><strong>get_bounding_box</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="RigidBody-get_bounding_radius"><strong>get_bounding_radius</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="RigidBody-remove_force"><strong>remove_force</strong></a>(self, force)</dt></dl>
+
+<dl><dt><a name="RigidBody-update"><strong>update</strong></a>(self, dt)</dt></dl>
+
+<dl><dt><a name="RigidBody-update_acceleration"><strong>update_acceleration</strong></a>(self, dt)</dt></dl>
+
+<dl><dt><a name="RigidBody-zero_forces"><strong>zero_forces</strong></a>(self)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>GL_BLEND</strong> = 3042<br>
+<strong>GL_FILL</strong> = 6914<br>
+<strong>GL_FLOAT</strong> = 5126<br>
+<strong>GL_FRONT_AND_BACK</strong> = 1032<br>
+<strong>GL_LINE</strong> = 6913<br>
+<strong>GL_POLYGON</strong> = 9<br>
+<strong>GL_VERTEX_ARRAY</strong> = 32884<br>
+<strong>glColor4ub</strong> = &lt;_FuncPtr object&gt;<br>
+<strong>glDrawArrays</strong> = &lt;_FuncPtr object&gt;<br>
+<strong>glEnable</strong> = &lt;_FuncPtr object&gt;<br>
+<strong>glEnableClientState</strong> = &lt;_FuncPtr object&gt;<br>
+<strong>glPolygonMode</strong> = &lt;_FuncPtr object&gt;<br>
+<strong>glVertexPointer</strong> = &lt;_FuncPtr object&gt;</td></tr></table>
+</body></html>
