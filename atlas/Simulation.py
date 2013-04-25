@@ -18,17 +18,15 @@ from Phys.Force import Force
 from Entity.Entity import Entity
 from Entity.Square import Square
 from Entity.Circle import Circle
+from Entity.Triangle import Triangle
 from Entity.Plane import Plane
 from Util.Vector2 import Vector2
 from Util.Geometry import is_in_polygon
 from Sound.Music import Music
+from Character.Player import Player
 
 class Simulation(object):
     def __init__(self, width, height):
-
-
-
-
         # create pyglet window
         self.window = pyglet.window.Window(resizable=True)
         self.window.on_draw = self.on_draw
@@ -57,7 +55,6 @@ class Simulation(object):
         world_height = 3000
         self.world = World(world_width, world_height)
 
-
         # create scene- match dimensions of the app window
         self.scene = Scene(width=width, height=height, background_width=world_width, background_height=world_height)
 
@@ -69,10 +66,18 @@ class Simulation(object):
         self.music = Music()
         self.music.play_bg()
 
+        # Making the player here (testing)
+        mag = 40000
+        offset = 400
+        player_type = Triangle(size=20, position=Vector2(x=offset, y=offset))
+        self.scene.entities.append(player_type)
+        self.player = Player(entity=player_type, mass=100)
+        self.world.add_body(self.player)
+
     def tick(self, dt):
         # update physics 
         self.world.update(dt)
-
+        self.player.translate(dt, self.key_pressed)
         # move scene
         if key.LEFT in self.key_pressed:
             self.scene.translate_x(-10)
@@ -95,28 +100,15 @@ class Simulation(object):
         # redraw scene
         self.scene.render()
 
-
         # draw fps clock
         self.fps_display.draw()
 
+        self.player.draw(self.scene)
         # draw foreground/ui ? in here or scene
 
     def on_key_press(self, symbol, modifiers):
-        if symbol == key.LEFT:
-            self.key_pressed.append(key.LEFT)
-        elif symbol == key.RIGHT:
-            self.key_pressed.append(key.RIGHT)
-        elif symbol == key.UP:
-            self.key_pressed.append(key.UP)
-        elif symbol == key.DOWN:
-            self.key_pressed.append(key.DOWN)
-        elif symbol == key.Q:
-            self.key_pressed.append(key.Q)
-        elif symbol == key.E:
-            self.key_pressed.append(key.E)
-        elif symbol == key.M:
-            self.key_pressed.append(key.M)
-
+        self.key_pressed.append(symbol)
+      
     def on_key_release(self, symbol, modifiers):
         if symbol in self.key_pressed:
             self.key_pressed.remove(symbol)
