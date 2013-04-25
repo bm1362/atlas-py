@@ -1,0 +1,69 @@
+Discription of test cases
+
+We are using unittest — the unit testing framework for Python
+it is a class that has several simple methods that allows us to
+run tests on the various methods of our program.
+
+
+
+vector2 class:
+
+setUp():
+This method contains the following vectors
+to run tests on:
+		v0_0
+		v1_2
+		v5_5
+		vMAX_MAX - used for edge testing using the maximum value for a float
+		vMIN_MIN - used for edge testing using the minimum value for a float
+		v50_0
+		v0_50
+		v100_0
+		v0_100
+		v100_100
+		v500000_500000
+
+test__init__():
+This method runs before every unit test and initializes every
+vector fresh for every test.
+
+test_rotate():
+This method tests the rotate functionality of the Vector2 class.
+
+test_rotate_self():
+This method tests the rotate_self method of the Vector2 class.
+
+test_angle_between()
+This method tests the angle_between two instances of the Vector2 class.
+
+test_dot_product():
+This method tests the dot product between two Vector2 classes.
+
+test_distance_between():
+This method tests the distance between two Vector2 classes.
+
+test_subtract():
+This method subtracts two instances of the Vecor2 class and 
+checks the result.
+
+test_length():
+This method tests the length of a Vector2 class and checks
+the result.
+
+test_multiply_scalar_self():
+This method checks the result of multiplying and instance of the Vector2
+class by a scalar.
+
+test_divide_scalar():
+This method checks the result of dividing an instance of a Vector2 class
+by a scalar.
+
+test_divide_scalar_self():
+This method checks the result of an instance of Vector2 dividing itself by a scalar.
+
+test_normalize():
+This method checks the normalization of a Vector2 class. 
+
+test_equal():
+This method checks that two instances of the Vector2 class are equal.
+
