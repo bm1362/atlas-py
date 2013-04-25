@@ -11,7 +11,7 @@ from pyglet.window import key, mouse
 from pyglet.gl import glClear, GL_COLOR_BUFFER_BIT, glLoadIdentity
 
 from Scene import Scene
-
+from UI.Menu import Menu
 from Phys.World import World
 from Phys.RigidBody import RigidBody
 from Phys.Force import Force
@@ -37,6 +37,10 @@ class Simulation(object):
         self.window.on_mouse_drag = self.on_mouse_drag
         self.window.width = width
         self.window.height = height
+        self.menu_window = False
+        self.gen_entity = 'SQUARE'
+        self.gen_size = 50
+        self.gen_mass = 500
         self.key_pressed = []
         self.clicked_object = None
         self.clicked_dx = 0
@@ -107,7 +111,15 @@ class Simulation(object):
         # draw foreground/ui ? in here or scene
 
     def on_key_press(self, symbol, modifiers):
-        self.key_pressed.append(symbol)
+        if symbol == key.ESCAPE:
+            if not self.menu_window:
+                # self.tick, self.tick_stub = self.tick_stub, self.tick
+                pyglet.clock.unschedule(self.tick)
+                self.menu_window = True
+                self.menu_window = Menu(self, width=500, height=500)
+            return pyglet.event.EVENT_HANDLED
+        else:
+            self.key_pressed.append(symbol)
       
     def on_key_release(self, symbol, modifiers):
         if symbol in self.key_pressed:
@@ -216,11 +228,17 @@ class Simulation(object):
 
         #If there was no object under the pointer, create a new object but 
         #keep it free from physics for now
-        entity = Circle(size=50, position=Vector2(
-            x=x + self.scene.top_left['x'], 
-            y=self.scene.height - y + self.scene.top_left['y']))
+        if self.gen_entity == 'CIRCLE':
+            entity = Circle(radius=self.gen_size / 2, position=Vector2(
+                x=x + self.scene.top_left['x'], 
+                y=self.scene.height - y + self.scene.top_left['y']))
+        elif self.gen_entity == 'SQUARE':
+            entity = Square(size=self.gen_size, position=Vector2(
+                x=x + self.scene.top_left['x'], 
+                y=self.scene.height - y + self.scene.top_left['y']))
+
         self.scene.entities.append(entity)
-        self.clicked_object = RigidBody(entity=entity, mass=100)
+        self.clicked_object = RigidBody(entity=entity, mass=self.gen_mass)
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
         #Store the dx and dy since mouse release does not track movements
