@@ -9,7 +9,7 @@ class Vector3(object):
     def __init__(self, **kwargs):
         self.x = float(kwargs.get('x', 0))
         self.y = float(kwargs.get('y', 0))
-        self.z = float(kwargs.get('z', 0))
+        self.z = float(kwargs.get('z', 1))
 
     def rotateZ(self, angle):
         """
@@ -21,7 +21,7 @@ class Vector3(object):
         cosa = math.cos(angle)
         sina = math.sin(angle )
 
-        return Vector3(x = x * cosa - y * sina, y = x * sina + y * cosa, z=1)
+        return Vector3(x = x * cosa - y * sina, y = x * sina + y * cosa, z=0)
 
     # expects radians
     def rotateZ_self(self, angle):

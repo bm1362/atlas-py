@@ -26,6 +26,7 @@ class World(object):
 
         # list of contacts in the world to be resolved
         self.contacts = []
+        self.old_contacts = []
 
     def add_body(self, body):
         self.bodies.append(body)
@@ -48,6 +49,10 @@ class World(object):
             if b.is_moving():
                 b.update(dt)
 
+    def draw(self):
+        for c in self.old_contacts:
+            c.draw()
+            
     # naive imp. could use trees
     def detect_collisions(self):
         lbodies = len(self.bodies)
@@ -112,10 +117,13 @@ class World(object):
             return False
     
     def handle_contacts(self):
+
         for c in self.contacts:
             c.solve()
 
+        self.old_contacts += self.contacts
         self.contacts = []
+
 
     def update_gravitational_forces(self):
         body_pairs = list(itertools.combinations(self.bodies, 2))

@@ -39,7 +39,7 @@ class Simulation(object):
         self.clicked_object = None
         self.clicked_dx = 0
         self.clicked_dy = 0
-        self.scale_step = .01
+        self.scale_step = .0001
 
         # create fps display 
         self.fps_display = pyglet.clock.ClockDisplay()
@@ -58,7 +58,7 @@ class Simulation(object):
 
         #self.demo_1(world_width, world_height)
         #self.demo_2(world_width, world_height)
-        #self.demo_4(world_width, world_height)
+        self.demo_4(world_width, world_height)
         #self.gravity_well_demo(world_width, world_height)
 
     def tick(self, dt):
@@ -91,6 +91,8 @@ class Simulation(object):
         
         # redraw scene
         self.scene.render()
+
+        self.world.draw()
 
         # draw fps clock
         self.fps_display.draw()
@@ -264,7 +266,7 @@ class Simulation(object):
 
         #If there was no object under the pointer, create a new object but 
         #keep it free from physics for now
-        entity = Circle(size=50, position=Vector2(
+        entity = Square(size=50, position=Vector2(
             x=(x * (1.0/self.scene.scale_factor)) + self.scene.top_left['x'], 
             y=self.scene.height - (y * (1/self.scene.scale_factor)) + self.scene.top_left['y'] ))
         self.scene.entities.append(entity)
